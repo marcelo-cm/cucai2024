@@ -156,13 +156,11 @@ export default function Home() {
         </BlurredText>
       </div>
       <CountdownTimer />
-      <div className="w-full md:w-4/5 xl:w-3/5 md:h-[60%] bg-gradient-to-b from-sky-200 to-sky-200/0 rounded-t-3xl pt-4 px-4">
-        <video
+      <div className="w-full h-[66vw] md:w-4/5 xl:w-3/5 md:h-[60%] bg-gradient-to-b from-sky-200 to-sky-200/0 rounded-t-3xl pt-4 px-4">
+        <iframe
           className="rounded-t-xl w-full h-full object-cover"
-          src="/cucai2023-fullrecap.mp4"
-          controls
-          autoPlay
-          loop
+          src="https://www.youtube.com/embed/_vovByoDn68?controls=0?quality=auto"
+          allow="accelerometer; autoplay;"
         />
       </div>
     </main>
