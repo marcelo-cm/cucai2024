@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -153,6 +154,7 @@ export default function RootLayout({
           className="absolute left-1/2 bottom-1/4 -translate-x-1/2 mix-blend-luminosity opacity-10	"
           src="/looping-animation-copy.gif"
         />
+        <Analytics />
       </body>
     </html>
   );
