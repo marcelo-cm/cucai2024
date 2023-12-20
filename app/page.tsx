@@ -149,11 +149,25 @@ const LandingSponsors = [
 
 const PastSpeakers = [
   {
-    name: "Ivan Zhang",
-    headshot: "/headshots/ivan-zhang.png",
-    titles: ["CTO & Co-Founder"],
-    company: "Cohere",
-    logo: "/logos/cohere-logo.png",
+    name: "Shivon Zilis",
+    headshot: "/headshots/shivon-zilis.png",
+    titles: ["Prev. Board"],
+    company: "OpenAI",
+    logo: "/logos/open-ai-logo.png",
+  },
+  {
+    name: "Dr. Geoffrey Hinton",
+    headshot: "/headshots/dr-geoffrey-hinton.png",
+    titles: ["Godfather of AI"],
+    company: "Google",
+    logo: "/logos/google-logo.png",
+  },
+  {
+    name: "Laurence Moroney",
+    headshot: "/headshots/laurence-moroney.png",
+    titles: ["AI Lead"],
+    company: "Google",
+    logo: "/logos/google-logo.png",
   },
   {
     name: "Ivan Zhang",
@@ -163,37 +177,30 @@ const PastSpeakers = [
     logo: "/logos/cohere-logo.png",
   },
   {
-    name: "Ivan Zhang",
-    headshot: "/headshots/ivan-zhang.png",
-    titles: ["CTO & Co-Founder"],
-    company: "Cohere",
-    logo: "/logos/cohere-logo.png",
+    name: "Wemba Opota",
+    headshot: "/headshots/wemba-opota.png",
+    titles: ["Global Director, AI Solutions"],
+    company: "Microsoft",
+    logo: "/logos/microsoft-logo.png",
   },
   {
-    name: "Ivan Zhang",
-    headshot: "/headshots/ivan-zhang.png",
-    titles: ["CTO & Co-Founder"],
-    company: "Cohere",
-    logo: "/logos/cohere-logo.png",
+    name: "Ron Bodkin",
+    headshot: "/headshots/ron-bodkin.png",
+    titles: ["VP of AI Engineering"],
+    company: "Vector Institute",
+    logo: "/logos/vector-institute-logo.png",
   },
   {
-    name: "Ivan Zhang",
-    headshot: "/headshots/ivan-zhang.png",
-    titles: ["CTO & Co-Founder"],
-    company: "Cohere",
-    logo: "/logos/cohere-logo.png",
+    name: "Allison Cohen",
+    headshot: "/headshots/allison-cohen.png",
+    titles: ["Senior Applied AI PM"],
+    company: "Mila",
+    logo: "/logos/mila-logo.png",
   },
   {
-    name: "Ivan Zhang",
-    headshot: "/headshots/ivan-zhang.png",
-    titles: ["CTO & Co-Founder"],
-    company: "Cohere",
-    logo: "/logos/cohere-logo.png",
-  },
-  {
-    name: "Ivan Zhang",
-    headshot: "/headshots/ivan-zhang.png",
-    titles: ["CTO & Co-Founder"],
+    name: "Edward Kim",
+    headshot: "/headshots/edward-Kim.png",
+    titles: ["Manager of Technical Staff"],
     company: "Cohere",
     logo: "/logos/cohere-logo.png",
   },
@@ -415,8 +422,8 @@ export default function Home() {
       <div className="absolute right-[7.5dvw] h-full w-[1px] bg-[#55E0FF]/50 blur-sm" />
 
       {/* NAV BAR */}
-      <div className="w-full py-8 px-48 flex flex-row justify-between">
-        <div className="flex flex-row gap-8 text-white text-sm tracking-[6px]">
+      <div className="flex w-full py-4 lg:py-8 lg:px-48 flex-col gap-4 lg:flex-row justify-between">
+        <div className="hidden md:flex  flex-row gap-8 text-white text-sm tracking-[6px]">
           <a href="#About">ABOUT</a>
           <a href="#Speakers">SPEAKERS</a>
           <a href="#Programming">PROGRAMMING</a>
@@ -437,9 +444,10 @@ export default function Home() {
       </div>
       <BlurredSeperator />
       {/* LANDING */}
-      <div className="w-full flex flex-col gap-2 items-center pt-16">
-        <BlurredText
-          className="
+      <div className="w-full flex flex-col gap-12 lg:gap-2 items-center pt-12">
+        <div className="flex flex-col gap-2">
+          <BlurredText
+            className="
           text-cyan-300
           text-[10pt]
           md:text-[2vw]
@@ -447,12 +455,12 @@ export default function Home() {
           font-bold
           tracking-[12px]
           md:tracking-[18px]"
-        >
-          MARCH 2-3, 2024{" "}
-          <p className="hidden lg:inline-block">| KINGSTON, ON</p>
-        </BlurredText>
-        <BlurredText
-          className="
+          >
+            MARCH 2-3, 2024{" "}
+            <p className="hidden lg:inline-block">| KINGSTON, ON</p>
+          </BlurredText>
+          <BlurredText
+            className="
           text-white
           text-[18vw]
           leading-none
@@ -461,11 +469,11 @@ export default function Home() {
           font-bold
           leading-[153px]
           tracking-[6px]"
-        >
-          CUCAI 2024
-        </BlurredText>
-        <BlurredText
-          className="
+          >
+            CUCAI 2024
+          </BlurredText>
+          <BlurredText
+            className="
           text-cyan-300
           text-[10pt]
           md:text-[2vw]
@@ -477,11 +485,12 @@ export default function Home() {
           tracking-[12px]
           md:tracking-[18px]
           lg:hidden"
-        >
-          KINGSTON, ON
-        </BlurredText>
+          >
+            KINGSTON, ON
+          </BlurredText>
+        </div>
         <CountdownTimer />
-        <img className="w-3/5 pt-8" src="/ontario-hall.png" />
+        <img className="lg:w-3/5 pt-8 z-50" src="/ontario-hall.png" />
       </div>
       <BlurredSeperator />
       {/* LANDING SPONSORS TICKER */}
@@ -503,15 +512,15 @@ export default function Home() {
         colour="FFC24B"
         className="bg-gradient-to-r from-[#FFC24B]/25 to-[#FFC24B]/0"
       >
-        APPLY TO CUCAI 2024 NOW!
+        APPLY TO CUCAI 2024!
       </SectionTitle>
       <BlurredSeperator blur="md" className="!border-[#FFC24B]" />
       {/* ABOUT */}
       <div
         id="About"
-        className="py-16 px-48 flex flex-row justify-between gap-32 items-center"
+        className="py-16 px-[10dvw] lg:px-48 flex flex-col-reverse lg:flex-row justify-between gap-8 lg:gap-32 items-center"
       >
-        <div className="flex flex-col gap-4 min-w-[475px]">
+        <div className="flex flex-col gap-4 lg:min-w-[475px]">
           <h1 className="text-4xl text-[#FFC24B] font-semibold">
             Canadian Undergraduate Conference on AI
           </h1>
@@ -549,9 +558,9 @@ export default function Home() {
       <SectionTitle>PAST SPEAKERS</SectionTitle>
       <BlurredSeperator />
       <div id="Speakers" className="w-full px-[7.5dvw] ">
-        <div className="flex flex-row items-center h-fit overflow-scroll no-scrollbar divide-x-[1px] divide-[#55E0FF]/50">
+        <div className="flex flex-col sm:flex-row items-center h-fit overflow-scroll no-scrollbar divide-x-[1px]  divide-y-[1px] divide-[#55E0FF]/50">
           {PastSpeakers.map((speaker, i) => (
-            <div className="flex flex-col justify-center items-center py-8 px-16 gap-4 min-w-[300px]">
+            <div className="flex flex-col items-center py-8 px-16 gap-4 min-w-[340px] h-[375px]">
               <img
                 src={speaker.headshot}
                 alt={`Headshot of ${speaker.name}`}
@@ -563,20 +572,20 @@ export default function Home() {
                   <p className="text-sm">{title}</p>
                 ))}
               </div>
-              <img src={speaker.logo} className="w-3/4 h-auto mt-2" />
+              <img src={speaker.logo} className="w-3/4 mt-2" />
             </div>
           ))}
         </div>
       </div>
       {/* PROGRAMMING */}
       <BlurredSeperator />
-      <SectionTitle>CUCAI 2024 PROGRAMMING</SectionTitle>
+      <SectionTitle>CUCAI 2024 SCHEDULE</SectionTitle>
       <BlurredSeperator />
       <div
         id="Programming"
-        className="w-full px-[7.5dvw] flex flex-row flex-wrap divide-x-[1px] divide-y-[1px] divide-[#55E0FF]/50"
+        className="w-full px-[7.5dvw] flex flex-col lg:flex-row flex-wrap divide-x-[1px] divide-y-[1px] divide-[#55E0FF]/50"
       >
-        <div className="w-1/2 h-[320px] flex flex-col relative text-center py-8 px-16 justify-center items-center gap-2">
+        <div className="lg:w-1/2 h-[350px] flex flex-col relative text-center py-8 px-4 md:px-16 justify-center items-center gap-2">
           <img
             src="/cucai-1.png"
             className="absolute top-0 left-0 w-full h-full object-cover mix-blend-luminosity grayscale"
@@ -600,7 +609,7 @@ export default function Home() {
             More.
           </p>
         </div>{" "}
-        <div className="w-1/2 h-[320px] flex flex-col relative text-center py-8 px-16 justify-center items-center gap-2">
+        <div className="lg:w-1/2 h-[350px] flex flex-col relative text-center py-8 px-4 md:px-16 justify-center items-center gap-2">
           <img
             src="/cucai-2.png"
             className="absolute top-0 left-0 w-full h-full object-cover mix-blend-luminosity grayscale"
@@ -614,7 +623,7 @@ export default function Home() {
             like to movement on AI today.
           </p>
         </div>{" "}
-        <div className="w-1/2 h-[320px] flex flex-col relative text-center py-8 px-16 justify-center items-center gap-2">
+        <div className="lg:w-1/2 h-[350px] flex flex-col relative text-center py-8 px-4 md:px-16 justify-center items-center gap-2">
           <img
             src="/cucai-3.png"
             className="absolute top-0 left-0 w-full h-full object-cover mix-blend-luminosity grayscale"
@@ -628,7 +637,7 @@ export default function Home() {
             work in AI.
           </p>
         </div>{" "}
-        <div className="w-1/2 h-[320px] flex flex-col relative text-center py-8 px-16 justify-center items-center gap-2">
+        <div className="lg:w-1/2 h-[350px] flex flex-col relative text-center py-8 px-4 md:px-16 justify-center items-center gap-2">
           <img
             src="/cucai-4.png"
             className="absolute top-0 left-0 w-full h-full object-cover mix-blend-luminosity grayscale"
@@ -650,14 +659,14 @@ export default function Home() {
       <BlurredSeperator />
       <div
         id="StudentPartners"
-        className="w-full px-[7.5dvw] flex flex-row flex-wrap divide-x-[1px] divide-y-[1px] divide-[#55E0FF]/50"
+        className="w-full px-[7.5dvw] flex flex-col lg:flex-row flex-wrap divide-x-[1px] divide-y-[1px] divide-[#55E0FF]/50"
       >
         {StudentPartners.map((partner, i) => (
           <div
             key={i}
-            className="px-16 py-8 flex flex-row justify-between w-1/2 brightness-[1.2]"
+            className="px-16 py-8 flex flex-col lg:flex-row justify-between items-center lg:w-1/2 brightness-[1.2] gap-4 text-center lg:text-left"
           >
-            <div className="flex flex-row gap-8 items-center leading-tight w-full">
+            <div className="flex flex-col lg:flex-row gap-2 lg:gap-8 items-center leading-tight w-full">
               <img
                 src={partner.logo}
                 className="max-h-[75px] h-auto min-w-[75px]"
@@ -722,6 +731,28 @@ export default function Home() {
         </div>
       </div>
       <BlurredSeperator />
+      <SectionTitle>CONTACT US</SectionTitle>
+      <BlurredSeperator />
+      <div className="flex w-full py-4 lg:py-8 lg:px-48 flex-col gap-4 lg:flex-row justify-between">
+        <div className="hidden md:flex  flex-row gap-8 text-white text-sm tracking-[6px]">
+          <a href="#About">ABOUT</a>
+          <a href="#Speakers">SPEAKERS</a>
+          <a href="#Programming">PROGRAMMING</a>
+          {/* <a href="#Sponsors">SPONSORS</a> */}
+          <a href="#StudentPartners">STUDENT PARTNERS</a>
+        </div>
+        <div className="flex flex-row gap-8 items-center justify-center">
+          <a href="mailto:chair@cucai.ca">
+            <img src="/email-icon.svg" className="h-4" />
+          </a>
+          <a href="https://www.instagram.com/cucai2024/">
+            <img src="/instagram-icon.svg" className="h-5" />
+          </a>
+          <a href="https://www.linkedin.com/company/canadian-undergraduate-conference-on-artificial-intelligence/">
+            <img src="/linkedin-icon.svg" className="h-5" />
+          </a>
+        </div>
+      </div>
     </main>
   );
 }
