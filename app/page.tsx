@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { IBM_Plex_Sans } from "next/font/google";
 import { ReactNode, useEffect, useState } from "react";
+import { motion, useAnimation } from "framer-motion";
 
 const IBMPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
@@ -206,7 +207,7 @@ const PastSpeakers = [
   },
 ];
 
-const Team = [
+let Team = [
   {
     name: "Marcelo Chaman Mallqui",
     headshot: "/headshots/marcelo-chamanmallqui.png",
@@ -286,6 +287,7 @@ const Team = [
     linkedin: "https://www.linkedin.com/in/warrenjk/",
   },
 ];
+const carouselTeam = [...Team, ...Team];
 
 const StudentPartners = [
   {
@@ -347,6 +349,23 @@ const StudentPartners = [
 ];
 
 export default function Home() {
+  const [position, setPosition] = useState(0);
+  const controls = useAnimation();
+
+  const resumeAnimation = () => {
+    controls.start({ x: true ? -position : position });
+  };
+  const pauseAnimation = () => {
+    controls.stop();
+  };
+
+  useEffect(() => {
+    const cardsContainer = document.getElementById("oraganizing-team-id");
+    const cardsWidth = cardsContainer!?.clientWidth / 2 + 24;
+    setPosition(cardsWidth);
+    controls.start({ x: true ? -cardsWidth : cardsWidth });
+  }, []);
+
   const CountdownTimer = () => {
     const [timeLeft, setTimeLeft] = useState<string>("79D 7H 20M 20S");
 
@@ -697,11 +716,21 @@ export default function Home() {
       <BlurredSeperator />
       <SectionTitle>ORGANIZING TEAM</SectionTitle>
       <BlurredSeperator />
-      <div id="Team" className="w-full px-[7.5dvw] ">
-        <div className="flex flex-row items-center h-fit overflow-scroll no-scrollbar divide-x-[1px] divide-[#55E0FF]/50">
-          {Team.map((person, i) => (
+      <div className="w-[85dvw] flex flex-col items-start gap-[24px]  relative overflow-x-hidden min-h-[350px] text-left">
+        <motion.div
+          id="oraganizing-team-id"
+          initial={{ x: 0 }}
+          animate={controls}
+          transition={{ duration: 55, repeat: Infinity, ease: "linear" }}
+          className={`flex gap-[24px] absolute ${
+            true ? "" : "right-0"
+          } divide-x-[1px] divide-[#55E0FF]/50`}
+          onHoverStart={pauseAnimation}
+          onHoverEnd={resumeAnimation}
+        >
+          {carouselTeam.map((person, i) => (
             <div
-              className="flex flex-col justify-center items-center py-8 px-16 gap-4 min-w-[320px]"
+              className="flex flex-col justify-center items-center py-8 px-16 gap-4 min-w-[280px] xl:min-w-[320px]"
               key={i}
             >
               <img
@@ -728,8 +757,9 @@ export default function Home() {
               </a>
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
+
       <BlurredSeperator />
       <SectionTitle>CONTACT US</SectionTitle>
       <BlurredSeperator />
