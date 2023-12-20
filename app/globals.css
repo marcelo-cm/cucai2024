@@ -8,12 +8,59 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+p {
+  font-size: 14pt;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
 @media (prefers-color-scheme: dark) {
   /* :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   } */
+}
+
+@layer components {
+  @variants responsive {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+  }
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.logos-slide {
+  display: inline-block;
+  white-space: nowrap;
+  width: max-content;
+  animation: slide 5s linear infinite;
+}
+
+.logos {
+  overflow: hidden;
+  width: 100%;
+  white-space: nowrap;
+  padding: 60px 0;
+  background: black;
 }
 
 body {
