@@ -707,51 +707,50 @@ export default function Home() {
       <BlurredSeperator />
       <SectionTitle>ORGANIZING TEAM</SectionTitle>
       <BlurredSeperator />
-      <div className="flex flex-col items-start gap-[24px] w-[100%] relative">
-        <div
-          className={`min-h-[350px] w-[100%] text-left`}
+      <div className="w-[85dvw] flex flex-col items-start gap-[24px]  relative overflow-x-hidden min-h-[350px] text-left">
+        <motion.div
+          id="oraganizing-team-id"
+          initial={{ x: 0 }}
+          animate={controls}
+          transition={{ duration: 55, repeat: Infinity, ease: "linear" }}
+          className={`flex gap-[24px] absolute ${
+            true ? "" : "right-0"
+          } divide-x-[1px] divide-[#55E0FF]/50`}
+          onHoverStart={pauseAnimation}
+          onHoverEnd={resumeAnimation}
         >
-          <motion.div
-            id="oraganizing-team-id"
-            initial={{ x: 0 }}
-            animate={controls}
-            transition={{ duration: 55, repeat: Infinity, ease: "linear" }}
-            className={`flex gap-[24px] absolute ${true ? "" : "right-0"} divide-x-[1px] divide-[#55E0FF]/50`}
-            onHoverStart={pauseAnimation}
-            onHoverEnd={resumeAnimation}
-          >
-            {carouselTeam.map((person, i) => (
-              <div
-                className="flex flex-col justify-center items-center py-8 px-16 gap-4 min-w-[280px] xl:min-w-[320px]"
-                key={i}
-              >
-                <img
-                  src={person.headshot}
-                  alt={`Headshot of ${person.name}`}
-                  className="h-[150px] rounded-full border-[#55E0FF]/50 border-[1px] object-cover bg-gradient-to-t from-[#55E0FF]/50 to-[#55E0FF]/0"
-                />
-                <div className="text-center">
-                  <p
-                    className={`${
-                      person.name.length > 13 ? `!text-[13pt]` : "text-2xl"
-                    } font-normal`}
-                  >
-                    {person.name}
-                  </p>
-                  <p className="text-sm">{person.title}</p>
-                </div>
-                <a
-                  target="_blank"
-                  className="hover:opacity-50"
-                  href={person.linkedin}
+          {carouselTeam.map((person, i) => (
+            <div
+              className="flex flex-col justify-center items-center py-8 px-16 gap-4 min-w-[280px] xl:min-w-[320px]"
+              key={i}
+            >
+              <img
+                src={person.headshot}
+                alt={`Headshot of ${person.name}`}
+                className="h-[150px] rounded-full border-[#55E0FF]/50 border-[1px] object-cover bg-gradient-to-t from-[#55E0FF]/50 to-[#55E0FF]/0"
+              />
+              <div className="text-center">
+                <p
+                  className={`${
+                    person.name.length > 13 ? `!text-[13pt]` : "text-2xl"
+                  } font-normal`}
                 >
-                  <img src="/linkedin-icon.svg" className="h-5" />
-                </a>
+                  {person.name}
+                </p>
+                <p className="text-sm">{person.title}</p>
               </div>
-            ))}
-          </motion.div>
-        </div>
+              <a
+                target="_blank"
+                className="hover:opacity-50"
+                href={person.linkedin}
+              >
+                <img src="/linkedin-icon.svg" className="h-5" />
+              </a>
+            </div>
+          ))}
+        </motion.div>
       </div>
+
       <BlurredSeperator />
     </main>
   );
