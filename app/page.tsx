@@ -199,7 +199,7 @@ const PastSpeakers = [
   },
   {
     name: "Edward Kim",
-    headshot: "/headshots/edward-Kim.png",
+    headshot: "/headshots/edward-kim.png",
     titles: ["Manager of Technical Staff"],
     company: "Cohere",
     logo: "/logos/cohere-logo.png",
