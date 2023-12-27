@@ -622,7 +622,10 @@ export default function Home() {
       >
         <div className="invisible sm:visible cancel-carousel r-carousel-inner flex flex-col sm:flex-row items-center h-fit sm:overflow-scroll no-scrollbar sm:divide-x-[1px] divide-y-[1px] sm:divide-y-[0px] divide-[#55E0FF]/50">
           {PastSpeakers.map((speaker, i) => (
-            <div className="flex flex-col items-center py-8 justify-between px-16 gap-4 w-[85dvw] sm:min-w-[340px] sm:w-fit h-[350px]">
+            <div
+              className="flex flex-col items-center py-8 justify-between px-16 gap-4 w-[85dvw] sm:min-w-[340px] sm:w-fit h-[350px]"
+              key={i}
+            >
               <img
                 src={speaker.headshot}
                 alt={`Headshot of ${speaker.name}`}
@@ -630,8 +633,10 @@ export default function Home() {
               />
               <div className="text-center">
                 <h3 className="text-2xl font-normal">{speaker.name}</h3>
-                {speaker.titles.map((title) => (
-                  <p className="text-sm">{title}</p>
+                {speaker.titles.map((title, i) => (
+                  <p className="text-sm" key={i}>
+                    {title}
+                  </p>
                 ))}
               </div>
               <img
@@ -643,7 +648,10 @@ export default function Home() {
         </div>
         <div className="cancel-carousel r-carousel-inner flex flex-col sm:flex-row items-center h-fit sm:overflow-scroll no-scrollbar sm:divide-x-[1px] divide-y-[1px] sm:divide-y-[0px] divide-[#55E0FF]/50">
           {PastSpeakers.map((speaker, i) => (
-            <div className="flex flex-col items-center py-8 justify-between px-16 gap-4 w-[85dvw] sm:min-w-[340px] sm:w-fit h-[350px]">
+            <div
+              className="flex flex-col items-center py-8 justify-between px-16 gap-4 w-[85dvw] sm:min-w-[340px] sm:w-fit h-[350px]"
+              key={i}
+            >
               <img
                 src={speaker.headshot}
                 alt={`Headshot of ${speaker.name}`}
@@ -651,8 +659,10 @@ export default function Home() {
               />
               <div className="text-center">
                 <h3 className="text-2xl font-normal">{speaker.name}</h3>
-                {speaker.titles.map((title) => (
-                  <p className="text-sm">{title}</p>
+                {speaker.titles.map((title, i) => (
+                  <p className="text-sm" key={i}>
+                    {title}
+                  </p>
                 ))}
               </div>
               <img
@@ -664,7 +674,10 @@ export default function Home() {
         </div>
         <div className="invisible sm:visible cancel-carousel r-carousel-inner flex flex-col sm:flex-row items-center h-fit sm:overflow-scroll no-scrollbar sm:divide-x-[1px] divide-y-[1px] sm:divide-y-[0px] divide-[#55E0FF]/50">
           {PastSpeakers.map((speaker, i) => (
-            <div className="flex flex-col items-center py-8 justify-between px-16 gap-4 w-[85dvw] sm:min-w-[340px] sm:w-fit h-[350px]">
+            <div
+              className="flex flex-col items-center py-8 justify-between px-16 gap-4 w-[85dvw] sm:min-w-[340px] sm:w-fit h-[350px]"
+              key={i}
+            >
               <img
                 src={speaker.headshot}
                 alt={`Headshot of ${speaker.name}`}
@@ -672,8 +685,10 @@ export default function Home() {
               />
               <div className="text-center">
                 <h3 className="text-2xl font-normal">{speaker.name}</h3>
-                {speaker.titles.map((title) => (
-                  <p className="text-sm">{title}</p>
+                {speaker.titles.map((title, i) => (
+                  <p className="text-sm" key={i}>
+                    {title}
+                  </p>
                 ))}
               </div>
               <img
