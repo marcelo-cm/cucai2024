@@ -90,36 +90,12 @@ const LandingSponsors = [
     logo: "intel-logo.png",
   },
   {
-    title: "Accenture",
-    logo: "accenture-logo.png",
-  },
-  {
     title: "AWS",
     logo: "aws-logo.png",
   },
   {
     title: "Borealis AI",
     logo: "borealis-ai-logo.png",
-  },
-  {
-    title: "Cohere",
-    logo: "cohere-logo.png",
-  },
-  {
-    title: "DDQIC",
-    logo: "ddqic-logo.png",
-  },
-  {
-    title: "Deloitte",
-    logo: "deloitte-logo.png",
-  },
-  {
-    title: "Deloitte OmniaAI",
-    logo: "deloitte-omnia-ai-logo.png",
-  },
-  {
-    title: "Loblaw Digital",
-    logo: "loblaw-digital-logo.png",
   },
   {
     title: "NASA",
@@ -130,6 +106,10 @@ const LandingSponsors = [
     logo: "nrc-logo.png",
   },
   {
+    title: "Cohere",
+    logo: "cohere-logo.png",
+  },
+  {
     title: "RBC",
     logo: "rbc-logo.png",
   },
@@ -138,14 +118,37 @@ const LandingSponsors = [
     logo: "shopify-logo.png",
   },
   {
+    title: "TD Bank",
+    logo: "td-logo.png",
+  },
+  {
+    title: "Accenture",
+    logo: "accenture-logo.png",
+  },
+
+  {
+    title: "DDQIC",
+    logo: "ddqic-logo.png",
+  },
+  {
+    title: "Deloitte",
+    logo: "deloitte-logo.png",
+  },
+  {
+    title: "Loblaw Digital",
+    logo: "loblaw-digital-logo.png",
+  },
+  {
     title: "Smith School of Business",
     logo: "smith-sob-logo.png",
   },
   {
-    title: "TD Bank",
-    logo: "td-logo.png",
+    title: "Deloitte OmniaAI",
+    logo: "deloitte-omnia-ai-logo.png",
   },
 ];
+
+const LSpons1 = LandingSponsors.slice(0, LandingSponsors.length / 2 + 6);
 
 const PastSpeakers = [
   {
@@ -494,7 +497,7 @@ export default function Home() {
       </div>
       <BlurredSeperator />
       {/* LANDING SPONSORS TICKER */}
-      <div className="w-full px-[7.5dvw] h-[100px]">
+      {/* <div className="w-full px-[7.5dvw] h-[100px]">
         <div className="flex flex-row items-center h-fit overflow-scroll no-scrollbar divide-x-[1px] divide-[#55E0FF]/50">
           {LandingSponsors.map((company, i) => (
             <img
@@ -505,17 +508,50 @@ export default function Home() {
             />
           ))}
         </div>
+      </div> */}
+      <div className="flex flex-row divide-x-[1px] divide-[#55E0FF]/50">
+        <div className="carousel-inner divide-x-[1px] divide-[#55E0FF]/50">
+          {LSpons1.map((company, i) => (
+            <img
+              key={i}
+              alt={company.title}
+              src={`/logos/${company.logo}`}
+              className="object-fit h-[105px] px-16 py-8 flex items-center "
+            />
+          ))}
+        </div>
+        <div className="carousel-inner divide-x-[1px] divide-[#55E0FF]/50">
+          {LSpons1.map((company, i) => (
+            <img
+              key={i}
+              alt={company.title}
+              src={`/logos/${company.logo}`}
+              className="object-fit h-[105px] px-16 py-8 flex items-center "
+            />
+          ))}
+        </div>
+        <div className="carousel-inner divide-x-[1px] divide-[#55E0FF]/50">
+          {LSpons1.map((company, i) => (
+            <img
+              key={i}
+              alt={company.title}
+              src={`/logos/${company.logo}`}
+              className="object-fit h-[105px] px-16 py-8 flex items-center "
+            />
+          ))}
+        </div>
       </div>
       {/* BUY TICKETS */}
-      <BlurredSeperator blur="md" className="!border-[#FFC24B]" />
+      {/* <BlurredSeperator blur="md" className="!border-[#FFC24B]" />
       <SectionTitle
         colour="FFC24B"
         className="bg-gradient-to-r from-[#FFC24B]/25 to-[#FFC24B]/0"
       >
         APPLY TO CUCAI 2024!
       </SectionTitle>
-      <BlurredSeperator blur="md" className="!border-[#FFC24B]" />
+      <BlurredSeperator blur="md" className="!border-[#FFC24B]" /> */}
       {/* ABOUT */}
+      <BlurredSeperator />
       <div
         id="About"
         className="py-16 px-[10dvw] lg:px-48 flex flex-col-reverse lg:flex-row justify-between gap-8 lg:gap-32 items-center"
@@ -557,10 +593,10 @@ export default function Home() {
       <BlurredSeperator />
       <SectionTitle>PAST SPEAKERS</SectionTitle>
       <BlurredSeperator />
-      <div id="Speakers" className="w-full px-[7.5dvw] ">
+      {/* <div id="Speakers" className="w-full px-[7.5dvw] ">
         <div className="flex flex-col sm:flex-row items-center h-fit overflow-scroll no-scrollbar divide-x-[1px]  divide-y-[1px] divide-[#55E0FF]/50">
           {PastSpeakers.map((speaker, i) => (
-            <div className="flex flex-col items-center py-8 px-16 gap-4 min-w-[340px] h-[375px]">
+            <div className="flex flex-col items-center py-8 justify-between px-16 gap-4 min-w-[340px] h-[350px]">
               <img
                 src={speaker.headshot}
                 alt={`Headshot of ${speaker.name}`}
@@ -572,7 +608,78 @@ export default function Home() {
                   <p className="text-sm">{title}</p>
                 ))}
               </div>
-              <img src={speaker.logo} className="w-3/4 mt-2" />
+              <img
+                src={speaker.logo}
+                className="w-[200px] h-[55px] object-contain"
+              />
+            </div>
+          ))}
+        </div>
+      </div> */}
+      <div
+        id="Speakers"
+        className="flex flex-row divide-x-[1px] divide-y-[1px] sm:divide-y-[0px divide-[#55E0FF]/50"
+      >
+        <div className="invisible sm:visible cancel-carousel r-carousel-inner flex flex-col sm:flex-row items-center h-fit sm:overflow-scroll no-scrollbar sm:divide-x-[1px] divide-y-[1px] sm:divide-y-[0px] divide-[#55E0FF]/50">
+          {PastSpeakers.map((speaker, i) => (
+            <div className="flex flex-col items-center py-8 justify-between px-16 gap-4 w-[85dvw] sm:min-w-[340px] sm:w-fit h-[350px]">
+              <img
+                src={speaker.headshot}
+                alt={`Headshot of ${speaker.name}`}
+                className="h-[150px] rounded-full border-[#55E0FF]/50 border-[1px] object-cover bg-gradient-to-t from-[#55E0FF]/50 to-[#55E0FF]/0"
+              />
+              <div className="text-center">
+                <h3 className="text-2xl font-normal">{speaker.name}</h3>
+                {speaker.titles.map((title) => (
+                  <p className="text-sm">{title}</p>
+                ))}
+              </div>
+              <img
+                src={speaker.logo}
+                className="w-[200px] h-[55px] object-contain"
+              />
+            </div>
+          ))}
+        </div>
+        <div className="cancel-carousel r-carousel-inner flex flex-col sm:flex-row items-center h-fit sm:overflow-scroll no-scrollbar sm:divide-x-[1px] divide-y-[1px] sm:divide-y-[0px] divide-[#55E0FF]/50">
+          {PastSpeakers.map((speaker, i) => (
+            <div className="flex flex-col items-center py-8 justify-between px-16 gap-4 w-[85dvw] sm:min-w-[340px] sm:w-fit h-[350px]">
+              <img
+                src={speaker.headshot}
+                alt={`Headshot of ${speaker.name}`}
+                className="h-[150px] rounded-full border-[#55E0FF]/50 border-[1px] object-cover bg-gradient-to-t from-[#55E0FF]/50 to-[#55E0FF]/0"
+              />
+              <div className="text-center">
+                <h3 className="text-2xl font-normal">{speaker.name}</h3>
+                {speaker.titles.map((title) => (
+                  <p className="text-sm">{title}</p>
+                ))}
+              </div>
+              <img
+                src={speaker.logo}
+                className="w-[200px] h-[55px] object-contain"
+              />
+            </div>
+          ))}
+        </div>
+        <div className="invisible sm:visible cancel-carousel r-carousel-inner flex flex-col sm:flex-row items-center h-fit sm:overflow-scroll no-scrollbar sm:divide-x-[1px] divide-y-[1px] sm:divide-y-[0px] divide-[#55E0FF]/50">
+          {PastSpeakers.map((speaker, i) => (
+            <div className="flex flex-col items-center py-8 justify-between px-16 gap-4 w-[85dvw] sm:min-w-[340px] sm:w-fit h-[350px]">
+              <img
+                src={speaker.headshot}
+                alt={`Headshot of ${speaker.name}`}
+                className="h-[150px] rounded-full border-[#55E0FF]/50 border-[1px] object-cover bg-gradient-to-t from-[#55E0FF]/50 to-[#55E0FF]/0"
+              />
+              <div className="text-center">
+                <h3 className="text-2xl font-normal">{speaker.name}</h3>
+                {speaker.titles.map((title) => (
+                  <p className="text-sm">{title}</p>
+                ))}
+              </div>
+              <img
+                src={speaker.logo}
+                className="w-[200px] h-[55px] object-contain"
+              />
             </div>
           ))}
         </div>
@@ -697,8 +804,73 @@ export default function Home() {
       <BlurredSeperator />
       <SectionTitle>ORGANIZING TEAM</SectionTitle>
       <BlurredSeperator />
-      <div id="Team" className="w-full px-[7.5dvw] ">
-        <div className="flex flex-row items-center h-fit overflow-scroll no-scrollbar divide-x-[1px] divide-[#55E0FF]/50">
+      <div
+        id="Team"
+        className="flex flex-row divide-x-[1px] divide-y-[1px] sm:divide-y-[0px divide-[#55E0FF]/50"
+      >
+        <div className="carousel-inner flex flex-row items-center h-fit overflow-scroll no-scrollbar divide-x-[1px] divide-[#55E0FF]/50">
+          {Team.map((person, i) => (
+            <div
+              className="flex flex-col justify-center items-center py-8 px-16 gap-4 min-w-[320px]"
+              key={i}
+            >
+              <img
+                src={person.headshot}
+                alt={`Headshot of ${person.name}`}
+                className="h-[150px] rounded-full border-[#55E0FF]/50 border-[1px] object-cover bg-gradient-to-t from-[#55E0FF]/50 to-[#55E0FF]/0"
+              />
+              <div className="text-center">
+                <p
+                  className={`${
+                    person.name.length > 13 ? `!text-[13pt]` : "text-2xl"
+                  } font-normal`}
+                >
+                  {person.name}
+                </p>
+                <p className="text-sm">{person.title}</p>
+              </div>
+              <a
+                target="_blank"
+                className="hover:opacity-50"
+                href={person.linkedin}
+              >
+                <img src="/linkedin-icon.svg" className="h-5" />
+              </a>
+            </div>
+          ))}
+        </div>
+        <div className="carousel-inner flex flex-row items-center h-fit overflow-scroll no-scrollbar divide-x-[1px] divide-[#55E0FF]/50">
+          {Team.map((person, i) => (
+            <div
+              className="flex flex-col justify-center items-center py-8 px-16 gap-4 min-w-[320px]"
+              key={i}
+            >
+              <img
+                src={person.headshot}
+                alt={`Headshot of ${person.name}`}
+                className="h-[150px] rounded-full border-[#55E0FF]/50 border-[1px] object-cover bg-gradient-to-t from-[#55E0FF]/50 to-[#55E0FF]/0"
+              />
+              <div className="text-center">
+                <p
+                  className={`${
+                    person.name.length > 13 ? `!text-[13pt]` : "text-2xl"
+                  } font-normal`}
+                >
+                  {person.name}
+                </p>
+                <p className="text-sm">{person.title}</p>
+              </div>
+              <a
+                target="_blank"
+                className="hover:opacity-50"
+                href={person.linkedin}
+              >
+                <img src="/linkedin-icon.svg" className="h-5" />
+              </a>
+            </div>
+          ))}
+        </div>
+        <div className="carousel-inner flex flex-row items-center h-fit overflow-scroll no-scrollbar divide-x-[1px] divide-[#55E0FF]/50">
           {Team.map((person, i) => (
             <div
               className="flex flex-col justify-center items-center py-8 px-16 gap-4 min-w-[320px]"

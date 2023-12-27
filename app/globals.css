@@ -39,28 +39,57 @@ p {
   }
 }
 
-@keyframes slide {
-  from {
-    transform: translateX(0);
+.carousel-container {
+  overflow: hidden;
+}
+
+@media screen and (max-width: 640px) {
+  .cancel-carousel {
+    animation: none !important;
+    width: fit-content !important;
   }
-  to {
+}
+
+.carousel-inner {
+  animation: scroll 20s linear infinite; /* Adjust timing for speed */
+  width: max-content;
+  display: flex;
+}
+.r-carousel-inner {
+  animation: rscroll 20s linear infinite; /* Adjust timing for speed */
+  width: max-content;
+  display: flex;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%); /* Adjust based on duplication */
+  }
+}
+
+@keyframes rscroll {
+  0% {
     transform: translateX(-100%);
   }
+  100% {
+    transform: translateX(0%); /* Adjust based on duplication */
+  }
 }
 
-.logos-slide {
-  display: inline-block;
-  white-space: nowrap;
-  width: max-content;
-  animation: slide 5s linear infinite;
+.carousel-item {
+  flex: 0 0 auto;
 }
 
-.logos {
-  overflow: hidden;
-  width: 100%;
-  white-space: nowrap;
-  padding: 60px 0;
-  background: black;
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 body {
