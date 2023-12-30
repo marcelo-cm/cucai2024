@@ -561,8 +561,8 @@ export default function Home() {
             Canadian Undergraduate Conference on AI
           </h1>
           <p>
-            We a not-for-profit conference that bring together over 320 of the
-            brightest minds on AI from across the country. 100% run by
+            We are a not-for-profit conference that bring together over 320 of
+            the brightest minds on AI from across the country. 100% run by
             undergraduate volunteers, out of passion.
             <br />
             <br />
