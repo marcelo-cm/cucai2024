@@ -542,14 +542,20 @@ export default function Home() {
         </div>
       </div>
       {/* BUY TICKETS */}
-      {/* <BlurredSeperator blur="md" className="!border-[#FFC24B]" />
-      <SectionTitle
-        colour="FFC24B"
-        className="bg-gradient-to-r from-[#FFC24B]/25 to-[#FFC24B]/0"
+      <BlurredSeperator blur="md" className="!border-[#FFC24B]" />
+      <a
+        href="https://tally.so/r/wkNMQM"
+        target="_blank"
+        className="w-full hover:font-normal"
       >
-        APPLY TO CUCAI 2024!
-      </SectionTitle>
-      <BlurredSeperator blur="md" className="!border-[#FFC24B]" /> */}
+        <SectionTitle
+          colour="FFC24B"
+          className="bg-gradient-to-r from-[#FFC24B]/25 to-[#FFC24B]/0 hover:bg-[#FFC24B]/10 transition-all duration-200"
+        >
+          APPLY TO CUCAI 2024!
+        </SectionTitle>
+      </a>
+      <BlurredSeperator blur="md" className="!border-[#FFC24B]" />
       {/* ABOUT */}
       <BlurredSeperator />
       <div
