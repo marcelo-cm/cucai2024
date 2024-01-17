@@ -852,7 +852,7 @@ export default function Home() {
               </div>
               <a
                 target="_blank"
-                className="hover:opacity-50"
+                className="flex w-full items-center justify-center hover:bg-white/10 rounded-md p-2"
                 href={person.linkedin}
               >
                 <img src="/linkedin-icon.svg" className="h-5" />
@@ -883,7 +883,7 @@ export default function Home() {
               </div>
               <a
                 target="_blank"
-                className="hover:opacity-50"
+                className="flex w-full items-center justify-center hover:bg-white/10 rounded-md p-2"
                 href={person.linkedin}
               >
                 <img src="/linkedin-icon.svg" className="h-5" />
@@ -914,7 +914,7 @@ export default function Home() {
               </div>
               <a
                 target="_blank"
-                className="hover:opacity-50"
+                className="flex w-full items-center justify-center hover:bg-white/10 rounded-md p-2"
                 href={person.linkedin}
               >
                 <img src="/linkedin-icon.svg" className="h-5" />

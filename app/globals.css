@@ -51,12 +51,12 @@ p {
 }
 
 .carousel-inner {
-  animation: scroll 20s linear infinite; /* Adjust timing for speed */
+  animation: scroll 25s linear infinite; /* Adjust timing for speed */
   width: max-content;
   display: flex;
 }
 .r-carousel-inner {
-  animation: rscroll 20s linear infinite; /* Adjust timing for speed */
+  animation: rscroll 25s linear infinite; /* Adjust timing for speed */
   width: max-content;
   display: flex;
 }
