@@ -3,16 +3,14 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-function OpenAIPage() {
+function ApplyPage() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push(
-      "https://docs.google.com/forms/d/e/1FAIpQLSdAHPWF6l81JcDMT-g0UcteQEM5ZUvT57XAlj7TtnVKUxO8PA/viewform"
-    );
+    router.push("https://forms.gle/s5GJwx1oYhxTSQJG7");
   }, [router]);
 
   return <div className="text-white">see u soon. redirecting...</div>;
 }
 
-export default OpenAIPage;
+export default ApplyPage;
