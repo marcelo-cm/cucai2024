@@ -1,8 +1,8 @@
 'use client';
 
 import PrimaryDetails from '@/components/onboarding/PrimaryDetails';
-import TeamEnrolment from '@/components/onboarding/TeamEnrolment';
-import UniversityPlusTeam from '@/components/onboarding/TeamEnrolment';
+import TeamEnrolment from '@/components/onboarding/PaperEnrolment';
+import PaperEnrolment from '@/components/onboarding/PaperEnrolment';
 
 import { useState } from 'react';
 
@@ -12,9 +12,14 @@ const Onboarding = () => {
     firstName: '',
     lastName: '',
     university: '',
+    universityKey: '',
     linkedin: '',
-    team: '',
+    paper: '',
+    paperId: '',
+    organization: '',
   });
+
+  console.log('userDetails', userDetails);
   return (
     <div className='flex grow items-center justify-center'>
       {step === 0 && (
@@ -26,7 +31,7 @@ const Onboarding = () => {
         />
       )}
       {step === 1 && (
-        <TeamEnrolment
+        <PaperEnrolment
           step={step}
           setStep={setStep}
           userDetails={userDetails}

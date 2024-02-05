@@ -43,7 +43,7 @@ const UniversityComboBox = ({
           aria-expanded={open}
           className='w-[280px] justify-between'
         >
-          {value?.label || 'Select a university'}
+          {value || 'Select a university'}
           <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
         </Button>
       </PopoverTrigger>
@@ -52,22 +52,25 @@ const UniversityComboBox = ({
           <CommandInput placeholder='Search universities...' />
           <CommandEmpty>University not found.</CommandEmpty>
           <CommandGroup>
-            {universities.map((framework) => (
+            {universities.map((university) => (
               <CommandItem
-                key={framework.value}
-                value={framework.value}
-                onSelect={(currentValue) => {
-                  setValue(framework);
+                key={university.value}
+                onSelect={() => {
+                  setValue((prev: any) => ({
+                    ...prev,
+                    university: university.label,
+                    universityKey: university.value,
+                  }));
                   setOpen(false);
                 }}
               >
                 <Check
                   className={cn(
                     'mr-2 h-4 w-4',
-                    value === framework.value ? 'opacity-100' : 'opacity-0'
+                    value === university.value ? 'opacity-100' : 'opacity-0'
                   )}
                 />
-                {framework.label}
+                {university.label}
               </CommandItem>
             ))}
           </CommandGroup>

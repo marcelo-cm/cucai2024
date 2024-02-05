@@ -24,19 +24,19 @@ import { paperSearch } from '@/lib/actions/general.actions';
 import { FilePlus, FileSearch2 } from 'lucide-react';
 import useOutsideClick from '@/lib/hooks/useOutsideClick';
 
-interface UniversityPlusTeamProps {
+interface PaperEnrolmentProps {
   step: number;
   setStep: (value: number) => void;
   userDetails: any;
   setUserDetails: (value: any) => void;
 }
 
-const UniversityPlusTeam = ({
+const PaperEnrolment = ({
   step,
   setStep,
   userDetails,
   setUserDetails,
-}: UniversityPlusTeamProps) => {
+}: PaperEnrolmentProps) => {
   const [search, setSearch] = useState<string>('');
   const [isOpen, setIsOpen] = useState(false);
   const [results, setResults] = useState<any[]>([]);
@@ -91,7 +91,7 @@ const UniversityPlusTeam = ({
   );
 };
 
-export default UniversityPlusTeam;
+export default PaperEnrolment;
 
 export const SearchResults = ({
   results,

@@ -68,9 +68,7 @@ const PrimaryDetails = ({
             <Label htmlFor='name'>University</Label>
             <UniversityComboBox
               value={userDetails.university}
-              setValue={(value) =>
-                setUserDetails({ ...userDetails, university: value })
-              }
+              setValue={setUserDetails}
               open={open}
               setOpen={setOpen}
             />
