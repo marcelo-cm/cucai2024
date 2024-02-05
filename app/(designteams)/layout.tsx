@@ -14,6 +14,7 @@ export default async function Layout({
 
   const { data, error } = await supabase.auth.getUser();
   if (error || !data?.user) {
+    console.log(data?.user);
     redirect('/');
   }
 

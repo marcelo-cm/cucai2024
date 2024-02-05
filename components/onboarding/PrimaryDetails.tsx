@@ -10,8 +10,9 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import UniversityComboBox from '../shared/UniversityComboBox';
+import UniversityComboBox from './UniversityComboBox';
 import { useState } from 'react';
+import OrganizationsComboBox from './OrganizationsComboBox';
 
 interface PrimaryDetailsProps {
   step: number;
@@ -26,7 +27,8 @@ const PrimaryDetails = ({
   userDetails,
   setUserDetails,
 }: PrimaryDetailsProps) => {
-  const [open, setOpen] = useState<boolean>(false);
+  const [uniOpen, setUniOpen] = useState<boolean>(false);
+  const [orgOpen, setorgOpen] = useState<boolean>(false);
   return (
     <Card className='max-w-[560px] w-full'>
       <CardHeader>
@@ -65,12 +67,21 @@ const PrimaryDetails = ({
             />
           </div>
           <div className='grid gap-2'>
-            <Label htmlFor='name'>University</Label>
+            <Label>University</Label>
             <UniversityComboBox
               value={userDetails.university}
               setValue={setUserDetails}
-              open={open}
-              setOpen={setOpen}
+              open={uniOpen}
+              setOpen={setUniOpen}
+            />
+          </div>
+          <div className='grid gap-2'>
+            <Label>Organization / Club</Label>
+            <OrganizationsComboBox
+              value={userDetails.organization}
+              setValue={setUserDetails}
+              open={orgOpen}
+              setOpen={setorgOpen}
             />
           </div>
         </div>

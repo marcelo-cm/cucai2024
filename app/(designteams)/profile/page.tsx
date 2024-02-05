@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 
 import { useState } from 'react';
-import UniversityComboBox from '@/components/shared/UniversityComboBox';
+import UniversityComboBox from '@/components/onboarding/UniversityComboBox';
 
 const Profile = () => {
   const [open, setOpen] = useState<boolean>(false);

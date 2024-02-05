@@ -9,19 +9,11 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-
 import { Button } from '../ui/button';
 import { Input } from '@/components/ui/input';
 import { useEffect, useState } from 'react';
 import { paperSearch } from '@/lib/actions/general.actions';
-import { FilePlus, FileSearch2 } from 'lucide-react';
+import { FilePlus, FileSearch2, XCircle } from 'lucide-react';
 import useOutsideClick from '@/lib/hooks/useOutsideClick';
 
 interface PaperEnrolmentProps {
@@ -39,6 +31,7 @@ const PaperEnrolment = ({
 }: PaperEnrolmentProps) => {
   const [search, setSearch] = useState<string>('');
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedPaper, setSelectedPaper] = useState<string>('');
   const [results, setResults] = useState<any[]>([]);
 
   useEffect(() => {
@@ -64,7 +57,27 @@ const PaperEnrolment = ({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className='flex gap-2 relative'>
+        <div className='grid gap-2 relative'>
+          {userDetails.paper && (
+            <div className='flex justify-between bg-gray-100 rounded-md px-4 py-3'>
+              <p className='text-sm font-semibold'>
+                {'Selected: ' + userDetails.paper}
+              </p>
+              <Button
+                variant={'ghost'}
+                className='w-max h-max p-0'
+                onClick={() =>
+                  setUserDetails((prev: any) => ({
+                    ...prev,
+                    paper: '',
+                    paperId: '',
+                  }))
+                }
+              >
+                <XCircle size={18} />
+              </Button>
+            </div>
+          )}
           <Input
             id='teamQuery'
             name='teamQuery'
@@ -104,7 +117,11 @@ export const SearchResults = ({
 }) => {
   const commandRef = useOutsideClick(() => setIsOpen(false));
   const selectTeam = (result: any) => {
-    setUserDetails(result.id);
+    setUserDetails((prev: any) => ({
+      ...prev,
+      paper: result.title,
+      paperId: result.id,
+    }));
     setIsOpen(false);
   };
 
