@@ -80,7 +80,7 @@ const BlurredSeperator = ({
   );
 };
 
-const LandingSponsors = [
+const LandingSponsorsOld = [
   {
     title: "Microsoft",
     logo: "microsoft-logo.png",
@@ -148,6 +148,45 @@ const LandingSponsors = [
   },
 ];
 
+const LandingSponsors = [
+  {
+    title: "Redbit Development",
+    logo: "redbit-logo.png",
+    link: "https://redbitdev.com/",
+  },
+  {
+    title: "EY AI",
+    logo: "ey-logo.png",
+    link: "https://www.ey.com/en_gl/ai/platform",
+  },
+  { title: "Cohere", logo: "cohere-logo.png", link: "https://cohere.com//" },
+  {
+    title: "RSG International",
+    logo: "rsg-logo.png",
+    link: "https://rsgint.com/",
+  },
+  {
+    title: "Smith Engineering",
+    logo: "smith-engineering-logo.png",
+    link: "https://smithengineering.queensu.ca/",
+  },
+  {
+    title: "Queen's School of Computing ",
+    logo: "queens-computing-logo.png",
+    link: "https://www.cs.queensu.ca/",
+  },
+  {
+    title: "Waterloo AI Institute ",
+    logo: "waterloo-ai-institute-logo.png",
+    link: "https://uwaterloo.ca/artificial-intelligence-institute/",
+  },
+  {
+    title: "Université de Montreal",
+    logo: "u-de-m-logo.png",
+    link: "https://www.umontreal.ca/",
+  },
+];
+
 const LSpons1 = LandingSponsors.slice(0, LandingSponsors.length / 2 + 6);
 
 const PastSpeakers = [
@@ -206,6 +245,65 @@ const PastSpeakers = [
     titles: ["Manager of Technical Staff"],
     company: "Cohere",
     logo: "/logos/cohere-logo.png",
+  },
+];
+
+const CurrentSpeakers = [
+  {
+    name: "Ben Rossen",
+    headshot: "/headshots/ben-rossen.png",
+    titles: ["AI Policy & Regulation"],
+    company: "OpenAI",
+    logo: "/logos/open-ai-logo.png",
+  },
+  {
+    name: "Eddie Kim",
+    headshot: "/headshots/eddie-kim.png",
+    titles: ["Manager of Technical Staff"],
+    company: "Cohere",
+    logo: "/logos/cohere-logo.png",
+  },
+  {
+    name: "Ezequiel Lanza",
+    headshot: "/headshots/ezequiel-lanza.png",
+    titles: ["AI Open Source Evangelist"],
+    company: "Intel",
+    logo: "/logos/intel-logo.png",
+  },
+  {
+    name: "Dr. Ruslan Salakhutdinov",
+    headshot: "/headshots/ruslan.png",
+    titles: ["Ex-Director of AI Resarch"],
+    company: "Apple",
+    logo: "/logos/apple-logo.png",
+  },
+  {
+    name: "Patricia Arocena",
+    headshot: "/headshots/patricia-arocena.png",
+    titles: ["Head of Generative AI"],
+    company: "RBC",
+    logo: "/logos/rbc-logo.png",
+  },
+  {
+    name: "Chris Caira",
+    headshot: "/headshots/chris-caira.png",
+    titles: ["Senior Director"],
+    company: "EY Parthenon",
+    logo: "/logos/ey-parth-logo.png",
+  },
+  {
+    name: "Sam Talasila",
+    headshot: "/headshots/sam-talasila.png",
+    titles: ["Head of LLMs"],
+    company: "Wealthsimple",
+    logo: "/logos/wealthsimple-logo.png",
+  },
+  {
+    name: "Diego Magalhaes",
+    headshot: "/headshots/diego-magalhaes.png",
+    titles: ["Chief Technologist"],
+    company: "AWS",
+    logo: "/logos/aws-logo.png",
   },
 ];
 
@@ -346,6 +444,19 @@ const StudentPartners = [
     school: "Universitié de Montréal",
     instagram: "https://www.instagram.com/udem.ai/",
     website: "https://www.qmind.ca/",
+  },
+  {
+    name: "UTMIST",
+    logo: "/logos/utmist-logo.png",
+    school: "University of Toronto",
+    instagram: "https://www.instagram.com/uoft_utmist",
+    website: "https://utmist.gitlab.io/",
+  },
+  {
+    name: "Want to be a Student Partner for CUCAI 2025?",
+    school: "Email Us!",
+    instagram: "https://www.instagram.com/cuca2024/",
+    website: "mailto:chair@cucai.ca",
   },
 ];
 
@@ -491,53 +602,75 @@ export default function Home() {
           >
             KINGSTON, ON
           </BlurredText>
+          <BlurredText
+            className="hidden
+          lg:flex
+          text-cyan-300
+          text-[10pt]
+          md:text-[2vw]
+          xl:text-[1.2vw]
+          font-bold
+          tracking-[12px]
+          md:tracking-[18px]"
+          >
+            POWERED BY:
+          </BlurredText>
+          <a
+            className="w-3/4 lg:w-1/4 lg:pb-8 z-50 self-center"
+            href="https://www.yorku.ca/research/connected-minds/"
+          >
+            <img src="/logos/connected-minds-landing.png" />
+          </a>
         </div>
+
         <CountdownTimer />
-        <img className="lg:w-3/5 pt-8 z-50" src="/ontario-hall.png" />
+        <img className="lg:w-1/2 pt-8 z-50" src="/ontario-hall.png" />
       </div>
       <BlurredSeperator />
-      {/* LANDING SPONSORS TICKER */}
-      {/* <div className="w-full px-[7.5dvw] h-[100px]">
-        <div className="flex flex-row items-center h-fit overflow-scroll no-scrollbar divide-x-[1px] divide-[#55E0FF]/50">
-          {LandingSponsors.map((company, i) => (
-            <img
-              key={i}
-              alt={company.title}
-              src={`/logos/${company.logo}`}
-              className="object-fit h-[105px] px-16 py-8 flex items-center "
-            />
-          ))}
-        </div>
-      </div> */}
       <div className="flex flex-row divide-x-[1px] divide-[#55E0FF]/50">
         <div className="carousel-inner divide-x-[1px] divide-[#55E0FF]/50">
           {LSpons1.map((company, i) => (
-            <img
-              key={i}
-              alt={company.title}
-              src={`/logos/${company.logo}`}
-              className="object-fit h-[105px] px-16 py-8 flex items-center "
-            />
+            <a
+              className="h-[105px] px-16 py-8 flex items-center"
+              href={company.link}
+            >
+              <img
+                key={i}
+                alt={company.title}
+                src={`/logos/${company.logo}`}
+                className="object-fit w-full h-full"
+              />
+            </a>
           ))}
         </div>
         <div className="carousel-inner divide-x-[1px] divide-[#55E0FF]/50">
           {LSpons1.map((company, i) => (
-            <img
-              key={i}
-              alt={company.title}
-              src={`/logos/${company.logo}`}
-              className="object-fit h-[105px] px-16 py-8 flex items-center "
-            />
+            <a
+              className="h-[105px] px-16 py-8 flex items-center"
+              href={company.link}
+            >
+              <img
+                key={i}
+                alt={company.title}
+                src={`/logos/${company.logo}`}
+                className="object-fit w-full h-full"
+              />
+            </a>
           ))}
         </div>
         <div className="carousel-inner divide-x-[1px] divide-[#55E0FF]/50">
           {LSpons1.map((company, i) => (
-            <img
-              key={i}
-              alt={company.title}
-              src={`/logos/${company.logo}`}
-              className="object-fit h-[105px] px-16 py-8 flex items-center "
-            />
+            <a
+              className="h-[105px] px-16 py-8 flex items-center"
+              href={company.link}
+            >
+              <img
+                key={i}
+                alt={company.title}
+                src={`/logos/${company.logo}`}
+                className="object-fit w-full h-full"
+              />
+            </a>
           ))}
         </div>
       </div>
@@ -556,6 +689,90 @@ export default function Home() {
         </SectionTitle>
       </a>
       <BlurredSeperator blur="md" className="!border-[#FFC24B]" />
+      <div
+        id="Speakers"
+        className="flex flex-row divide-x-[1px] divide-y-[1px] sm:divide-y-[0px divide-[#55E0FF]/50"
+      >
+        <div className="invisible sm:visible cancel-carousel r-carousel-inner flex flex-col sm:flex-row items-center h-fit sm:overflow-scroll no-scrollbar sm:divide-x-[1px] divide-y-[1px] sm:divide-y-[0px] divide-[#55E0FF]/50">
+          {CurrentSpeakers.map((speaker, i) => (
+            <div
+              className="flex flex-col items-center py-8 justify-between px-16 gap-4 w-[85dvw] sm:min-w-[340px] sm:w-fit h-[350px]"
+              key={i}
+            >
+              <img
+                src={speaker.headshot}
+                alt={`Headshot of ${speaker.name}`}
+                className="h-[150px] rounded-full border-[#55E0FF]/50 border-[1px] object-cover bg-gradient-to-t from-[#55E0FF]/50 to-[#55E0FF]/0"
+              />
+              <div className="text-center">
+                <h3 className="text-2xl font-normal">{speaker.name}</h3>
+                {speaker.titles.map((title, i) => (
+                  <p className="text-sm" key={i}>
+                    {title}
+                  </p>
+                ))}
+              </div>
+              <img
+                src={speaker.logo}
+                className="w-[200px] h-[55px] object-contain"
+              />
+            </div>
+          ))}
+        </div>
+        <div className="cancel-carousel r-carousel-inner flex flex-col sm:flex-row items-center h-fit sm:overflow-scroll no-scrollbar sm:divide-x-[1px] divide-y-[1px] sm:divide-y-[0px] divide-[#55E0FF]/50">
+          {CurrentSpeakers.map((speaker, i) => (
+            <div
+              className="flex flex-col items-center py-8 justify-between px-16 gap-4 w-[85dvw] sm:min-w-[340px] sm:w-fit h-[350px]"
+              key={i}
+            >
+              <img
+                src={speaker.headshot}
+                alt={`Headshot of ${speaker.name}`}
+                className="h-[150px] rounded-full border-[#55E0FF]/50 border-[1px] object-cover bg-gradient-to-t from-[#55E0FF]/50 to-[#55E0FF]/0"
+              />
+              <div className="text-center">
+                <h3 className="text-2xl font-normal">{speaker.name}</h3>
+                {speaker.titles.map((title, i) => (
+                  <p className="text-sm" key={i}>
+                    {title}
+                  </p>
+                ))}
+              </div>
+              <img
+                src={speaker.logo}
+                className="w-[200px] h-[55px] object-contain"
+              />
+            </div>
+          ))}
+        </div>
+        <div className="invisible sm:visible cancel-carousel r-carousel-inner flex flex-col sm:flex-row items-center h-fit sm:overflow-scroll no-scrollbar sm:divide-x-[1px] divide-y-[1px] sm:divide-y-[0px] divide-[#55E0FF]/50">
+          {CurrentSpeakers.map((speaker, i) => (
+            <div
+              className="flex flex-col items-center py-8 justify-between px-16 gap-4 w-[85dvw] sm:min-w-[340px] sm:w-fit h-[350px]"
+              key={i}
+            >
+              <img
+                src={speaker.headshot}
+                alt={`Headshot of ${speaker.name}`}
+                className="h-[150px] rounded-full border-[#55E0FF]/50 border-[1px] object-cover bg-gradient-to-t from-[#55E0FF]/50 to-[#55E0FF]/0"
+              />
+              <div className="text-center">
+                <h3 className="text-2xl font-normal">{speaker.name}</h3>
+                {speaker.titles.map((title, i) => (
+                  <p className="text-sm" key={i}>
+                    {title}
+                  </p>
+                ))}
+              </div>
+              <img
+                src={speaker.logo}
+                className="w-[200px] h-[55px] object-contain"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+      <BlurredSeperator />
       {/* ABOUT */}
       <BlurredSeperator />
       <div
@@ -596,33 +813,10 @@ export default function Home() {
         </div>
       </div>
       {/* SPEAKERS */}
-      <BlurredSeperator />
+      {/* <BlurredSeperator />
       <SectionTitle>PAST SPEAKERS</SectionTitle>
-      <BlurredSeperator />
-      {/* <div id="Speakers" className="w-full px-[7.5dvw] ">
-        <div className="flex flex-col sm:flex-row items-center h-fit overflow-scroll no-scrollbar divide-x-[1px]  divide-y-[1px] divide-[#55E0FF]/50">
-          {PastSpeakers.map((speaker, i) => (
-            <div className="flex flex-col items-center py-8 justify-between px-16 gap-4 min-w-[340px] h-[350px]">
-              <img
-                src={speaker.headshot}
-                alt={`Headshot of ${speaker.name}`}
-                className="h-[150px] rounded-full border-[#55E0FF]/50 border-[1px] object-cover bg-gradient-to-t from-[#55E0FF]/50 to-[#55E0FF]/0"
-              />
-              <div className="text-center">
-                <h3 className="text-2xl font-normal">{speaker.name}</h3>
-                {speaker.titles.map((title) => (
-                  <p className="text-sm">{title}</p>
-                ))}
-              </div>
-              <img
-                src={speaker.logo}
-                className="w-[200px] h-[55px] object-contain"
-              />
-            </div>
-          ))}
-        </div>
-      </div> */}
-      <div
+      <BlurredSeperator /> */}
+      {/* <div
         id="Speakers"
         className="flex flex-row divide-x-[1px] divide-y-[1px] sm:divide-y-[0px divide-[#55E0FF]/50"
       >
@@ -704,8 +898,81 @@ export default function Home() {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
       {/* PROGRAMMING */}
+      <BlurredSeperator />
+      <SectionTitle>SPONSORS</SectionTitle>
+      <BlurredSeperator />
+      <div className="w-4/5 py-8 flex flex-col gap-6 justify-center">
+        <div className="flex flex-col gap-2">
+          <BlurredText
+            className="
+          text-cyan-300
+          text-[10pt]
+          md:text-[2vw]
+          xl:text-[1.2vw]
+          font-bold
+          tracking-[12px]
+          md:tracking-[18px]"
+          >
+            TITLE
+          </BlurredText>
+          <img
+            className="w-[520px] flex self-center"
+            src="/logos/connected-logo.png"
+          />
+        </div>
+        <div className="w-full flex flex-col gap-2">
+          <BlurredText
+            className="
+          text-cyan-300
+          text-[10pt]
+          md:text-[2vw]
+          xl:text-[1.2vw]
+          font-bold
+          tracking-[12px]
+          md:tracking-[18px]"
+          >
+            GOLD
+          </BlurredText>
+          <div className="w-full flex flex-row flex-wrap justify-center items-center gap-12">
+            <img className="lg:h-[128px]" src="/logos/ey-logo.png" />
+            <img className="lg:h-[96px]" src="/logos/redbit-logo.png" />
+            <img className="lg:h-[112px]" src="/logos/rsg-logo.png" />
+            <img className="lg:h-[96px]" src="/logos/cohere-logo.png" />
+          </div>
+        </div>
+        <div className="w-full flex flex-col gap-12">
+          <BlurredText
+            className="
+          text-cyan-300
+          text-[10pt]
+          md:text-[2vw]
+          xl:text-[1.2vw]
+          font-bold
+          tracking-[12px]
+          md:tracking-[18px]"
+          >
+            SUPPORTING FACULTIES
+          </BlurredText>
+          <div className="w-full flex flex-row flex-wrap justify-center items-center gap-12">
+            <img
+              className="lg:h-[64px]"
+              src="/logos/queens-computing-logo.png"
+            />
+            <img className="lg:h-[64px]" src="/logos/u-waterloo-logo.png" />
+            <img
+              className="lg:h-[64px]"
+              src="/logos/waterloo-ai-institute-logo.png"
+            />
+            <img
+              className="lg:h-[64px]"
+              src="/logos/smith-engineering-logo.png"
+            />
+            <img className="lg:h-[96px]" src="/logos/u-de-m-logo.png" />
+          </div>
+        </div>
+      </div>
       <BlurredSeperator />
       <SectionTitle>CUCAI 2024 SCHEDULE</SectionTitle>
       <BlurredSeperator />
