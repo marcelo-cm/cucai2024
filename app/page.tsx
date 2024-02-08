@@ -628,7 +628,7 @@ export default function Home() {
       </div>
       <BlurredSeperator />
       <div className="flex flex-row divide-x-[1px] divide-[#55E0FF]/50">
-        <div className="carousel-inner divide-x-[1px] divide-[#55E0FF]/50">
+        <div className="carousel-inner divide-x-[1px] z-50 divide-[#55E0FF]/50">
           {LSpons1.map((company, i) => (
             <a
               className="h-[105px] px-16 py-8 flex items-center"
@@ -643,7 +643,7 @@ export default function Home() {
             </a>
           ))}
         </div>
-        <div className="carousel-inner divide-x-[1px] divide-[#55E0FF]/50">
+        <div className="carousel-inner divide-x-[1px] z-40 divide-[#55E0FF]/50">
           {LSpons1.map((company, i) => (
             <a
               className="h-[105px] px-16 py-8 flex items-center"
