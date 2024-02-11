@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation';
 
 import { createClient } from '@/lib/supabase/actions';
 
+// Sign-in function
 export async function signin(formData: FormData) {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
@@ -17,14 +18,13 @@ export async function signin(formData: FormData) {
 
   const { error } = await supabase.auth.signInWithPassword(data);
 
-  if (error) {
-    redirect('/error');
-  }
+  if (error) throw new Error(error.message);
 
   revalidatePath('/', 'layout');
   redirect('/');
 }
 
+// Sign-up function
 export async function signup(formData: FormData) {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
@@ -46,6 +46,7 @@ export async function signup(formData: FormData) {
   redirect('/onboarding');
 }
 
+// Sign-out function
 export async function signout() {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
@@ -54,4 +55,16 @@ export async function signout() {
 
   revalidatePath('/', 'layout');
   redirect('/');
+}
+
+// Check if user is authenticated
+export async function checkAuth() {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error || !data?.user) {
+    redirect('/signin');
+  }
 }
