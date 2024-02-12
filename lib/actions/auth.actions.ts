@@ -21,7 +21,7 @@ export async function signin(formData: FormData) {
   if (error) throw new Error(error.message);
 
   revalidatePath('/', 'layout');
-  redirect('/');
+  redirect('/dashboard');
 }
 
 // Sign-up function
@@ -54,7 +54,7 @@ export async function signout() {
   await supabase.auth.signOut();
 
   revalidatePath('/', 'layout');
-  redirect('/dashboard');
+  redirect('/');
 }
 
 export async function checkAuth() {

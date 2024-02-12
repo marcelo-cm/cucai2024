@@ -67,3 +67,21 @@ export async function checkOnboarded() {
     redirect('/dashboard');
   }
 }
+
+export async function getUserDetails() {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
+  const userId = await getUserId();
+
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', userId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data[0];
+}

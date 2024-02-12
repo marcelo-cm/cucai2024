@@ -24,7 +24,7 @@ export default async function Dashboard() {
   const data = await getData();
 
   return (
-    <div className='flex grow flex-col gap-4 p-8 bg-white '>
+    <div className='flex grow flex-col gap-4 p-4 bg-white '>
       <h1 className='text-2xl font-bold'>My projects</h1>
       <DataTable
         columns={columns}
