@@ -15,48 +15,78 @@ export const navlinks = [
   },
 ];
 
-export const universities = [
-  {
-    value: 'other',
-    label: 'Other',
-  },
-  {
-    value: 'queensUniversity',
-    label: 'Queens University',
-  },
-  {
-    value: 'westernUniversity',
-    label: 'Western University',
-  },
-  {
-    value: 'universityOfToronto',
-    label: 'University of Toronto',
-  },
-  {
-    value: 'universityofWaterloo',
-    label: 'Waterloo University',
-  },
-];
+export const universitiesList = {
+  other: 'Other',
+  queensUniversity: 'Queens University',
+  westernUniversity: 'Western University',
+  universityOfToronto: 'University of Toronto',
+  universityofWaterloo: 'Waterloo University',
+};
 
-export const organizations = [
-  {
-    value: 'other',
-    label: 'Other',
-  },
-  {
-    value: 'qmind',
-    label: 'QMIND',
-  },
-  {
-    value: 'westernAI',
-    label: 'Western AI',
-  },
-  {
-    value: 'uoftAI',
-    label: 'UofT AI',
-  },
-  {
-    value: 'watAI',
-    label: 'WatAI',
-  },
-];
+export const organizationsList = {
+  other: 'Other',
+  qmind: 'QMIND',
+  westernAI: 'Western AI',
+  uoftAI: 'UofT AI',
+  watAI: 'WatAI',
+};
+
+export const onboardingForm = {
+  name: 'Onboarding Survey',
+  slug: 'onboarding-survey',
+  steps: [
+    {
+      title: 'Primary Details',
+      description: 'Please fill in your primary details',
+      fields: [
+        {
+          type: 'text',
+          id: 'firstName',
+          label: 'First Name',
+        },
+        {
+          type: 'text',
+          id: 'lastName',
+          label: 'Last Name',
+        },
+        {
+          type: 'text',
+          id: 'linkedin',
+          label: 'LinkedIn',
+        },
+      ],
+    },
+    {
+      title: 'More Details',
+      description: 'Please fill in your more details',
+      fields: [
+        {
+          type: 'select',
+          id: 'university',
+          label: 'University',
+          options: Object.entries(universitiesList).map(([key, value]) => ({
+            label: value,
+            value: key,
+          })),
+        },
+        {
+          type: 'select',
+          id: 'organization',
+          label: 'Organization / Club',
+          options: Object.entries(organizationsList).map(([key, value]) => ({
+            label: value,
+            value: key,
+          })),
+        },
+      ],
+    },
+  ],
+};
+
+export const onboardingFormDictionary = {
+  firstName: 'First Name',
+  lastName: 'Last Name',
+  linkedin: 'LinkedIn',
+  university: 'University',
+  organization: 'Organization / Club',
+};
