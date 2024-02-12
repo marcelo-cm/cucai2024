@@ -54,10 +54,9 @@ export async function signout() {
   await supabase.auth.signOut();
 
   revalidatePath('/', 'layout');
-  redirect('/');
+  redirect('/dashboard');
 }
 
-// Check if user is authenticated
 export async function checkAuth() {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
@@ -66,5 +65,21 @@ export async function checkAuth() {
 
   if (error || !data?.user) {
     redirect('/signin');
+  }
+
+  // CHECK IF USER HAS ONBOARDED
+  const userId = data.user.id;
+
+  const { data: onboardedData, error: onboardedError } = await supabase
+    .from('profiles')
+    .select('onboarded')
+    .eq('id', userId);
+
+  if (onboardedError) {
+    throw new Error(onboardedError.message);
+  }
+
+  if (!onboardedData?.[0]?.onboarded) {
+    redirect('/onboarding');
   }
 }

@@ -20,7 +20,7 @@ async function getData(): Promise<Payment[]> {
   ];
 }
 
-const Projects = async () => {
+export default async function Dashboard() {
   const data = await getData();
 
   return (
@@ -32,6 +32,4 @@ const Projects = async () => {
       />
     </div>
   );
-};
-
-export default Projects;
+}
