@@ -2,7 +2,6 @@
 
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 
 import { createClient } from '@/lib/supabase/actions';
 
@@ -24,6 +23,48 @@ export const paperSearch = async (search: string): Promise<any[]> => {
   if (error) throw new Error(error.message);
 
   return data;
+};
+
+interface EnrollPaperResponse {
+  error?: string;
+  message?: string;
+}
+
+export const enrollPaper = async (
+  paperId: number,
+  password: string,
+  userId: string
+): Promise<EnrollPaperResponse | void> => {
+  try {
+    const cookieStore = cookies();
+    const supabase = createClient(cookieStore);
+
+    const { data: passwordData, error: passwordError } = await supabase
+      .from('paperPasswords')
+      .select('password')
+      .eq('paperId', paperId)
+      .single();
+
+    if (passwordError) throw new Error(passwordError.message);
+
+    if (passwordData?.password !== password)
+      return { error: 'Invalid password' };
+
+    const { data: paperData, error: paperError } = await supabase
+      .from('paperProfiles')
+      .insert({
+        paperId: paperId,
+        userId: userId,
+      })
+      .select('*');
+
+    if (paperError) throw new Error(paperError.message);
+
+    revalidatePath('/dashboard');
+    return { message: 'Enrolled successfully' };
+  } catch (error) {
+    return { error: 'Failed to enroll in paper' };
+  }
 };
 
 export const uploadPaper = async (formData: FormData): Promise<void> => {
