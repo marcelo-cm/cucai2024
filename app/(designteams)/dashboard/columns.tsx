@@ -13,33 +13,33 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Payment = {
+export type Paper = {
   projectName: string;
   organization: string;
   uploadDate: string;
 };
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Paper>[] = [
   {
     accessorKey: 'projectName',
     header: 'Project Name',
   },
   {
-    accessorKey: 'organization',
-    header: 'Organization',
+    accessorKey: 'track',
+    header: 'Track',
   },
   {
     accessorKey: 'uploadDate',
     header: 'Upload date',
   },
   {
+    accessorKey: 'file',
+    header: 'File',
+  },
+  {
     id: 'actions',
-    header: 'Actions',
     cell: ({ row }) => {
       const project = row.original;
-
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -53,6 +53,7 @@ export const columns: ColumnDef<Payment>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem>Copy Password</DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(project.projectName)}
             >

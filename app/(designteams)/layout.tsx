@@ -1,5 +1,3 @@
-import NavigationBar from '@/components/designteam/NavigationBar';
-import Sidebar from '@/components/shared/Sidebar';
 import { checkAuth } from '@/lib/actions/auth.actions';
 
 export default async function Layout({
@@ -8,10 +6,5 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   await checkAuth();
-  return (
-    <section className='flex grow flex-col'>
-      <NavigationBar />
-      {children}
-    </section>
-  );
+  return <section className='flex grow flex-col'>{children}</section>;
 }

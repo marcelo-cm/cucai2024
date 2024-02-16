@@ -15,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import PaperDialog from '@/components/designteam/PaperDialog';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -67,12 +68,13 @@ export function DataTable<TData, TValue>({
               </TableRow>
             ))
           ) : (
-            <TableRow>
+            <TableRow className='flex items-center justify-center'>
               <TableCell
                 colSpan={columns.length}
-                className='h-24 text-center'
+                className='flex flex-col gap-4 h-24 text-center'
               >
-                No results.
+                You haven't uploaded a research paper or project yet.
+                <PaperDialog label='Upload a paper' />
               </TableCell>
             </TableRow>
           )}
