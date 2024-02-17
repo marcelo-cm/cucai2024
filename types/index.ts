@@ -1,3 +1,12 @@
+export interface Inputs {
+  [key: string]: string | File;
+}
+
+export interface MessageError {
+  error?: string;
+  message?: string;
+}
+
 export interface User {}
 
 export interface PaperPassword {

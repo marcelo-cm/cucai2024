@@ -1,5 +1,3 @@
-import React from 'react';
-
 // ----- COMPONENTS ----- //
 import {
   CardContent,
@@ -20,15 +18,13 @@ import renderField from '@/components/onboarding/RenderField';
 // ----- CONSTANTS ----- //
 import { paperCreationForm } from '@/constants';
 import { Loader2 } from 'lucide-react';
+import { Inputs } from '@/types';
+import { createPaper } from '@/lib/actions/general.actions';
 
 interface PaperCreationFormProps {
   currentStep: number;
   setCurrentStep: (value: number) => void;
   lastStep: number;
-}
-
-interface Inputs {
-  [key: string]: any;
 }
 
 export default function PaperCreationForm({
@@ -46,7 +42,17 @@ export default function PaperCreationForm({
   // SUBMIT FUNCTION
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setLoading(true);
-    // submit logic
+
+    // CREATING NEW FORM DATA OBJECT FOR FILE UPLOAD
+    const formData = new FormData();
+    Object.entries(data).forEach(([key, value]) => {
+      if (value instanceof File) {
+        formData.append(key, value);
+      } else {
+        formData.append(key, value as string);
+      }
+    });
+    await createPaper(formData);
     setLoading(false);
   };
 
@@ -103,7 +109,44 @@ export default function PaperCreationForm({
           </CardFooter>
         </>
       )}
-      {currentStep === lastStep && <>Done</>}
+      {currentStep === lastStep && (
+        <>
+          <CardHeader>
+            <CardTitle>Submission Summary</CardTitle>
+            <CardDescription>Verify all details are correct</CardDescription>
+          </CardHeader>
+          <CardContent className='grid gap-4'>
+            {Object.entries(formValues).map(([key, value]) => {
+              const isValidValue =
+                value &&
+                (!(value instanceof File) ||
+                  (value instanceof File && value.name));
+
+              return isValidValue ? (
+                <div
+                  key={key}
+                  className='flex flex-row items-center gap-4'
+                >
+                  <p className='font-bold text-sm'>{key}</p>
+                  <p className='text-sm'>
+                    {value instanceof File ? value.name : value}
+                  </p>
+                </div>
+              ) : null;
+            })}
+          </CardContent>
+          <CardFooter className='justify-between'>
+            <Button
+              type='submit'
+              className='w-full'
+              disabled={loading}
+            >
+              {loading && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
+              Submit
+            </Button>
+          </CardFooter>
+        </>
+      )}
     </form>
   );
 }
