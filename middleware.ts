@@ -1,5 +1,6 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
+import { checkOnboarded } from './lib/actions/user.actions';
 
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({
@@ -54,9 +55,25 @@ export async function middleware(request: NextRequest) {
     }
   );
 
+  const user = await supabase.auth.getUser();
+
+  // ONLY REDIRECT IF USER IS LOGGED IN AND NOT ON ONBOARDING PAGE, OTHERWISE INFINITE REDIRECT LOOP
+  if (user.data.user && request.nextUrl.pathname !== '/onboarding') {
+    const onboarded = await checkOnboarded(user.data.user.id);
+
+    if (!onboarded) {
+      return NextResponse.redirect(new URL('/onboarding', request.nextUrl));
+    }
+  }
+
+  // REDIRECT TO MARKETING PAGE IF THE USER IS NOT LOGGED IN
+  if (!user.data.user) {
+    return NextResponse.redirect(new URL('/', request.nextUrl));
+  }
+
   return response;
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  matcher: ['/onboarding', '/dashboard', '/dashboard/(.*)', '/paper-upload'],
 };

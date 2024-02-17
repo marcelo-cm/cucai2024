@@ -48,24 +48,16 @@ export async function getUserId() {
   return data.user.id;
 }
 
-export async function checkOnboarded() {
+export async function checkOnboarded(userId: string): Promise<boolean> {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
-
-  const userId = await getUserId();
 
   const { data, error } = await supabase
     .from('profiles')
     .select('onboarded')
     .eq('id', userId);
 
-  if (error) {
-    throw new Error(error.message);
-  }
-
-  if (data?.[0]?.onboarded) {
-    redirect('/dashboard');
-  }
+  return data?.[0].onboarded;
 }
 
 export async function getUserDetails() {
