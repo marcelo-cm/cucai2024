@@ -17,6 +17,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 // ----- FUNCTIONS ----- //
 import renderField from '@/components/onboarding/RenderField';
 import { updateUserProfile } from '@/lib/actions/user.actions';
+import { getUserId } from '@/lib/actions/user.actions';
 
 // ----- CONSTANTS ----- //
 import {
@@ -26,7 +27,6 @@ import {
   universitiesList,
 } from '@/constants';
 import { Loader2 } from 'lucide-react';
-import { getUserId } from '@/lib/actions/user.actions';
 
 interface OnboardingFormProps {
   currentStep: number;
