@@ -1,5 +1,3 @@
-import { IconNode } from 'lucide-react';
-
 export const navlinks = [
   {
     name: 'Projects',
@@ -89,4 +87,66 @@ export const onboardingFormDictionary = {
   linkedin: 'LinkedIn',
   university: 'University',
   organization: 'Organization / Club',
+};
+
+export const paperCreationForm = {
+  name: 'Paper Creation',
+  slug: 'paper-creation',
+  steps: [
+    {
+      title: 'Paper Details',
+      description: 'Please fill in your paper details',
+      fields: [
+        {
+          type: 'text',
+          id: 'title',
+          label: 'Title',
+        },
+        {
+          type: 'text',
+          id: 'abstract',
+          label: 'Abstract',
+        },
+      ],
+    },
+    {
+      title: 'More Details',
+      description: 'Please fill in your more details',
+      fields: [
+        {
+          type: 'select',
+          id: 'track',
+          label: 'Track',
+          options: [],
+        },
+        {
+          type: 'text',
+          id: 'url',
+          label: 'URL',
+        },
+      ],
+    },
+    {
+      title: 'More Details',
+      description: 'Please fill in your more details',
+      fields: [
+        {
+          type: 'upload',
+          id: 'pdf',
+          label: 'PDF',
+        },
+      ],
+    },
+    {
+      title: 'More Details',
+      description: 'Please fill in your more details',
+      fields: [
+        {
+          type: 'text',
+          id: 'password',
+          label: 'Password',
+        },
+      ],
+    },
+  ],
 };
