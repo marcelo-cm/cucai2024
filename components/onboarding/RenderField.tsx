@@ -94,5 +94,30 @@ export default function renderField(field: any, control: any) {
           )}
         />
       );
+
+    case 'upload':
+      return (
+        <Controller
+          control={control}
+          name={field.id}
+          rules={{ required: field.required }}
+          render={({ field: { onChange, onBlur, ref } }) => (
+            <div className='grid gap-2'>
+              <Label htmlFor={field.id}>{field.label}</Label>
+              <Input
+                type='file'
+                id={field.id}
+                onChange={(e) => {
+                  if (e.target.files) {
+                    onChange(e.target.files[0]);
+                  }
+                }}
+                onBlur={onBlur}
+                ref={ref}
+              />
+            </div>
+          )}
+        />
+      );
   }
 }
