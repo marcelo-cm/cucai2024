@@ -1,6 +1,7 @@
 // ----- COMPONENTS ----- //
-import { Input } from '@/components/ui/input';
 import { Label } from '../ui/label';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
@@ -20,7 +21,7 @@ export default function renderField(field: any, control: any) {
         <Controller
           control={control}
           name={field.id}
-          rules={{ required: true }}
+          rules={{ required: field.required }}
           render={({ field: { onChange, onBlur, value, ref } }) => (
             <div className='grid gap-2'>
               <Label htmlFor={field.id}>{field.label}</Label>
@@ -38,12 +39,34 @@ export default function renderField(field: any, control: any) {
         />
       );
 
+    case 'textarea':
+      return (
+        <Controller
+          control={control}
+          name={field.id}
+          rules={{ required: field.required }}
+          render={({ field: { onChange, onBlur, value, ref } }) => (
+            <div className='grid gap-2'>
+              <Label htmlFor={field.id}>{field.label}</Label>
+              <Textarea
+                id={field.id}
+                value={value || ''}
+                placeholder={'Your ' + field.label.toLowerCase()}
+                onChange={onChange}
+                onBlur={onBlur}
+                ref={ref}
+              />
+            </div>
+          )}
+        />
+      );
+
     case 'select':
       return (
         <Controller
           control={control}
           name={field.id}
-          rules={{ required: true }}
+          rules={{ required: field.required }}
           render={({ field: { onChange, value } }) => (
             <div className='grid gap-2'>
               <Label htmlFor={field.id}>{field.label}</Label>

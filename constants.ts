@@ -29,6 +29,8 @@ export const organizationsList = {
   watAI: 'WatAI',
 };
 
+// ONBOARDING FORM
+
 export const onboardingForm = {
   name: 'Onboarding Survey',
   slug: 'onboarding-survey',
@@ -41,16 +43,19 @@ export const onboardingForm = {
           type: 'text',
           id: 'firstName',
           label: 'First Name',
+          required: true,
         },
         {
           type: 'text',
           id: 'lastName',
           label: 'Last Name',
+          required: true,
         },
         {
           type: 'text',
           id: 'linkedin',
           label: 'LinkedIn',
+          required: false,
         },
       ],
     },
@@ -66,6 +71,7 @@ export const onboardingForm = {
             label: value,
             value: key,
           })),
+          required: true,
         },
         {
           type: 'select',
@@ -75,6 +81,7 @@ export const onboardingForm = {
             label: value,
             value: key,
           })),
+          required: true,
         },
       ],
     },
@@ -89,6 +96,16 @@ export const onboardingFormDictionary = {
   organization: 'Organization / Club',
 };
 
+export const paperTrackList = {
+  other: 'Other',
+  machineLearning: 'Machine Learning',
+  computerVision: 'Computer Vision',
+  naturalLanguageProcessing: 'Natural Language Processing',
+  robotics: 'Robotics',
+};
+
+// PAPER CREATION FORM
+
 export const paperCreationForm = {
   name: 'Paper Creation',
   slug: 'paper-creation',
@@ -101,11 +118,13 @@ export const paperCreationForm = {
           type: 'text',
           id: 'title',
           label: 'Title',
+          required: true,
         },
         {
-          type: 'text',
+          type: 'textarea',
           id: 'abstract',
           label: 'Abstract',
+          required: true,
         },
       ],
     },
@@ -117,12 +136,23 @@ export const paperCreationForm = {
           type: 'select',
           id: 'track',
           label: 'Track',
-          options: [],
+          options: Object.entries(paperTrackList).map(([key, value]) => ({
+            label: value,
+            value: key,
+          })),
+          required: true,
         },
         {
           type: 'text',
           id: 'url',
           label: 'URL',
+          required: false,
+        },
+        {
+          type: 'text',
+          id: 'doi',
+          label: 'DOI',
+          required: false,
         },
       ],
     },
@@ -134,6 +164,7 @@ export const paperCreationForm = {
           type: 'upload',
           id: 'pdf',
           label: 'PDF',
+          required: true,
         },
       ],
     },
@@ -145,6 +176,7 @@ export const paperCreationForm = {
           type: 'text',
           id: 'password',
           label: 'Password',
+          required: true,
         },
       ],
     },
