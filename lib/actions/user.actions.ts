@@ -5,10 +5,7 @@ import { redirect } from 'next/navigation';
 
 import { createClient } from '@/lib/supabase/actions';
 import { handleError } from '../utils';
-
-interface Inputs {
-  [key: string]: string;
-}
+import { Inputs } from '@/types';
 
 export const updateUserProfile = async (
   formData: Inputs,

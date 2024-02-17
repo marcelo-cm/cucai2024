@@ -27,15 +27,12 @@ import {
   universitiesList,
 } from '@/constants';
 import { Loader2 } from 'lucide-react';
+import { Inputs } from '@/types';
 
 interface OnboardingFormProps {
   currentStep: number;
   setCurrentStep: (value: number) => void;
   lastStep: number;
-}
-
-interface Inputs {
-  [key: string]: string;
 }
 
 export default function OnboardingForm({
@@ -54,7 +51,7 @@ export default function OnboardingForm({
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setLoading(true);
     const userId = await getUserId();
-    updateUserProfile(data, userId);
+    await updateUserProfile(data, userId);
     setLoading(false);
   };
 
