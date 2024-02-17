@@ -4,6 +4,8 @@ import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 
 import { createClient } from '@/lib/supabase/actions';
+import { MessageError } from '@/types';
+import { redirect } from 'next/navigation';
 
 export const paperSearch = async (search: string): Promise<any[]> => {
   const cookieStore = cookies();
@@ -25,16 +27,11 @@ export const paperSearch = async (search: string): Promise<any[]> => {
   return data;
 };
 
-interface EnrollPaperResponse {
-  error?: string;
-  message?: string;
-}
-
 export const enrollPaper = async (
   paperId: number,
   password: string,
   userId: string
-): Promise<EnrollPaperResponse | void> => {
+): Promise<MessageError | void> => {
   try {
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
@@ -67,38 +64,69 @@ export const enrollPaper = async (
   }
 };
 
-export const uploadPaper = async (formData: FormData): Promise<void> => {
-  try {
-    const cookieStore = cookies();
-    const supabase = createClient(cookieStore);
-    const paperDetails = {
-      title: formData.get('title') as string,
-      abstract: formData.get('abstract') as string,
-      paperFile: formData.get('file') as File,
-    };
-    if (!paperDetails.paperFile) throw new Error('No file provided');
+export const createPaper = async (
+  formData: FormData
+): Promise<MessageError | void> => {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
 
-    const fileName = `${paperDetails.title}-${Date.now()}.pdf`;
-    const { data: uploadData, error: uploadError } = await supabase.storage
-      .from('papers')
-      .upload(fileName, paperDetails.paperFile);
+  const fieldData = {
+    title: formData.get('title') as string,
+    abstract: formData.get('abstract') as string,
+    track: formData.get('track') as string,
+    url: formData.get('url') as string,
+    doi: formData.get('doi') as string,
+    pdf: formData.get('pdf') as File,
+    password: formData.get('password') as string,
+  };
 
-    const { data: fileUrlData } = await supabase.storage
-      .from('papers')
-      .getPublicUrl(fileName);
+  // UPLOAD THE FILE TO STORAGE
+  const fileName = `${new Date(Date.now()).getFullYear()}/${
+    fieldData.title
+  }-${Date.now()}.pdf`;
+  const { data: uploadData, error: uploadError } = await supabase.storage
+    .from('papers')
+    .upload(fileName, fieldData.pdf);
 
-    if (!fileUrlData) throw new Error('Failed to get public URL for the file');
+  if (uploadError) throw new Error(uploadError.message);
 
-    const fileUrl = fileUrlData.publicUrl;
+  // GET THE FILE URL
+  const { data: fileUrlData } = await supabase.storage
+    .from('papers')
+    .getPublicUrl(fileName);
 
-    const { data, error } = await supabase.from('papers').insert({
-      title: paperDetails.title,
-      abstract: paperDetails.abstract,
-      fileUrl: uploadData,
+  if (!fileUrlData) throw new Error('Failed to get public URL for the file');
+
+  const fileUrl = fileUrlData.publicUrl;
+
+  // CREATE PAPER ENTRY IN DATABASE
+  const { data: paperEntry, error: paperEntryError } = await supabase
+    .from('papers')
+    .insert({
+      title: fieldData.title,
+      abstract: fieldData.abstract,
+      track: fieldData.track,
+      url: fieldData.url,
+      doi: fieldData.doi,
+      fileUrl: fileUrl,
+    })
+    .select('*');
+
+  if (paperEntryError) throw new Error(paperEntryError.message);
+
+  const paperId = paperEntry[0].id;
+
+  // CREATE PASSWORD ENTRY IN DATABASE
+  const { data: passwordData, error: passwordError } = await supabase
+    .from('paperPasswords')
+    .insert({
+      paperId: paperId,
+      password: fieldData.password,
     });
 
-    // everything working, just need to clean this up and get the response to the user, redirecting them to the complete screen
-  } catch (error) {
-    console.error(error);
-  }
+  if (passwordError) throw new Error(passwordError.message);
+
+  revalidatePath('/dashboard');
+
+  redirect('/dashboard');
 };
