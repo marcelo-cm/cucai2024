@@ -6,8 +6,8 @@ import { redirect } from 'next/navigation';
 
 import { createClient } from '@/lib/supabase/actions';
 
-// Sign-in function
-export async function signin(formData: FormData) {
+// FUNCTION TO SIGN IN USER
+export async function signin(formData: FormData): Promise<void> {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
@@ -24,7 +24,7 @@ export async function signin(formData: FormData) {
   redirect('/dashboard');
 }
 
-// Sign-up function
+// FUNCTION TO SIGNUP USER
 export async function signup(formData: FormData) {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
@@ -46,7 +46,7 @@ export async function signup(formData: FormData) {
   redirect('/onboarding');
 }
 
-// Sign-out function
+// FUNCTION TO SIGN OUT USER
 export async function signout() {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
@@ -55,31 +55,4 @@ export async function signout() {
 
   revalidatePath('/', 'layout');
   redirect('/');
-}
-
-export async function checkAuth() {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
-
-  const { data, error } = await supabase.auth.getUser();
-
-  if (error || !data?.user) {
-    redirect('/signin');
-  }
-
-  // CHECK IF USER HAS ONBOARDED
-  const userId = data.user.id;
-
-  const { data: onboardedData, error: onboardedError } = await supabase
-    .from('profiles')
-    .select('onboarded')
-    .eq('id', userId);
-
-  if (onboardedError) {
-    throw new Error(onboardedError.message);
-  }
-
-  if (!onboardedData?.[0]?.onboarded) {
-    redirect('/onboarding');
-  }
 }

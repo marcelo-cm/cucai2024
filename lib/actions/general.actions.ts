@@ -4,10 +4,11 @@ import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 
 import { createClient } from '@/lib/supabase/actions';
-import { MessageError } from '@/types';
+import { MessageError, Paper } from '@/types';
 import { redirect } from 'next/navigation';
 
-export const paperSearch = async (search: string): Promise<any[]> => {
+// FUNCTION USED TO SEARCH FOR PAPERS DURING ENROLMENT
+export const paperSearch = async (search: string): Promise<Paper[]> => {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
@@ -27,14 +28,21 @@ export const paperSearch = async (search: string): Promise<any[]> => {
   return data;
 };
 
+// FUNCTION USED TO ENROLL IN EXISTING PAPER
 export const enrollPaper = async (
   paperId: number,
-  password: string,
-  userId: string
+  password: string
 ): Promise<MessageError | void> => {
   try {
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
+
+    const { data: userData, error: userError } =
+      await supabase.auth.getSession();
+
+    if (!userData || userError) throw new Error('User not found');
+
+    const userId = userData.session?.user.id;
 
     const { data: passwordData, error: passwordError } = await supabase
       .from('paperPasswords')
@@ -64,19 +72,12 @@ export const enrollPaper = async (
   }
 };
 
+// FUNCTION USED TO CREATE THE PAPER
 export const createPaper = async (
   formData: FormData
 ): Promise<MessageError | void> => {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
-
-  // GET USER ID
-
-  const { data: userData, error: userError } = await supabase.auth.getSession();
-
-  if (!userData) throw new Error('User not found');
-
-  const userId = userData.session?.user.id;
 
   const fieldData = {
     title: formData.get('title') as string,
@@ -87,6 +88,14 @@ export const createPaper = async (
     pdf: formData.get('pdf') as File,
     password: formData.get('password') as string,
   };
+
+  // GET USER ID
+
+  const { data: userData, error: userError } = await supabase.auth.getSession();
+
+  if (!userData || userError) throw new Error('User not found');
+
+  const userId = userData.session?.user.id;
 
   // UPLOAD THE FILE TO STORAGE
   const fileName = `${new Date(Date.now()).getFullYear()}/${
@@ -150,4 +159,35 @@ export const createPaper = async (
   revalidatePath('/dashboard');
 
   redirect('/dashboard');
+};
+
+// FUNCTION TO GET ALL PAPERS BY USER
+
+export const getPapersByUser = async (): Promise<Paper[]> => {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
+  const { data: userData, error: userError } = await supabase.auth.getSession();
+
+  if (!userData || userError) throw new Error('User not found');
+
+  const userId = userData.session?.user.id;
+
+  const { data, error } = await supabase
+    .from('paperProfiles')
+    .select('paperId')
+    .eq('userId', userId);
+
+  if (error) throw new Error(error.message);
+
+  const paperIds = data.map((paper) => paper.paperId);
+
+  const { data: paperData, error: paperError } = await supabase
+    .from('papers')
+    .select('*')
+    .in('id', paperIds);
+
+  if (paperError) throw new Error(paperError.message);
+
+  return paperData;
 };

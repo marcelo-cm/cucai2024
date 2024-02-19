@@ -5,14 +5,17 @@ import { redirect } from 'next/navigation';
 
 import { createClient } from '@/lib/supabase/actions';
 import { handleError } from '../utils';
-import { Inputs } from '@/types';
+import { Inputs, User } from '@/types';
 
-export const updateUserProfile = async (
-  formData: Inputs,
-  userId: string
-): Promise<any> => {
+export const updateUserProfile = async (formData: Inputs): Promise<any> => {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
+
+  const { data: userData, error: userError } = await supabase.auth.getSession();
+
+  if (!userData || userError) throw new Error('User not found');
+
+  const userId = userData.session?.user.id;
 
   const { data, error } = await supabase
     .from('profiles')
@@ -45,9 +48,15 @@ export async function getUserId() {
   return data.user.id;
 }
 
-export async function checkOnboarded(userId: string): Promise<boolean> {
+export async function checkOnboarded(): Promise<boolean> {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
+
+  const { data: userData, error: userError } = await supabase.auth.getSession();
+
+  if (!userData || userError) throw new Error('User not found');
+
+  const userId = userData.session?.user.id;
 
   const { data, error } = await supabase
     .from('profiles')
@@ -57,7 +66,7 @@ export async function checkOnboarded(userId: string): Promise<boolean> {
   return data?.[0].onboarded;
 }
 
-export async function getUserDetails() {
+export async function getUserDetails(): Promise<User> {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
@@ -68,9 +77,7 @@ export async function getUserDetails() {
     .select('*')
     .eq('id', userId);
 
-  if (error) {
-    throw new Error(error.message);
-  }
+  if (error) throw new Error(error.message);
 
   return data[0];
 }
