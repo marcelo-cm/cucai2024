@@ -70,6 +70,14 @@ export const createPaper = async (
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
+  // GET USER ID
+
+  const { data: userData, error: userError } = await supabase.auth.getSession();
+
+  if (!userData) throw new Error('User not found');
+
+  const userId = userData.session?.user.id;
+
   const fieldData = {
     title: formData.get('title') as string,
     abstract: formData.get('abstract') as string,
@@ -122,9 +130,22 @@ export const createPaper = async (
     .insert({
       paperId: paperId,
       password: fieldData.password,
-    });
+    })
+    .select('*');
 
   if (passwordError) throw new Error(passwordError.message);
+
+  // ADD USER TO PAPER PROFILES TABLE
+
+  const { data: paperProfileData, error: paperProfileError } = await supabase
+    .from('paperProfiles')
+    .insert({
+      paperId: paperId,
+      userId: userId,
+    })
+    .select('*');
+
+  if (paperProfileError) throw new Error(paperProfileError.message);
 
   revalidatePath('/dashboard');
 
