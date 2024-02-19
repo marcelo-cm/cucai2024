@@ -66,9 +66,9 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // REDIRECT TO MARKETING PAGE IF THE USER IS NOT LOGGED IN
+  // REDIRECT TO SIGN IN PAGE IF THE USER IS NOT LOGGED IN
   if (!user.data.user) {
-    return NextResponse.redirect(new URL('/', request.nextUrl));
+    return NextResponse.redirect(new URL('/signin', request.nextUrl));
   }
 
   return response;
