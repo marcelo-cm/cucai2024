@@ -21,7 +21,6 @@ import { Paper } from '@/types';
 import { useRouter } from 'next/navigation';
 import { Label } from '../ui/label';
 import CardBanner from '../shared/CardBanner';
-import { getUserId } from '@/lib/actions/user.actions';
 
 interface PaperEnrolmentProps {
   setOpen: (open: boolean) => void;
@@ -52,12 +51,8 @@ const PaperEnrolment = ({ setOpen }: PaperEnrolmentProps) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const userId = await getUserId();
-    const response = await enrollPaper(
-      selectedPaper?.id || 0,
-      password,
-      userId
-    );
+
+    const response = await enrollPaper(selectedPaper?.id || 0, password);
     if (response?.error) {
       setSuccess(false);
       setError(response.error);

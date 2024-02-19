@@ -10,28 +10,34 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { signout } from '@/lib/actions/auth.actions';
+import { User } from '@/types';
 import Link from 'next/link';
 
-export default function NavUserDropdown({ user }: any) {
-  const signoutUser = async () => {
-    await signout();
-  };
+interface NavUserDropdownProps {
+  user: User;
+}
+
+export default function NavUserDropdown({ user }: NavUserDropdownProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar>
           <AvatarImage
-            src='https://github.com/shadcn.png'
+            src={user?.avatar}
             alt={user.firstName + "'s profile picture"}
           />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarFallback>
+            {user?.firstName?.[0] + user?.lastName?.[0]}
+          </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Profile</DropdownMenuItem>
-        <DropdownMenuItem onClick={signoutUser}>Sign out</DropdownMenuItem>
+        <DropdownMenuItem onClick={async () => await signout()}>
+          Sign out
+        </DropdownMenuItem>
 
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
