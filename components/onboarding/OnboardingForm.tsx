@@ -17,7 +17,6 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 // ----- FUNCTIONS ----- //
 import renderField from '@/components/onboarding/RenderField';
 import { updateUserProfile } from '@/lib/actions/user.actions';
-import { getUserId } from '@/lib/actions/user.actions';
 
 // ----- CONSTANTS ----- //
 import {
@@ -50,8 +49,7 @@ export default function OnboardingForm({
   // SUBMIT FUNCTION
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setLoading(true);
-    const userId = await getUserId();
-    await updateUserProfile(data, userId);
+    await updateUserProfile(data);
     setLoading(false);
   };
 

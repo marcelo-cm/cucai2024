@@ -7,7 +7,18 @@ export interface MessageError {
   message?: string;
 }
 
-export interface User {}
+export interface User {
+  id: string;
+  createdAt: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  avatar: string;
+  linkedIn: string;
+  university: string;
+  organization: string;
+  onboarded: boolean;
+}
 
 export interface PaperPassword {
   id: number;
@@ -20,6 +31,7 @@ export interface Paper {
   id: number;
   createdAt: string;
   title: string;
+  track: string;
   abstract: string;
   doi: string;
   url: string;

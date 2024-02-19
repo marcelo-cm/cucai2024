@@ -1,29 +1,14 @@
 import React from 'react';
 
-import { Paper, columns } from './columns';
+import { columns } from './columns';
 
 import { DataTable } from './data-table';
-
-async function getData(): Promise<Paper[]> {
-  // Fetch data from your API here.
-  return [
-    // {
-    //   projectName: 'Project 1',
-    //   track: 'Track 1',
-    //   organization: 'Organization 1',
-    //   uploadDate: '2022-01-01',
-    // },
-    // {
-    //   projectName: 'Project 2',
-    //   track: 'Track 2',
-    //   organization: 'Organization 2',
-    //   uploadDate: '2022-01-02',
-    // },
-  ];
-}
+import { getPapersByUser } from '@/lib/actions/general.actions';
 
 export default async function Dashboard() {
-  const data = await getData();
+  const data = await getPapersByUser();
+
+  console.log(data);
 
   return (
     <div className='flex grow flex-col gap-4 p-4 bg-white'>
