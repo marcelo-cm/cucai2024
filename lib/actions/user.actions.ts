@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 
 import { createClient } from '@/lib/supabase/actions';
 import { handleError } from '../utils';
-import { Inputs, User } from '@/types';
+import { Inputs, MessageError, User } from '@/types';
 
 export const updateUserProfile = async (formData: Inputs): Promise<any> => {
   const cookieStore = cookies();
@@ -22,7 +22,7 @@ export const updateUserProfile = async (formData: Inputs): Promise<any> => {
     .update({
       firstName: formData.firstName as string,
       lastName: formData.lastName as string,
-      linkedIn: formData.linkedin as string,
+      linkedIn: formData.linkedIn as string,
       university: formData.university as string,
       organization: formData.organization as string,
       onboarded: true,
@@ -80,4 +80,44 @@ export async function getUserDetails(): Promise<User> {
   if (error) throw new Error(error.message);
 
   return data[0];
+}
+
+export async function updateUserDetails(
+  formData: FormData
+): Promise<MessageError> {
+  try {
+    const cookieStore = cookies();
+    const supabase = createClient(cookieStore);
+
+    // FUNCTION TO GET USER ID
+    const { data: userData, error: userError } =
+      await supabase.auth.getSession();
+
+    if (!userData || userError) throw new Error('User not found');
+
+    const userId = userData.session?.user.id;
+
+    // EXTRACTING FORM DATA
+    const userFormData = {
+      firstName: formData.get('firstName') as string,
+      lastName: formData.get('lastName') as string,
+      linkedIn: formData.get('linkedIn') as string,
+      university: formData.get('university') as string,
+      organization: formData.get('organization') as string,
+    };
+
+    // UPDATING USER PROFILE
+    const { data, error } = await supabase
+      .from('profiles')
+      .update(userFormData)
+      .eq('id', userId)
+      .select('*');
+
+    if (error) throw new Error(error.message);
+
+    return { message: 'Profile updated successfully' };
+  } catch (error: any) {
+    handleError(error);
+    return { message: error.message };
+  }
 }

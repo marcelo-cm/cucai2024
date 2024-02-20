@@ -13,6 +13,8 @@ import { signout } from '@/lib/actions/auth.actions';
 import { User } from '@/types';
 import Link from 'next/link';
 
+import ProfileDialog from './ProfileDialog';
+
 interface NavUserDropdownProps {
   user: User;
 }
@@ -34,7 +36,7 @@ export default function NavUserDropdown({ user }: NavUserDropdownProps) {
       <DropdownMenuContent>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Profile</DropdownMenuItem>
+        <ProfileDialog />
         <DropdownMenuItem onClick={async () => await signout()}>
           Sign out
         </DropdownMenuItem>

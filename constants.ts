@@ -53,7 +53,7 @@ export const onboardingForm = {
         },
         {
           type: 'text',
-          id: 'linkedin',
+          id: 'linkedIn',
           label: 'LinkedIn',
           required: false,
         },
