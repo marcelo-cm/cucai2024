@@ -98,9 +98,10 @@ export const createPaper = async (
   const userId = userData.session?.user.id;
 
   // UPLOAD THE FILE TO STORAGE
-  const fileName = `${new Date(Date.now()).getFullYear()}/${
-    fieldData.title
-  }-${Date.now()}.pdf`;
+  const fileName = `${new Date(Date.now()).getFullYear()}/${fieldData.title
+    .replace(/\s+/g, '')
+    .toLowerCase()}-${Date.now()}.pdf`;
+
   const { data: uploadData, error: uploadError } = await supabase.storage
     .from('papers')
     .upload(fileName, fieldData.pdf);
@@ -263,8 +264,52 @@ export const updatePaper = async (
       if (updateFileError) throw new Error(updateFileError.message);
     }
 
+    revalidatePath('/dashboard');
+
     return { message: 'Paper updated successfully' };
   } catch (error: any) {
+    return { error: error.message };
+  }
+};
+
+// FUNCTION TO DELETE PAPER
+export const deletePaper = async (paperId: number): Promise<MessageError> => {
+  try {
+    const cookieStore = cookies();
+    const supabase = createClient(cookieStore);
+
+    const { data: paperData, error: paperError } = await supabase
+      .from('papers')
+      .select('fileUrl')
+      .eq('id', paperId)
+      .single();
+
+    if (paperError) throw new Error(paperError.message);
+
+    const fileUrl = new URL(paperData.fileUrl);
+
+    // DELETE PAPER ENTRY FROM TABLE
+    const { data, error } = await supabase
+      .from('papers')
+      .delete()
+      .eq('id', paperId);
+
+    if (error) throw new Error(error.message);
+
+    // DELETE FILE FROM STORAGE
+    const parsedUrl = `${fileUrl.pathname.split('/papers/')[1]}`;
+
+    const { data: fileData, error: fileError } = await supabase.storage
+      .from('papers')
+      .remove([parsedUrl]);
+
+    if (fileError) throw new Error(fileError.message);
+
+    revalidatePath('/dashboard');
+
+    return { message: 'Paper deleted successfully' };
+  } catch (error: any) {
+    console.log(error);
     return { error: error.message };
   }
 };

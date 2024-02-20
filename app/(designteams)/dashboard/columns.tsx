@@ -19,7 +19,7 @@ import { FileText, MoreHorizontal } from 'lucide-react';
 // ----- FUNCTIONS ----- //
 import { formatDate } from '@/lib/utils';
 import EditPaperDialog from '@/components/designteam/EditPaperDialog';
-import { getPasswordByPaper } from '@/lib/actions/general.actions';
+import { deletePaper, getPasswordByPaper } from '@/lib/actions/general.actions';
 
 // ----- CONSTANTS ----- //
 import { Paper } from '@/types';
@@ -82,7 +82,6 @@ export const columns: ColumnDef<Paper>[] = [
         getPaperPassWord(paper?.id);
       }, [paper]);
 
-      // const paperPassword = await getPassword(paper.id);
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -104,7 +103,7 @@ export const columns: ColumnDef<Paper>[] = [
             <DropdownMenuItem
               onClick={() =>
                 navigator.clipboard.writeText(
-                  `https://cucai.ca/paper/${paper?.id}`
+                  `https://cucai.ca/papers/${paper?.id}`
                 )
               }
             >
@@ -112,7 +111,11 @@ export const columns: ColumnDef<Paper>[] = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <EditPaperDialog paper={paper} />
-            <DropdownMenuItem>Delete</DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={async () => await deletePaper(paper?.id)}
+            >
+              Delete
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
