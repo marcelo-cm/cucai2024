@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { uploadPaper } from '@/lib/actions/general.actions';
+import { createPaper } from '@/lib/actions/general.actions';
 
 const PaperCreation = () => {
   const [paperFile, setPaperFile] = useState<File>();
@@ -26,7 +26,7 @@ const PaperCreation = () => {
     formData.append('file', paperFile as Blob);
     formData.append('title', paperDetails.title);
     formData.append('abstract', paperDetails.abstract);
-    const response = await uploadPaper(formData);
+    const response = await createPaper(formData);
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
