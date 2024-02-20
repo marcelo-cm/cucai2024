@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 
 import { createClient } from '@/lib/supabase/actions';
-import { MessageError, Paper } from '@/types';
+import { Inputs, MessageError, Paper } from '@/types';
 import { redirect } from 'next/navigation';
 
 // FUNCTION USED TO SEARCH FOR PAPERS DURING ENROLMENT
@@ -190,4 +190,81 @@ export const getPapersByUser = async (): Promise<Paper[]> => {
   if (paperError) throw new Error(paperError.message);
 
   return paperData;
+};
+
+// FUNCTION TO GET PAPER PASSWORD
+export const getPasswordByPaper = async (
+  paperId: number
+): Promise<string | MessageError> => {
+  try {
+    const cookieStore = cookies();
+    const supabase = createClient(cookieStore);
+
+    const { data, error } = await supabase
+      .from('paperPasswords')
+      .select('password')
+      .eq('paperId', paperId)
+      .single();
+
+    if (error) throw new Error(error.message);
+
+    return data.password;
+  } catch (error: any) {
+    return { error: error.message };
+  }
+};
+
+// FUNCTION TO UPDATE PAPER DETAILS
+export const updatePaper = async (
+  formData: FormData
+): Promise<MessageError> => {
+  try {
+    const cookieStore = cookies();
+    const supabase = createClient(cookieStore);
+
+    // CONSTRUCT FIELD DATA OBJECT WITH ALL NON-EMPTY FIELDS
+    const fieldData = Array.from(formData.entries()).reduce(
+      (acc, [key, value]) => {
+        if (
+          value !== null &&
+          value !== undefined &&
+          value !== '' &&
+          key !== 'pdf'
+        ) {
+          acc[key] = value;
+        }
+        return acc;
+      },
+      {} as Inputs
+    );
+
+    const { data, error } = await supabase
+      .from('papers')
+      .update(fieldData)
+      .eq('id', fieldData.id)
+      .select('*')
+      .single();
+
+    if (error) throw new Error(error.message);
+
+    // CHECK IF THERE IS A FILE TO UPLOAD
+    if (formData && (formData.get('pdf') as File)) {
+      const fileUrl = new URL(data.fileUrl);
+      const parsedUrl = `${fileUrl.pathname.split('/papers/')[1]}`;
+
+      const { data: updateFileData, error: updateFileError } =
+        await supabase.storage
+          .from('papers')
+          .update(parsedUrl, formData.get('pdf') as File, {
+            cacheControl: '3600',
+            upsert: true,
+          });
+
+      if (updateFileError) throw new Error(updateFileError.message);
+    }
+
+    return { message: 'Paper updated successfully' };
+  } catch (error: any) {
+    return { error: error.message };
+  }
 };

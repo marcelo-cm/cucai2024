@@ -28,7 +28,7 @@ export default function renderField(field: any, control: any) {
               <Input
                 type='text'
                 id={field.id}
-                value={value || ''}
+                value={(value !== 'undefined' && value) || ''}
                 placeholder={'Your ' + field.label.toLowerCase()}
                 onChange={onChange}
                 onBlur={onBlur}
@@ -50,7 +50,7 @@ export default function renderField(field: any, control: any) {
               <Label htmlFor={field.id}>{field.label}</Label>
               <Textarea
                 id={field.id}
-                value={value || ''}
+                value={(value !== 'undefined' && value) || ''}
                 placeholder={'Your ' + field.label.toLowerCase()}
                 onChange={onChange}
                 onBlur={onBlur}

@@ -48,15 +48,9 @@ export async function getUserId() {
   return data.user.id;
 }
 
-export async function checkOnboarded(): Promise<boolean> {
+export async function checkOnboarded(userId: string): Promise<boolean> {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
-
-  const { data: userData, error: userError } = await supabase.auth.getSession();
-
-  if (!userData || userError) throw new Error('User not found');
-
-  const userId = userData.session?.user.id;
 
   const { data, error } = await supabase
     .from('profiles')

@@ -157,8 +157,8 @@ export const paperCreationForm = {
       ],
     },
     {
-      title: 'More Details',
-      description: 'Please fill in your more details',
+      title: 'File upload',
+      description: 'Please upload your paper in PDF format',
       fields: [
         {
           type: 'upload',
@@ -169,8 +169,9 @@ export const paperCreationForm = {
       ],
     },
     {
-      title: 'More Details',
-      description: 'Please fill in your more details',
+      title: 'Set a password',
+      description:
+        'Please set a password so your team members can join the submission',
       fields: [
         {
           type: 'text',

@@ -1,8 +1,9 @@
 'use client';
-
+// ----- HOOKS ----- //
+import { useEffect, useState } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
-import { FileText, MoreHorizontal } from 'lucide-react';
 
+// ----- COMPONENTS ----- //
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,9 +13,16 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { Paper } from '@/types';
 import Link from 'next/link';
+import { FileText, MoreHorizontal } from 'lucide-react';
+
+// ----- FUNCTIONS ----- //
 import { formatDate } from '@/lib/utils';
+import EditPaperDialog from '@/components/designteam/EditPaperDialog';
+import { getPasswordByPaper } from '@/lib/actions/general.actions';
+
+// ----- CONSTANTS ----- //
+import { Paper } from '@/types';
 import { paperTrackList } from '@/constants';
 
 export const columns: ColumnDef<Paper>[] = [
@@ -62,7 +70,19 @@ export const columns: ColumnDef<Paper>[] = [
   {
     id: 'actions',
     cell: ({ row }) => {
-      const project = row.original;
+      const paper = row.original;
+      const [password, setPassword] = useState<string | null>(null);
+
+      useEffect(() => {
+        const getPaperPassWord = async (id: number) => {
+          const password = await getPasswordByPaper(paper?.id);
+          setPassword(typeof password === 'string' ? password : null);
+        };
+
+        getPaperPassWord(paper?.id);
+      }, [paper]);
+
+      // const paperPassword = await getPassword(paper.id);
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -76,14 +96,22 @@ export const columns: ColumnDef<Paper>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Copy Password</DropdownMenuItem>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(project.title)}
+              onClick={() => navigator.clipboard.writeText(password || '')}
+            >
+              Copy Password
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() =>
+                navigator.clipboard.writeText(
+                  `https://cucai.ca/paper/${paper?.id}`
+                )
+              }
             >
               Share Link
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Edit</DropdownMenuItem>
+            <EditPaperDialog paper={paper} />
             <DropdownMenuItem>Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
