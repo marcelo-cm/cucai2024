@@ -14,6 +14,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  TableFooter,
 } from '@/components/ui/table';
 import PaperDialog from '@/components/designteam/PaperDialog';
 
@@ -53,33 +54,30 @@ export function DataTable<TData, TValue>({
             </TableRow>
           ))}
         </TableHeader>
+
         <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && 'selected'}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
-          ) : (
-            <TableRow className='flex items-center justify-center'>
-              <TableCell
-                colSpan={columns.length}
-                className='flex flex-col gap-4 h-24 text-center'
-              >
-                You haven't uploaded a research paper or project yet.
-                <PaperDialog label='Upload a paper' />
-              </TableCell>
+          {table.getRowModel().rows.map((row) => (
+            <TableRow
+              key={row.id}
+              data-state={row.getIsSelected() && 'selected'}
+            >
+              {row.getVisibleCells().map((cell) => (
+                <TableCell key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </TableCell>
+              ))}
             </TableRow>
-          )}
+          ))}
         </TableBody>
       </Table>
+      {table.getRowModel().rows?.length === 0 ? (
+        <div className='w-full flex grow items-center justify-center py-20'>
+          <div className='flex  flex-col gap-4 h-24 text-center'>
+            You haven't uploaded a research paper or project yet.
+            <PaperDialog label='Upload a paper' />
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
