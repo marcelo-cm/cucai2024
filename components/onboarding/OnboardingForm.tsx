@@ -13,10 +13,11 @@ import { Button } from '../ui/button';
 // ----- HOOKS ----- //
 import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 
 // ----- FUNCTIONS ----- //
 import renderField from '@/components/onboarding/RenderField';
-import { updateUserProfile } from '@/lib/actions/user.actions';
+import { updateUserDetails } from '@/lib/actions/user.actions';
 
 // ----- CONSTANTS ----- //
 import {
@@ -27,6 +28,7 @@ import {
 } from '@/constants';
 import { Loader2 } from 'lucide-react';
 import { Inputs } from '@/types';
+import CardBanner from '../shared/CardBanner';
 
 interface OnboardingFormProps {
   currentStep: number;
@@ -41,15 +43,36 @@ export default function OnboardingForm({
 }: OnboardingFormProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [completedStep, setCompletedStep] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
 
   // FORM
   const { control, handleSubmit, watch, trigger } = useForm();
   const formValues = watch();
 
+  // ROUTER
+  const router = useRouter();
+
   // SUBMIT FUNCTION
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setLoading(true);
-    await updateUserProfile(data);
+
+    // CREATING NEW FORM DATA OBJECT FOR FILE UPLOAD
+    const formData = new FormData();
+    Object.entries(data).forEach(([key, value]) => {
+      if (value instanceof File) {
+        formData.append(key, value);
+      } else {
+        formData.append(key, value as string);
+      }
+    });
+
+    const response = await updateUserDetails(formData);
+
+    if (response?.message) {
+      router.push('/dashboard');
+    } else if (response?.error) {
+      setError(response?.error);
+    }
     setLoading(false);
   };
 
@@ -113,6 +136,12 @@ export default function OnboardingForm({
             <CardDescription>Verify all details are correct</CardDescription>
           </CardHeader>
           <CardContent className='grid gap-4'>
+            {error && (
+              <CardBanner
+                message={error}
+                type='error'
+              />
+            )}
             {Object.entries(formValues).map(([key, value]) => (
               <div
                 key={key}

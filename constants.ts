@@ -91,7 +91,7 @@ export const onboardingForm = {
 export const onboardingFormDictionary = {
   firstName: 'First Name',
   lastName: 'Last Name',
-  linkedin: 'LinkedIn',
+  linkedIn: 'LinkedIn',
   university: 'University',
   organization: 'Organization / Club',
 };

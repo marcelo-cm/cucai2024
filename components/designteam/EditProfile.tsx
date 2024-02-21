@@ -1,5 +1,8 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+
 import {
   DialogContent,
   DialogDescription,
@@ -7,15 +10,18 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { onboardingForm } from '@/constants';
-
-import { useForm, SubmitHandler } from 'react-hook-form';
-import renderField from '../onboarding/RenderField';
 import { Button } from '../ui/button';
-import { getUserDetails, updateUserDetails } from '@/lib/actions/user.actions';
-import { Inputs } from '@/types';
-import { useEffect, useState } from 'react';
 import CardBanner from '../shared/CardBanner';
+
+import renderField from '../onboarding/RenderField';
+import {
+  deleteUser,
+  getUserDetails,
+  updateUserDetails,
+} from '@/lib/actions/user.actions';
+
+import { onboardingForm } from '@/constants';
+import { Inputs } from '@/types';
 
 interface EditProfileProps {
   setOpen: (open: boolean) => void;
@@ -85,6 +91,12 @@ export default function EditProfile({ setOpen }: EditProfileProps) {
         </div>
 
         <DialogFooter>
+          <Button
+            onClick={async () => await deleteUser()}
+            variant='destructive'
+          >
+            Delete account
+          </Button>
           <Button onClick={() => handleSubmit(onSubmit)()}>Save</Button>
         </DialogFooter>
       </DialogContent>

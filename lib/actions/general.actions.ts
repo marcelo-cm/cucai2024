@@ -309,7 +309,6 @@ export const deletePaper = async (paperId: number): Promise<MessageError> => {
 
     return { message: 'Paper deleted successfully' };
   } catch (error: any) {
-    console.log(error);
     return { error: error.message };
   }
 };
