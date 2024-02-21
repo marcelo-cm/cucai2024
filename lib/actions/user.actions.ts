@@ -4,36 +4,8 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { createClient } from '@/lib/supabase/actions';
-import { handleError } from '../utils';
 import { Inputs, MessageError, User } from '@/types';
-
-export const updateUserProfile = async (formData: Inputs): Promise<any> => {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
-
-  const { data: userData, error: userError } = await supabase.auth.getSession();
-
-  if (!userData || userError) throw new Error('User not found');
-
-  const userId = userData.session?.user.id;
-
-  const { data, error } = await supabase
-    .from('profiles')
-    .update({
-      firstName: formData.firstName as string,
-      lastName: formData.lastName as string,
-      linkedIn: formData.linkedIn as string,
-      university: formData.university as string,
-      organization: formData.organization as string,
-      onboarded: true,
-    })
-    .eq('id', userId)
-    .select();
-
-  if (error) throw new Error(error.message);
-
-  redirect('/dashboard');
-};
+import { revalidatePath } from 'next/cache';
 
 export async function getUserId() {
   const cookieStore = cookies();
@@ -57,7 +29,7 @@ export async function checkOnboarded(userId: string): Promise<boolean> {
     .select('onboarded')
     .eq('id', userId);
 
-  return data?.[0].onboarded;
+  return data?.[0]?.onboarded;
 }
 
 export async function getUserDetails(): Promise<User> {
@@ -76,42 +48,65 @@ export async function getUserDetails(): Promise<User> {
   return data[0];
 }
 
+// FUNCTION USED DURING ONBOARDING AND PROFILE EDITING TO UPDATE USER DETAILS ON THE PROFILE TABLE
 export async function updateUserDetails(
   formData: FormData
 ): Promise<MessageError> {
-  try {
-    const cookieStore = cookies();
-    const supabase = createClient(cookieStore);
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
 
-    // FUNCTION TO GET USER ID
-    const { data: userData, error: userError } =
-      await supabase.auth.getSession();
+  // FUNCTION TO GET USER ID & EMAIL
+  const { data: userData, error: userError } = await supabase.auth.getSession();
 
-    if (!userData || userError) throw new Error('User not found');
+  if (!userData || userError) return { error: 'User not found' };
 
-    const userId = userData.session?.user.id;
+  const userId = userData.session?.user.id;
+  const email = userData.session?.user?.email;
 
-    // EXTRACTING FORM DATA
-    const userFormData = {
-      firstName: formData.get('firstName') as string,
-      lastName: formData.get('lastName') as string,
-      linkedIn: formData.get('linkedIn') as string,
-      university: formData.get('university') as string,
-      organization: formData.get('organization') as string,
-    };
+  // EXTRACTING FORM DATA
+  const fieldData = Array.from(formData.entries()).reduce(
+    (acc, [key, value]) => {
+      if (value !== null && value !== undefined && value !== '') {
+        acc[key] = value;
+      }
+      return acc;
+    },
+    { id: userId, email, onboarded: true } as any
+  );
 
-    // UPDATING USER PROFILE
-    const { data, error } = await supabase
-      .from('profiles')
-      .update(userFormData)
-      .eq('id', userId)
-      .select('*');
+  // UPDATING USER PROFILE
+  const { data, error } = await supabase
+    .from('profiles')
+    .upsert(fieldData)
+    .eq('id', userId)
+    .select('*');
 
-    if (error) throw new Error(error.message);
+  if (error) return { error: error.message };
 
-    return { message: 'Profile updated successfully' };
-  } catch (error: any) {
-    handleError(error);
-    return { message: error.message };
-  }
+  revalidatePath('/onboarding');
+
+  return { message: 'Profile updated successfully' };
 }
+
+export const deleteUser = async (): Promise<void> => {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
+  // FUNCTION TO GET USER ID
+  const { data: userData, error: userError } = await supabase.auth.getSession();
+
+  if (!userData || userError) throw new Error('User not found');
+
+  const userId = userData.session?.user.id;
+
+  // DELETING USER
+  const { error } = await supabase.from('profiles').delete().eq('id', userId);
+
+  if (error) throw new Error(error.message);
+
+  // SIGN OUT USER
+
+  await supabase.auth.signOut();
+
+  redirect('/signin');
+};
