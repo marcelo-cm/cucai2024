@@ -312,3 +312,30 @@ export const deletePaper = async (paperId: number): Promise<MessageError> => {
     return { error: error.message };
   }
 };
+
+// FUNCTION TO GET LIST OF PAPERS FOR RESEARCH PAGE
+export default async function getResearchPapers(
+  page: number,
+  limit: number
+): Promise<{ papers: Paper[]; total: number }> {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
+  let skip = (page - 1) * limit;
+
+  const { data, error } = await supabase
+    .from('papers')
+    .select('*')
+    .order('createdAt', { ascending: false })
+    .range(skip, skip + limit - 1);
+
+  if (error) return { papers: [], total: 0 };
+
+  const { count, error: countError } = await supabase
+    .from('papers')
+    .select('*', { count: 'exact', head: true });
+
+  if (error) return { papers: [], total: 0 };
+
+  return { papers: data, total: count || 0 };
+}
