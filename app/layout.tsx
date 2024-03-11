@@ -33,7 +33,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
+<<<<<<< Updated upstream
         className={`h-[100dvh] w-[100dvw] flex flex-col overflow-y-hidden no-scrollbar bg-[#003C58]`}
+=======
+        className={`h-[100dvh] w-[100dvw] flex flex-col overflow-y-hidden no-scrollbar bg-[#173A4D]`}
+>>>>>>> Stashed changes
       >
         {children}
         <svg
