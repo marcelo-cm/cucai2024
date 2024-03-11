@@ -16,7 +16,9 @@ import React from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 
-const ConferenceApplication = () => {
+type Checked = DropdownMenuCheckboxItemProps["checked"];
+
+const ProfileInformation = () => {
   const context = useFormContext();
 
   if (!context) {
@@ -24,62 +26,134 @@ const ConferenceApplication = () => {
   }
 
   const { title, page, data, setData, canSubmit, handleChange } = context;
+
   const formFields: { [key: string]: string | string[] }[] = [
     {
-      label: "What ticket are you applying for?",
-      name: "ticket_applied",
-      type: "dropdown",
-      options: ["Conference Ticket ($100)", "Conference + Hotel Ticket ($225)"],
-    },
-    {
-      label:
-        "If you are applying for a hotel, can you attend the conference without a hotel?",
-      name: "consider_no_hotel",
-      type: "checkbox",
-    },
-    {
-      label: "LinkedIn Profile",
-      name: "linkedin",
+      label: "First Name",
+      name: "first_name",
       type: "text",
-      placeholder: "linkedin.com/in/your-profile",
+      placeholder: "Marcelo",
     },
     {
-      label: "Resume",
-      name: "resume",
-      type: "file",
-      placeholder: "Upload your resume",
+      label: "Last Name",
+      name: "last_name",
+      type: "text",
+      placeholder: "Chaman Mallqui",
     },
     {
-      label:
-        "Why is it important that you attend CUCAI 2025? (150 words or less)",
-      name: "why_cucai",
-      type: "long_text",
-      placeholder: "I want to attend CUCAI 2025 because...",
+      label: "E-mail",
+      name: "email",
+      type: "text",
+      placeholder: "support@cucai.ca",
     },
     {
-      label: "Are you a part of a Student Partner Organization? If so, which?",
-      name: "why_cucai",
+      label: "Password",
+      name: "password",
+      type: "password",
+      placeholder: "CUCAIFTW!1",
+    },
+    {
+      label: "Confirm Password",
+      name: "confirm_password",
+      type: "password",
+      placeholder: "CUCAIFTW!1",
+    },
+    {
+      label: "Self-Identified Gender",
+      name: "gender",
       type: "dropdown",
       options: [
-        "None",
-        "Engineering Society Software Development (ESSDEV)",
-        "hopAI",
-        "McMaster AI (MacAI)",
-        "McGill AI (MAIS)",
-        "QMIND",
-        "Université de Montreal AI (UdeM AI)",
-        "University of Toronto AI (UofT AI)",
-        "University of Toronto Machine Intelligence Student Team (UTMIST)",
-        "University of Vic AI (UVic AI)",
-        "WAT.ai",
-        "Wester Cyber Society (WCS)",
-        "Western AI (WAI)",
+        "Male",
+        "Female",
+        "Non-Binary",
+        "Gender Fluid",
+        "Other",
+        "Prefer Not To Answer",
       ],
     },
     {
-      label: "Are you interested in submitting a project?",
-      name: "project",
-      type: "checkbox",
+      label: "Ethnicity",
+      name: "ethnicity",
+      type: "dropdown",
+      options: [
+        "White",
+        "American Indian",
+        "Alaska Native",
+        "Black or African American",
+        "Hispanic or Latino/Latina",
+        "Native Hawaiian or Other Pacific Islander",
+        "Two or More Races",
+        "Other",
+        "Prefer Not To Answer",
+      ],
+    },
+    {
+      label: "School",
+      name: "school",
+      type: "dropdown",
+      options: [
+        "Carleton University",
+        "École Polytechnique de Montréal",
+        "LaSalle College",
+        "McGill University",
+        "McMaster University",
+        "Queen’s University",
+        "Ryerson University",
+        "Université de Montréal",
+        "University of Calgary",
+        "University of Guelph",
+        "University of Ontario Institute of Technology",
+        "University of Ottawa",
+        "University of Toronto",
+        "University of Victoria",
+        "University of Waterloo",
+        "University of Western Ontario",
+        "Wilfrid Laurier University",
+        "York University",
+        "Other",
+      ],
+    },
+    {
+      label: "Graduation Year",
+      name: "grad_year",
+      type: "dropdown",
+      options: ["2025", "2026", "2027", "2028", "2029"],
+    },
+    {
+      label: "Faculty",
+      name: "faculty",
+      type: "dropdown",
+      options: [
+        "Arts and Humanities",
+        "Science",
+        "Engineering",
+        "Medicine",
+        "Business",
+        "Law",
+        "Education",
+        "Social Sciences",
+        "Health Sciences",
+        "Agriculture",
+        "Environmental Sciences",
+        "Architecture",
+        "Computer Science",
+        "Nursing",
+        "Pharmacy",
+        "Dentistry",
+        "Public Health",
+        "Veterinary Medicine",
+        "Information Technology",
+        "Fine Arts",
+        "Music",
+        "Physical Education",
+        "Tourism and Hospitality",
+      ],
+    },
+    {
+      label: "Discipline",
+      name: "discipline",
+      type: "text",
+      placeholder: "Computer Engineering",
     },
   ];
 
@@ -163,4 +237,4 @@ const ConferenceApplication = () => {
   );
 };
 
-export default ConferenceApplication;
+export default ProfileInformation;

@@ -1,10 +1,11 @@
 import React from "react";
-import ConferenceApplication from "./ConferenceApplication";
+import ProfileInformation from "./ProfileInformation";
 import ProjectApplication from "./ProjectApplication";
 import ThankYou from "./ThankYou";
 import useFormContext from "@/app/hooks/useFormContext";
 import { Nunito_Sans } from "next/font/google";
 import { Button } from "@/components/ui/button";
+import ConferenceApplication from "./ConferenceApplication";
 
 const NunitoSans = Nunito_Sans({
   subsets: ["latin"],
@@ -31,9 +32,10 @@ const ApplicationForm = () => {
   } = context;
 
   const activePage: any = {
-    0: <ConferenceApplication />,
-    1: <ProjectApplication />,
-    2: <ThankYou />,
+    0: <ProfileInformation />,
+    1: <ConferenceApplication />,
+    2: <ProjectApplication />,
+    3: <ThankYou />,
   };
 
   return (

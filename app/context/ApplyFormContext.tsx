@@ -18,8 +18,11 @@ interface ApplyFormContextType {
     degree_type: string;
     faculty: string;
     discipline: string;
+    ticket_applied: string;
+    consider_no_hotel: boolean;
     linkedin: string;
     resume: null | any;
+    why_cucai: string;
     student_partner: string;
     project: boolean;
     project_name: string;
@@ -36,9 +39,10 @@ interface ApplyFormContextType {
 
 const defaultContextValue: ApplyFormContextType = {
   title: {
-    0: "Conference Application",
-    1: "Project Application",
-    2: "Thank You!",
+    0: "Profile Information",
+    1: "Conference Application",
+    2: "Project Application",
+    3: "Thank You!",
   },
   page: 0,
   data: {
@@ -55,8 +59,11 @@ const defaultContextValue: ApplyFormContextType = {
     degree_type: "",
     faculty: "",
     discipline: "",
+    ticket_applied: "",
+    consider_no_hotel: false,
     linkedin: "",
     resume: null,
+    why_cucai: "",
     student_partner: "",
     project: false,
     project_name: "",
@@ -82,9 +89,10 @@ export const ApplyFormProvider = ({
   className?: string;
 }) => {
   const title: { [key: number]: string } = {
-    0: "Conference Application",
-    1: "Project Application",
-    2: "Thank You!",
+    0: "Profile Information",
+    1: "Conference Application",
+    2: "Project Application",
+    3: "Thank You!",
   };
 
   const [page, setPage] = useState(0);
@@ -103,8 +111,11 @@ export const ApplyFormProvider = ({
     degree_type: "",
     faculty: "",
     discipline: "",
+    ticket_applied: "",
+    consider_no_hotel: false,
     linkedin: "",
     resume: null,
+    why_cucai: "",
     student_partner: "",
     project: false,
     project_name: "",
@@ -117,10 +128,11 @@ export const ApplyFormProvider = ({
     console.log("FormProvider mounted");
   }, []);
 
-  const handleChange = (e: any) => {
-    // console.log(e.target.name, e.target.value);
-    // console.log(data);
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
+  const handleChange = (e: any) => {
     const type = e.target.type;
     const name = e.target.name;
     const value = e.target.value;
