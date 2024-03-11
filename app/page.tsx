@@ -159,7 +159,7 @@ const LandingSponsors = [
     logo: "ey-logo.png",
     link: "https://www.ey.com/en_gl/ai/platform",
   },
-  { title: "Cohere", logo: "cohere-logo.png", link: "https://cohere.com//" },
+  { title: "Cohere", logo: "cohere-logo.png", link: "https://cohere.com/" },
   {
     title: "RSG International",
     logo: "rsg-logo.png",
@@ -541,7 +541,7 @@ export default function Home() {
           <a href="#About">ABOUT</a>
           <a href="#Speakers">SPEAKERS</a>
           <a href="#Programming">PROGRAMMING</a>
-          {/* <a href="#Sponsors">SPONSORS</a> */}
+          <a href="#Sponsors">SPONSORS</a>
           <a href="#StudentPartners">STUDENT PARTNERS</a>
         </div>
         <div className="flex flex-row gap-8 items-center justify-center">
@@ -722,7 +722,7 @@ export default function Home() {
         <div className="cancel-carousel r-carousel-inner flex flex-col sm:flex-row items-center h-fit sm:overflow-scroll no-scrollbar sm:divide-x-[1px] divide-y-[1px] sm:divide-y-[0px] divide-[#55E0FF]/50">
           {CurrentSpeakers.map((speaker, i) => (
             <div
-              className="flex flex-col items-center py-8 justify-between px-16 gap-4 w-[85dvw] sm:min-w-[340px] sm:w-fit h-[350px]"
+              className="flex flex-col items-center py-8 justify-between px-16 gap-4 w-[85dvw] sm:min-w-[340px] sm:w-fit h-fit sm:h-[350px]"
               key={i}
             >
               <img
@@ -903,7 +903,10 @@ export default function Home() {
       <BlurredSeperator />
       <SectionTitle>SPONSORS</SectionTitle>
       <BlurredSeperator />
-      <div className="w-4/5 py-8 flex flex-col gap-6 justify-center">
+      <div
+        id="Sponsors"
+        className="w-4/5 py-8 flex flex-col gap-6 justify-center"
+      >
         <div className="flex flex-col gap-2">
           <BlurredText
             className="
@@ -917,10 +920,12 @@ export default function Home() {
           >
             TITLE
           </BlurredText>
-          <img
-            className="w-[520px] flex self-center"
-            src="/logos/connected-logo.png"
-          />
+          <a
+            className="flex self-center"
+            href="https://www.yorku.ca/research/connected-minds/"
+          >
+            <img className="w-[520px] " src="/logos/connected-logo.png" />
+          </a>
         </div>
         <div className="w-full flex flex-col gap-2">
           <BlurredText
@@ -936,10 +941,18 @@ export default function Home() {
             GOLD
           </BlurredText>
           <div className="w-full flex flex-row flex-wrap justify-center items-center gap-12">
-            <img className="lg:h-[128px]" src="/logos/ey-logo.png" />
-            <img className="lg:h-[96px]" src="/logos/redbit-logo.png" />
-            <img className="lg:h-[112px]" src="/logos/rsg-logo.png" />
-            <img className="lg:h-[96px]" src="/logos/cohere-logo.png" />
+            <a href="https://www.ey.com/en_gl/ai/platform">
+              <img className="lg:h-[128px]" src="/logos/ey-logo.png" />
+            </a>
+            <a href="https://redbitdev.com/">
+              <img className="lg:h-[96px]" src="/logos/redbit-logo.png" />
+            </a>
+            <a href="https://rsgint.com/">
+              <img className="lg:h-[112px]" src="/logos/rsg-logo.png" />
+            </a>
+            <a href="https://cohere.com/">
+              <img className="lg:h-[96px]" src="/logos/cohere-logo.png" />
+            </a>
           </div>
         </div>
         <div className="w-full flex flex-col gap-12">
