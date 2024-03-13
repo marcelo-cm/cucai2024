@@ -5,6 +5,7 @@ interface ApplyFormContextType {
   title: { [key: number]: string };
   page: number;
   data: {
+    // Profile Information
     first_name: string;
     last_name: string;
     email: string;
@@ -18,6 +19,7 @@ interface ApplyFormContextType {
     degree_type: string;
     faculty: string;
     discipline: string;
+    // Conference Application
     ticket_applied: string;
     consider_no_hotel: boolean;
     linkedin: string;
@@ -28,7 +30,8 @@ interface ApplyFormContextType {
     project_name: string;
     project_description: string;
     project_needs: string;
-    project_members: string[];
+    project_team: boolean;
+    project_members: { [key: string]: { name: string; email: string } };
   };
   setData: any;
   canSubmit: boolean;
@@ -69,7 +72,8 @@ const defaultContextValue: ApplyFormContextType = {
     project_name: "",
     project_description: "",
     project_needs: "",
-    project_members: [],
+    project_team: false,
+    project_members: { member_1: { name: "", email: "" } },
   },
   setData: () => {}, // Placeholder function
   canSubmit: false,
@@ -121,7 +125,8 @@ export const ApplyFormProvider = ({
     project_name: "",
     project_description: "",
     project_needs: "",
-    project_members: [],
+    project_team: false,
+    project_members: { member_1: { name: "", email: "" } },
   });
 
   useEffect(() => {
@@ -133,7 +138,6 @@ export const ApplyFormProvider = ({
   }, [data]);
 
   const handleChange = (e: any) => {
-    const type = e.target.type;
     const name = e.target.name;
     const value = e.target.value;
 

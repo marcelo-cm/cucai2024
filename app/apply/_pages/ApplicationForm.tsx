@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import ProfileInformation from "./ProfileInformation";
 import ProjectApplication from "./ProjectApplication";

@@ -58,7 +58,7 @@ const ConferenceApplication = () => {
     },
     {
       label: "Are you a part of a Student Partner Organization? If so, which?",
-      name: "why_cucai",
+      name: "student_partner",
       type: "dropdown",
       options: [
         "None",
@@ -132,15 +132,17 @@ const ConferenceApplication = () => {
                 })
               }
               name={field.name.toString()}
+              checked={data[field.name as keyof typeof data]}
             />
           </div>
         ) : field.type === "long_text" ? (
-          <div>
+          <div key={k}>
             <Label htmlFor={field.name.toString()}>{field.label}</Label>
             <Textarea
               onChange={handleChange}
               name={field.name.toString()}
               placeholder={field.placeholder.toString()}
+              value={data[field.name as keyof typeof data]}
             />
             <p className="text-xs flex justify-end mt-1">
               Word Count:{" "}
@@ -155,6 +157,7 @@ const ConferenceApplication = () => {
               name={field.name.toString()}
               type={field.type.toString()}
               placeholder={field.placeholder.toString()}
+              value={data[field.name as keyof typeof data]}
             />
           </div>
         )

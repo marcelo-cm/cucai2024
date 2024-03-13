@@ -206,6 +206,7 @@ const ProfileInformation = () => {
                 })
               }
               name={field.name.toString()}
+              checked={data[field.name as keyof typeof data]}
             />
           </div>
         ) : field.type === "long_text" ? (
@@ -215,6 +216,7 @@ const ProfileInformation = () => {
               onChange={handleChange}
               name={field.name.toString()}
               placeholder={field.placeholder.toString()}
+              value={data[field.name as keyof typeof data]}
             />
             <p className="text-xs flex justify-end mt-1">
               Word Count:{" "}
@@ -229,6 +231,7 @@ const ProfileInformation = () => {
               name={field.name.toString()}
               type={field.type.toString()}
               placeholder={field.placeholder.toString()}
+              value={data[field.name as keyof typeof data]}
             />
           </div>
         )
