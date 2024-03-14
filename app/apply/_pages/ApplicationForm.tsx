@@ -38,7 +38,7 @@ const ApplicationForm = () => {
 
   return (
     <div
-      className={`${NunitoSans.className} flex flex-col gap-4 w-1/3 h-fit bg-blumine-800 p-12 text-blumine-50`}
+      className={`${NunitoSans.className} flex flex-col gap-4 w-full sm:w-1/2 sm:max-w-[560px] sm:min-w-[400px] h-fit bg-blumine-800 p-12 text-blumine-50`}
     >
       <div className="h-6 w-full bg-[#32404D]"></div>
       <p className="font-bold text-2xl">{title[page]}</p>

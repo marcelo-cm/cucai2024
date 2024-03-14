@@ -17,6 +17,7 @@ import {
 import React from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
+import FormGenerator from "./FormGenerator";
 
 type Checked = DropdownMenuCheckboxItemProps["checked"];
 
@@ -177,87 +178,7 @@ const ProfileInformation = () => {
     },
   ];
 
-  return (
-    <div className="text-blumine-50 flex flex-col gap-2">
-      {formFields.map((field, k) =>
-        field.type === "dropdown" ? (
-          <div key={k}>
-            <Label htmlFor={field.name.toString()}>{field.label}</Label>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="secondary" className="w-full">
-                  {data[field.name as keyof typeof data] || "Select"}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56">
-                <DropdownMenuRadioGroup
-                  value={data[field.name as keyof typeof data]}
-                  onValueChange={(value) =>
-                    handleChange({
-                      target: {
-                        type: "checkbox",
-                        name: field.name,
-                        value: value,
-                      },
-                    })
-                  }
-                >
-                  {Array.isArray(field.options) &&
-                    field.options.map((option) => (
-                      <DropdownMenuRadioItem key={option} value={option}>
-                        {option}
-                      </DropdownMenuRadioItem>
-                    ))}
-                </DropdownMenuRadioGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        ) : field.type === "checkbox" ? (
-          <div className="flex items-center justify-between pr-2" key={k}>
-            <Label htmlFor={field.name.toString()}>{field.label}</Label>
-            <Checkbox
-              onCheckedChange={() =>
-                handleChange({
-                  target: {
-                    type: "checkbox",
-                    name: field.name,
-                    value: !data[field.name as keyof typeof data],
-                  },
-                })
-              }
-              name={field.name.toString()}
-              checked={data[field.name as keyof typeof data]}
-            />
-          </div>
-        ) : field.type === "long_text" ? (
-          <div>
-            <Label htmlFor={field.name.toString()}>{field.label}</Label>
-            <Textarea
-              onChange={handleChange}
-              name={field.name.toString()}
-              placeholder={field.placeholder.toString()}
-              value={data[field.name as keyof typeof data]}
-            />
-            <p className="text-xs flex justify-end mt-1">
-              Word Count:{" "}
-              {data[field.name as keyof typeof data].split(" ").length - 1}
-            </p>
-          </div>
-        ) : (
-          <div key={k}>
-            <Label htmlFor={field.name.toString()}>{field.label}</Label>
-            <Input
-              onChange={handleChange}
-              name={field.name.toString()}
-              type={field.type.toString()}
-              placeholder={field.placeholder.toString()}
-              value={data[field.name as keyof typeof data]}
-            />
-          </div>
-        )
-      )}
-    </div>
-  );
+  return <FormGenerator formFields={formFields} />;
 };
 
 export default ProfileInformation;
