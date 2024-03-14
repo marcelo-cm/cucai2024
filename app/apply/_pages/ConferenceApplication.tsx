@@ -1,3 +1,5 @@
+"use client";
+
 import useFormContext from "@/app/hooks/useFormContext";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -23,7 +25,13 @@ const ConferenceApplication = () => {
     throw new Error("useApplyForm must be used within an ApplyFormProvider");
   }
 
-  const { title, page, data, setData, canSubmit, handleChange } = context;
+  const {
+    title,
+    states: { page, canNext, canSubmit },
+    data,
+    functions: { handleChange, nextPage, prevPage },
+  } = context;
+
   const formFields: { [key: string]: string | string[] }[] = [
     {
       label: "What ticket are you applying for?",
@@ -148,6 +156,39 @@ const ConferenceApplication = () => {
               Word Count:{" "}
               {data[field.name as keyof typeof data].split(" ").length - 1}
             </p>
+          </div>
+        ) : field.type === "file" ? (
+          <div key={k}>
+            <Label htmlFor={field.name.toString()}>{field.label}</Label>
+            {data[field.name as keyof typeof data] !== null ? (
+              <div className="w-full h-10 gap-2 bg-blumine-950 border border-2 border-blumine-900 flex px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-blumine-200 file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 items-center justify-between ">
+                <Button
+                  className="text-xs p-1 h-fit"
+                  onClick={() =>
+                    handleChange({
+                      target: {
+                        type: "file",
+                        name: field.name,
+                        files: [null],
+                      },
+                    })
+                  }
+                >
+                  Remove
+                </Button>
+                <p className="text-sm overflow-hidden text-ellipsis	 w-full">
+                  {data[field.name as keyof typeof data].name}
+                </p>
+              </div>
+            ) : (
+              <Input
+                onChange={handleChange}
+                name={field.name.toString()}
+                type={field.type.toString()}
+                placeholder={field.placeholder.toString()}
+                value={data[field.name as keyof typeof data]}
+              />
+            )}
           </div>
         ) : (
           <div key={k}>

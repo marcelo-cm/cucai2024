@@ -1,9 +1,13 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, use } from "react";
 import { ReactNode } from "react";
 
 interface ApplyFormContextType {
   title: { [key: number]: string };
-  page: number;
+  states: {
+    page: number;
+    canNext: boolean;
+    canSubmit: boolean;
+  };
   data: {
     // Profile Information
     first_name: string;
@@ -11,7 +15,6 @@ interface ApplyFormContextType {
     email: string;
     password: string;
     confirm_password: string;
-    phone: string;
     gender: string;
     ethnicity: string;
     school: string;
@@ -27,17 +30,20 @@ interface ApplyFormContextType {
     why_cucai: string;
     student_partner: string;
     project: boolean;
+    // Project Application
+    project_id: string;
     project_name: string;
     project_description: string;
     project_needs: string;
     project_team: boolean;
     project_members: { [key: string]: { name: string; email: string } };
   };
-  setData: any;
-  canSubmit: boolean;
-  nextPage: () => void;
-  prevPage: () => void;
-  handleChange: (e: any) => void;
+  functions: {
+    nextPage: () => void;
+    prevPage: () => void;
+    handleChange: (e: any) => void;
+    handleSubmit: () => void;
+  };
 }
 
 const defaultContextValue: ApplyFormContextType = {
@@ -47,14 +53,17 @@ const defaultContextValue: ApplyFormContextType = {
     2: "Project Application",
     3: "Thank You!",
   },
-  page: 0,
+  states: {
+    page: 0,
+    canNext: true,
+    canSubmit: false,
+  },
   data: {
     first_name: "",
     last_name: "",
     email: "",
     password: "",
     confirm_password: "",
-    phone: "",
     gender: "",
     ethnicity: "",
     school: "",
@@ -69,17 +78,19 @@ const defaultContextValue: ApplyFormContextType = {
     why_cucai: "",
     student_partner: "",
     project: false,
+    project_id: "",
     project_name: "",
     project_description: "",
     project_needs: "",
     project_team: false,
     project_members: { member_1: { name: "", email: "" } },
   },
-  setData: () => {}, // Placeholder function
-  canSubmit: false,
-  handleChange: () => {}, // Placeholder function
-  nextPage: () => {}, // Placeholder function
-  prevPage: () => {}, // Placeholder function
+  functions: {
+    handleChange: () => {},
+    nextPage: () => {},
+    prevPage: () => {},
+    handleSubmit: () => {},
+  },
 };
 
 const ApplyFormContext =
@@ -92,92 +103,111 @@ export const ApplyFormProvider = ({
   children: ReactNode;
   className?: string;
 }) => {
-  const title: { [key: number]: string } = {
-    0: "Profile Information",
-    1: "Conference Application",
-    2: "Project Application",
-    3: "Thank You!",
-  };
-
-  const [page, setPage] = useState(0);
-
-  const [data, setData] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-    confirm_password: "",
-    phone: "",
-    gender: "",
-    ethnicity: "",
-    school: "",
-    grad_year: "",
-    degree_type: "",
-    faculty: "",
-    discipline: "",
-    ticket_applied: "",
-    consider_no_hotel: false,
-    linkedin: "",
-    resume: null,
-    why_cucai: "",
-    student_partner: "",
-    project: false,
-    project_name: "",
-    project_description: "",
-    project_needs: "",
-    project_team: false,
-    project_members: { member_1: { name: "", email: "" } },
-  });
-
-  useEffect(() => {
-    console.log("FormProvider mounted");
-  }, []);
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  const title: { [key: number]: string } = defaultContextValue.title;
+  const [page, setPage] = useState(defaultContextValue.states.page);
+  const [data, setData] = useState(defaultContextValue.data);
 
   const handleChange = (e: any) => {
+    const type = e.target.type;
     const name = e.target.name;
     const value = e.target.value;
+
+    if (type === "file") {
+      const file = e.target.files[0];
+      setData((prev) => ({ ...prev, [name]: file }));
+      return;
+    }
 
     setData((prev) => ({ ...prev, [name]: value }));
   };
 
   const nextPage = () => {
     setPage((prev) => prev + 1);
-    console.log(page);
   };
 
   const prevPage = () => {
     setPage((prev) => prev - 1);
-    console.log(page);
   };
 
   const {
     project,
+    project_id,
     project_name,
     project_description,
     project_needs,
+    project_team,
     project_members,
-    ...requiredInputs
+    ...alwaysRequiredInputs
   } = data;
 
-  const canSubmit =
-    [...Object.values(requiredInputs)].every(Boolean) &&
-    page === Object.keys(title).length - 1;
+  const areAlwaysRequiredInputsValid = Object.values(
+    alwaysRequiredInputs
+  ).every((input) => {
+    if (input !== "" && input !== null) return true;
+    return false;
+  });
+
+  const [areProjectInputsValid, setAreProjectInputsValid] = useState(true);
+
+  useEffect(() => {
+    setAreProjectInputsValid(
+      !project
+        ? true
+        : project_id
+        ? true
+        : project_name !== "" &&
+          project_description !== "" &&
+          project_needs !== "" &&
+          (project_team
+            ? Object.values(project_members).every(
+                (member) => member.name !== "" && member.email !== ""
+              )
+            : true)
+    );
+  }, [
+    project,
+    project_id,
+    project_name,
+    project_description,
+    project_needs,
+    project_team,
+    project_members,
+  ]);
+
+  useEffect(() => {
+    setData((prev) => ({
+      ...prev,
+      project_name: "",
+      project_description: "",
+      project_needs: "",
+      project_team: false,
+      project_members: { member_1: { name: "", email: "" } },
+    }));
+  }, [project_id]);
+
+  const canSubmit = areAlwaysRequiredInputsValid && areProjectInputsValid;
+
+  const handleSubmit = () => {
+    console.log(data);
+    nextPage();
+  };
 
   return (
     <ApplyFormContext.Provider
       value={{
         title,
-        page,
+        states: {
+          page,
+          canNext: page < 3,
+          canSubmit,
+        },
         data,
-        handleChange,
-        setData,
-        canSubmit,
-        nextPage,
-        prevPage,
+        functions: {
+          handleChange,
+          nextPage,
+          prevPage,
+          handleSubmit,
+        },
       }}
     >
       {children}

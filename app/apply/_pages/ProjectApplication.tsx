@@ -26,13 +26,18 @@ const ProjectApplication = () => {
     throw new Error("useApplyForm must be used within an ApplyFormProvider");
   }
 
-  const { title, page, data, setData, canSubmit, handleChange } = context;
+  const {
+    title,
+    states: { page, canNext, canSubmit },
+    data,
+    functions: { handleChange, nextPage, prevPage },
+  } = context;
 
-  const formFields: { [key: string]: string | string[] }[] = [
+  const formFields: { [key: string]: string | string[] | boolean }[] = [
     {
       label:
         "If someone has already applied with this project, please enter their email address here.",
-      name: "project_owner",
+      name: "project_id",
       type: "text",
       placeholder: "CU-123456",
     },
@@ -41,12 +46,14 @@ const ProjectApplication = () => {
       name: "project_name",
       type: "text",
       placeholder: "Project Name",
+      disabled: data["project_id"] ? true : false,
     },
     {
       label: "Project Description",
       name: "project_description",
       type: "long_text",
       placeholder: "My project uses X to do Y. It will help Z.",
+      disabled: data["project_id"] ? true : false,
     },
     {
       label: "Special Presentation Needs",
@@ -54,6 +61,7 @@ const ProjectApplication = () => {
       type: "long_text",
       placeholder:
         "To present my project effectively I need an outlet near me...",
+      disabled: data["project_id"] ? true : false,
     },
   ];
 
@@ -143,6 +151,7 @@ const ProjectApplication = () => {
               }
               name={field.name.toString()}
               checked={data[field.name as keyof typeof data]}
+              disabled={data["project_id"] ? true : false}
             />
           </div>
         ) : field.type === "long_text" ? (
@@ -153,6 +162,7 @@ const ProjectApplication = () => {
               name={field.name.toString()}
               placeholder={field.placeholder.toString()}
               value={data[field.name as keyof typeof data]}
+              disabled={data["project_id"] ? true : false}
             />
             <p className="text-xs flex justify-end mt-1">
               Word Count:{" "}
@@ -169,6 +179,7 @@ const ProjectApplication = () => {
               type={field.type.toString()}
               placeholder={field.placeholder.toString()}
               value={data[field.name as keyof typeof data]}
+              disabled={field.disabled as boolean}
             />
           </div>
         )
@@ -188,6 +199,7 @@ const ProjectApplication = () => {
           }}
           name={"project_team"}
           checked={data["project_team"]}
+          disabled={data["project_id"] ? true : false}
         />
       </div>
       {data.project_team ? (

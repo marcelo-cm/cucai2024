@@ -24,13 +24,9 @@ const ApplicationForm = () => {
 
   const {
     title,
-    page,
+    states: { page, canNext, canSubmit },
     data,
-    setData,
-    canSubmit,
-    handleChange,
-    nextPage,
-    prevPage,
+    functions: { handleChange, nextPage, prevPage, handleSubmit },
   } = context;
 
   const activePage: any = {
@@ -47,14 +43,30 @@ const ApplicationForm = () => {
       <div className="h-6 w-full bg-[#32404D]"></div>
       <p className="font-bold text-2xl">{title[page]}</p>
       {activePage[page]}
-      {/* Nav Buttons */}
       <div className="flex flex-row gap-4">
-        <Button className="w-1/2 h-10" onClick={() => prevPage()}>
-          Previous
-        </Button>
-        <Button className="w-1/2 h-10" onClick={() => nextPage()}>
-          Next
-        </Button>
+        {page > 0 && page < 3 ? (
+          <Button className="w-full h-10" onClick={() => prevPage()}>
+            Previous
+          </Button>
+        ) : null}
+        {page === 0 || (data.project && page < 2) ? (
+          <Button
+            disabled={!canNext}
+            className="w-full h-10"
+            onClick={() => nextPage()}
+          >
+            Next
+          </Button>
+        ) : null}
+        {(!data.project && page == 1) || page == 2 ? (
+          <Button
+            disabled={!canSubmit}
+            className="w-full h-10"
+            onClick={handleSubmit}
+          >
+            Apply
+          </Button>
+        ) : null}
       </div>
     </div>
   );

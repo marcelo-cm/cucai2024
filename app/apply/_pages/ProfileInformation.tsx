@@ -1,3 +1,5 @@
+"use client";
+
 import useFormContext from "@/app/hooks/useFormContext";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -25,7 +27,12 @@ const ProfileInformation = () => {
     throw new Error("useApplyForm must be used within an ApplyFormProvider");
   }
 
-  const { title, page, data, setData, canSubmit, handleChange } = context;
+  const {
+    title,
+    states: { page, canNext, canSubmit },
+    data,
+    functions: { handleChange, nextPage, prevPage },
+  } = context;
 
   const formFields: { [key: string]: string | string[] }[] = [
     {
@@ -118,6 +125,19 @@ const ProfileInformation = () => {
       name: "grad_year",
       type: "dropdown",
       options: ["2025", "2026", "2027", "2028", "2029"],
+    },
+    {
+      label: "Type of Degree",
+      name: "degree_type",
+      type: "dropdown",
+      options: [
+        "High School",
+        "Undergraduate",
+        "Masters",
+        "PhD",
+        "Certificate",
+        "Other",
+      ],
     },
     {
       label: "Faculty",
