@@ -15,6 +15,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import useFormContext from "@/app/apply/hooks/useFormContext";
+import { CheckedState } from "@radix-ui/react-checkbox";
 
 const FormGenerator = ({
   formFields,
@@ -46,12 +47,12 @@ const FormGenerator = ({
                   className="w-full overflow-hidden text-ellipsis"
                   id={field.name.toString()}
                 >
-                  {data[field.name as keyof typeof data] || "Select"}
+                  {String(data[field.name as keyof typeof data]) || "Select"}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">
                 <DropdownMenuRadioGroup
-                  value={data[field.name as keyof typeof data]}
+                  value={String(data[field.name as keyof typeof data])}
                   onValueChange={(value) => {
                     handleChange({
                       target: {
@@ -90,7 +91,7 @@ const FormGenerator = ({
                 })
               }
               name={field.name.toString()}
-              checked={data[field.name as keyof typeof data]}
+              checked={data[field.name as keyof typeof data] as CheckedState}
               disabled={field.disabled as boolean}
               id={field.name.toString()}
             />
@@ -102,50 +103,15 @@ const FormGenerator = ({
               onChange={handleChange}
               name={field.name.toString()}
               placeholder={field.placeholder.toString()}
-              value={data[field.name as keyof typeof data]}
+              value={String(data[field.name as keyof typeof data])}
               disabled={field.disabled as boolean}
               id={field.name.toString()}
             />
             <p className="text-xs flex justify-end mt-1">
               Word Count:{" "}
-              {data[field.name as keyof typeof data]?.split(" ").length - 1 ||
-                0}
+              {String(data[field.name as keyof typeof data])?.split(" ")
+                .length - 1 || 0}
             </p>
-          </div>
-        ) : field.type === "file" ? (
-          <div key={k}>
-            <Label htmlFor={field.name.toString()}>{field.label}</Label>
-            {data[field.name as keyof typeof data] !== null ? (
-              <div className="w-full h-10 gap-2 bg-blumine-950 border border-2 border-blumine-900 flex px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-blumine-200 file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 items-center justify-between ">
-                <Button
-                  className="text-xs p-1 h-fit"
-                  onClick={() =>
-                    handleChange({
-                      target: {
-                        type: "file",
-                        name: field.name,
-                        files: [null],
-                      },
-                    })
-                  }
-                  id={field.name.toString()}
-                >
-                  Remove
-                </Button>
-                <p className="text-sm overflow-hidden text-ellipsis	 w-full">
-                  {data[field.name as keyof typeof data].name}
-                </p>
-              </div>
-            ) : (
-              <Input
-                onChange={handleChange}
-                name={field.name.toString()}
-                type={field.type.toString()}
-                placeholder={field.placeholder.toString()}
-                value={data[field.name as keyof typeof data]}
-                id={field.name.toString()}
-              />
-            )}
           </div>
         ) : (
           <div key={k}>
@@ -155,7 +121,7 @@ const FormGenerator = ({
               name={field.name.toString()}
               type={field.type.toString()}
               placeholder={field.placeholder.toString()}
-              value={data[field.name as keyof typeof data]}
+              value={String(data[field.name as keyof typeof data])}
               disabled={field.disabled as boolean}
               id={field.name.toString()}
             />

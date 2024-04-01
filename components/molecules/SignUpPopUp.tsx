@@ -25,7 +25,6 @@ import {
   FormMessage,
 } from "../ui/form";
 import { createClient } from "@/lib/supabase/client";
-import { useRouter } from "next/router";
 
 const NunitoSans = Nunito_Sans({
   subsets: ["latin"],
