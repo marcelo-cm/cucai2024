@@ -20,8 +20,6 @@ import { Textarea } from "@/components/ui/textarea";
 import FormGenerator from "../../../components/generators/FormGenerator";
 import Image from "next/image";
 
-type Checked = DropdownMenuCheckboxItemProps["checked"];
-
 const ProfileInformation = () => {
   const context = useFormContext();
 
@@ -50,24 +48,6 @@ const ProfileInformation = () => {
       name: "last_name",
       type: "text",
       placeholder: "Chaman Mallqui",
-    },
-    {
-      label: "Email",
-      name: "email",
-      type: "text",
-      placeholder: "support@cucai.ca",
-    },
-    {
-      label: "Password",
-      name: "password",
-      type: "password",
-      placeholder: "CUCAIFTW!1",
-    },
-    {
-      label: "Confirm Password",
-      name: "confirm_password",
-      type: "password",
-      placeholder: "CUCAIFTW!1",
     },
     {
       label: "Self-Identified Gender",

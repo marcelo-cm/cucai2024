@@ -48,7 +48,7 @@ const ApplicationForm = () => {
           style={{ width: `${progress}%` }}
         />
       </div>
-      <p className="font-bold text-2xl">{title[page]}</p>
+      <h1 className="font-bold text-2xl">{title[page]}</h1>
       {activePage[page]}
       <div className="flex flex-row gap-4">
         {page > 0 && page < 3 ? (

@@ -55,12 +55,6 @@ const ConferenceApplication = () => {
       placeholder: "linkedin.com/in/your-profile",
     },
     {
-      label: "Resume",
-      name: "resume",
-      type: "file",
-      placeholder: "Upload your resume",
-    },
-    {
       label:
         "Why is it important that you attend CUCAI 2025? (150 words or less)",
       name: "why_cucai",

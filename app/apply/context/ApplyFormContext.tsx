@@ -1,5 +1,7 @@
 import { createContext, useState, useEffect, use } from "react";
 import { ReactNode } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { getTicketType } from "@/lib/utils";
 
 interface ApplyFormContextType {
   title: { [key: number]: string };
@@ -12,9 +14,6 @@ interface ApplyFormContextType {
     // Profile Information
     first_name: string;
     last_name: string;
-    email: string;
-    password: string;
-    confirm_password: string;
     gender: string;
     ethnicity: string;
     school: string;
@@ -22,11 +21,11 @@ interface ApplyFormContextType {
     degree_type: string;
     faculty: string;
     discipline: string;
-    // Conference Application
+    // Tickets
     ticket_applied: string;
     consider_no_hotel: boolean;
+    // Conference Application
     linkedin: string;
-    resume: null | any;
     why_cucai: string;
     student_partner: string;
     project: boolean;
@@ -61,9 +60,6 @@ const defaultContextValue: ApplyFormContextType = {
   data: {
     first_name: "",
     last_name: "",
-    email: "",
-    password: "",
-    confirm_password: "",
     gender: "",
     ethnicity: "",
     school: "",
@@ -74,7 +70,6 @@ const defaultContextValue: ApplyFormContextType = {
     ticket_applied: "",
     consider_no_hotel: false,
     linkedin: "",
-    resume: null,
     why_cucai: "",
     student_partner: "",
     project: false,
@@ -122,7 +117,7 @@ export const ApplyFormProvider = ({
   };
 
   // useEffect(() => {
-  //   console.log(data);
+  //   console.log(data.project_members);
   // }, [data]);
 
   const nextPage = () => {
@@ -191,9 +186,113 @@ export const ApplyFormProvider = ({
 
   const canSubmit = areAlwaysRequiredInputsValid && areProjectInputsValid;
 
-  const handleSubmit = () => {
-    console.log("Submitted: ", data);
-    setPage((prev) => prev + 2);
+  const handleSubmit = async () => {
+    const supabase = createClient();
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      console.error("No user found");
+      return;
+    }
+
+    const user_data = {
+      user_id: user.id,
+      first_name: data.first_name,
+      last_name: data.last_name,
+      email: user.email,
+      gender: data.gender,
+      ethnicity: data.ethnicity,
+      school: data.school,
+      grad_year: data.grad_year,
+      degree_type: data.degree_type,
+      faculty: data.faculty,
+      discipline: data.discipline,
+      linkedin: data.linkedin,
+      student_partner: data.student_partner,
+      why_cucai: data.why_cucai,
+      project_id: data.project_id || null,
+    };
+
+    const ticket_type = getTicketType(
+      data.ticket_applied,
+      data.consider_no_hotel
+    );
+
+    const ticket_data = {
+      owner: user.id,
+      ticket_applied: ticket_type,
+      ticket_assigned: null,
+      status: null,
+    };
+
+    const project_data = {
+      name: data.project_name,
+      description: data.project_description,
+      member_names: Object.values(project_members).map((member) => member.name),
+      member_emails: Object.values(project_members).map(
+        (member) => member.email
+      ),
+      special_req: data.project_needs,
+    };
+
+    console.log(user_data);
+    console.log(ticket_data);
+    console.log(project_data);
+
+    // Push user data to backend, excluding project id
+    const { data: user_data_res, error: user_data_error } = await supabase
+      .from("delegates")
+      .upsert(user_data);
+
+    if (user_data_error) {
+      console.error(user_data_error);
+      return;
+    }
+
+    // Push ticket entry to backend with user as owner (relation)
+    const { data: ticket_data_res, error: ticket_data_error } = await supabase
+      .from("tickets")
+      .upsert(ticket_data);
+
+    if (ticket_data_error) {
+      console.error(ticket_data_error);
+      return;
+    }
+
+    // Push project data to backend if applicable
+    if (data.project && !project_id) {
+      const { data: project_data_res, error: project_data_error } =
+        await supabase
+          .from("projects")
+          .upsert(project_data)
+          .select("project_id")
+          .single();
+
+      if (project_data_error) {
+        console.error(project_data_error);
+        return;
+      }
+
+      // Add project relation to user object if applicable
+      const { data: project_user_res, error: project_user_error } =
+        await supabase
+          .from("delegates")
+          .update({ project_id: project_data_res.project_id })
+          .eq("user_id", user.id);
+
+      if (project_user_error) {
+        console.error(project_user_error);
+        return;
+      }
+    }
+
+    console.log("Data submitted successfully!");
+
+    // Redirect to thank you page
+    setPage(3);
   };
 
   return (
