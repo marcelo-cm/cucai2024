@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const ThankYou = () => {
-  return <div>We'll see you soon.</div>;
+  useEffect(() => {
+    setTimeout(() => {
+      window.location.href = "/dashboard/delegate";
+    }, 3000);
+  }, []);
+
+  return (
+    <div>
+      Your application has been submitted successfully. You will be redirected
+      to the dashboard in a couple of seconds.
+    </div>
+  );
 };
 
 export default ThankYou;

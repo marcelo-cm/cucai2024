@@ -18,7 +18,7 @@ import React, { use, useEffect, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { PlusIcon } from "lucide-react";
-import FormGenerator from "../../../components/generators/FormGenerator";
+import FormGenerator from "../../../components/generators/FormGeneratorContext";
 
 const ProjectApplication = () => {
   const context = useFormContext();

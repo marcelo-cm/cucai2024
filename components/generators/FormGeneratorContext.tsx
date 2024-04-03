@@ -19,18 +19,20 @@ import { CheckedState } from "@radix-ui/react-checkbox";
 
 const FormGenerator = ({
   formFields,
-  handleChange,
-  data,
 }: {
   formFields: { [key: string]: string | string[] | boolean }[];
-  handleChange: (e: any) => void;
-  data: { [key: string]: string | string[] | boolean };
 }) => {
   const context = useFormContext();
 
   if (!context) {
     throw new Error("FormGenerator must be used within an ApplyFormProvider");
   }
+  const {
+    title,
+    states: { page, canNext, canSubmit },
+    data,
+    functions: { handleChange, nextPage, prevPage },
+  } = context;
 
   return (
     <div className="text-blumine-50 flex flex-col gap-2">

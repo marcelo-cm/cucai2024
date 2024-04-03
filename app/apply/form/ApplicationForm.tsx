@@ -4,11 +4,11 @@ import React from "react";
 import ProfileInformation from "./ProfileInformation";
 import ProjectApplication from "./ProjectApplication";
 import ThankYou from "./ThankYou";
-import useFormContext from "@/app/apply/hooks/useFormContext";
-import { Nunito_Sans } from "next/font/google";
 import { Button } from "@/components/ui/button";
 import ConferenceApplication from "./ConferenceApplication";
+import useFormContext from "@/app/apply/hooks/useFormContext";
 
+import { Nunito_Sans } from "next/font/google";
 const NunitoSans = Nunito_Sans({
   subsets: ["latin"],
   weight: ["200", "300", "400", "600", "700", "800", "900"],

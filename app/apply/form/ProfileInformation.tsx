@@ -17,7 +17,7 @@ import {
 import React from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
-import FormGenerator from "../../../components/generators/FormGenerator";
+import FormGenerator from "../../../components/generators/FormGeneratorContext";
 import Image from "next/image";
 
 const ProfileInformation = () => {
