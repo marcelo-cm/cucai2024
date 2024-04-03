@@ -54,7 +54,7 @@ const DelegateDashboard = () => {
 
   return (
     <div className="flex flex-col gap-4 w-full items-center h-full">
-      <div className="border border-blumine-700 w-full max-w-[1080px] h-1/4">
+      <div className="border border-blumine-700 w-full max-w-[1080px] h-[500px]">
         Graphic Here
       </div>
       <ProfileInfo user={user} supabase={supabase} />

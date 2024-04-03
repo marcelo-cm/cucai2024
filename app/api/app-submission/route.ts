@@ -85,7 +85,7 @@ export async function POST(req: Request) {
       owner: user.id,
       ticket_applied: ticket_type,
       ticket_assigned: null,
-      status: null,
+      status: "Application In Review",
     };
 
     // Push user data to backend, excluding project id
@@ -117,6 +117,7 @@ export async function POST(req: Request) {
         member_emails: Object.values(data.project_members).map(
           (member) => member.email
         ),
+        approved: false,
         special_req: data.project_needs,
       };
 

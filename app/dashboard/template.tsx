@@ -58,7 +58,7 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
   return (
     <UserContext.Provider value={{ user, supabase }}>
       <div
-        className={`${NunitoSans.className} h-full py-4 px-24 text-blumine-50 flex flex-col items-center gap-4`}
+        className={`${NunitoSans.className} h-full py-4 px-4 md:px-24 text-blumine-50 flex flex-col items-center gap-4 overflow-auto`}
       >
         <div className="bg-blumine-700 py-2 px-4 font-semibold leading-none flex justify-between items-center w-full">
           Canadian Undergraduate Conference on AI
