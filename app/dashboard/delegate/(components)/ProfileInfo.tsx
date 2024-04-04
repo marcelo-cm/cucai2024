@@ -3,24 +3,6 @@ import React, { useEffect, useState } from "react";
 import InfoComponent from "./InfoComponent";
 import ExternalLink from "@/components/ui/external-link";
 
-interface DelegateProfile {
-  user_id: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  gender: string;
-  ethnicity: string;
-  school: string;
-  grad_year: string;
-  degree_type: string;
-  faculty: string;
-  discipline: string;
-  linkedin: string;
-  student_partner: string;
-  why_cucai: string;
-  project_id: string | null;
-}
-
 const ProfileInfo = ({
   user,
   supabase,

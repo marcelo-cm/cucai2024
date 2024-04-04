@@ -2,16 +2,6 @@ import { SupabaseClient, User } from "@supabase/supabase-js";
 import React from "react";
 import InfoComponent from "./InfoComponent";
 
-interface Project {
-  project_id: string;
-  name: string;
-  description: string;
-  approved: boolean;
-  member_names: string[];
-  member_emails: string[];
-  special_req: string;
-}
-
 const ProjectInfo = ({ project }: { project: Project }) => {
   const members = project.member_names.map((name, index) => {
     return { name: name, email: project.member_emails[index] };

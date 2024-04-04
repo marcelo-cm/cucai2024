@@ -3,14 +3,6 @@ import React, { useEffect, useState } from "react";
 import InfoComponent from "./InfoComponent";
 import { getTicketDescription } from "@/lib/utils";
 
-interface Ticket {
-  ticket_id: string;
-  owner: string;
-  ticket_applied: string;
-  ticket_assigned: string;
-  status: string;
-}
-
 const TicketInfo = ({
   user,
   supabase,

@@ -27,10 +27,13 @@ export function getTicketDescription(category: string): string {
   if (category === "conference") {
     return "Conference Ticket ($100)";
   } else if (category === "hotel_needed") {
-    return "Conference + Hotel Ticket ($225), Hotel Needed";
+    return "Conference, Hotel Needed ($225)";
   } else if (category === "hotel_optional") {
-    return "Conference + Hotel Ticket ($225), Hotel Optional";
+    return "Conference, Hotel Optional ($225)";
   }
 
   return "Invalid category or mismatched options";
 }
+
+export const parseDate = (dateString: string): Date => new Date(dateString);
+export const formatDate = (date: Date): string => date.toLocaleDateString();
