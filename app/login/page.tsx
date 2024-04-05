@@ -2,11 +2,11 @@
 
 import React, { useState } from "react";
 
-import { Nunito_Sans } from "next/font/google";
-import { Input } from "@/components/ui/input";
 import FormGenerator from "@/components/generators/FormGenerator";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
+
+import { Nunito_Sans } from "next/font/google";
 const NunitoSans = Nunito_Sans({
   subsets: ["latin"],
   weight: ["200", "300", "400", "600", "700", "800", "900"],
@@ -54,7 +54,7 @@ const LogIn = () => {
   return (
     <div className="h-full w-full flex justify-center items-center">
       <div
-        className={`${NunitoSans.className} flex flex-col gap-4 w-full sm:w-1/2 sm:max-w-[560px] sm:min-w-[400px] h-fit bg-blumine-800 p-12 text-blumine-50`}
+        className={`flex flex-col gap-4 w-full sm:w-1/2 sm:max-w-[560px] sm:min-w-[400px] h-fit bg-blumine-800 p-12 text-blumine-50 ${NunitoSans.className}`}
       >
         <h1 className="font-bold text-2xl">Log In</h1>
         <div>

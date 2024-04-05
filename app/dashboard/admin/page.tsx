@@ -20,8 +20,6 @@ const AdminDashboard = () => {
       console.error(applicationsError);
       return;
     }
-
-    console.log(applicationsRes);
     setDelegates(applicationsRes);
   };
 
@@ -39,8 +37,6 @@ const AdminDashboard = () => {
       console.error(ticketsError);
       return;
     }
-
-    console.log(ticketsRes);
     setTickets(ticketsRes);
   };
 

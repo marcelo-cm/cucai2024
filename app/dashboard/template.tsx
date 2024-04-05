@@ -1,8 +1,6 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-
-import { Nunito_Sans } from "next/font/google";
 import { createClient } from "@/lib/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -15,6 +13,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { LogOut } from "lucide-react";
+
+import { Nunito_Sans } from "next/font/google";
 const NunitoSans = Nunito_Sans({
   subsets: ["latin"],
   weight: ["200", "300", "400", "600", "700", "800", "900"],
@@ -58,7 +58,7 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
   return (
     <UserContext.Provider value={{ user, supabase }}>
       <div
-        className={`${NunitoSans.className} h-full py-4 px-4 md:px-24 text-blumine-50 flex flex-col items-center gap-4 overflow-auto`}
+        className={`${NunitoSans.className} h-full p-4 text-blumine-50 flex flex-col items-center gap-4 overflow-auto`}
       >
         <div className="bg-blumine-700 py-2 px-4 font-semibold leading-none flex justify-between items-center w-full">
           Canadian Undergraduate Conference on AI

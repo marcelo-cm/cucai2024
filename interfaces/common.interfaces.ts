@@ -35,6 +35,7 @@ interface Ticket {
   ticket_applied: string;
   ticket_assigned: string;
   status: string;
+  batch: string;
 }
 
 interface Application extends DelegateProfile, Omit<Ticket, "owner"> {}

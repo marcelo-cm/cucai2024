@@ -9,7 +9,7 @@ const InfoComponent = ({
 }) => {
   return (
     <div
-      className={`flex flex-col lg:flex-row md:flex-wrap w-full my-2 md:gap-2 leading-tight ${className}`}
+      className={`flex flex-col lg:flex-row md:flex-wrap w-full my-2 md:gap-2 leading-tight text-white ${className}`}
     >
       <div className="md:w-[100px] font-semibold text-blumine-200 ">
         {label}

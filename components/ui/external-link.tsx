@@ -14,10 +14,10 @@ const ExternalLink = ({
     <a
       href={href}
       target="_blank"
-      className={`underline underline-offset-2 hover:no-underline hover:opacity-70 cursor-pointer flex flex-row gap-1 items-center ${className}`}
+      className={`underline underline-offset-2 hover:no-underline hover:opacity-70 cursor-pointer flex flex-row gap-1 items-center break-keep ${className}`}
     >
       {children}
-      <ExternalLinkIcon className="h-4 w-4" />
+      <ExternalLinkIcon className="h-4 w-4 hidden xl:inline" />
     </a>
   );
 };

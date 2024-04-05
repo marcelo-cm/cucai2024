@@ -633,9 +633,9 @@ export default function Home() {
             <a
               className="h-[105px] px-16 py-8 flex items-center"
               href={company.link}
+              key={i}
             >
               <img
-                key={i}
                 alt={company.title}
                 src={`/logos/${company.logo}`}
                 className="object-fit w-full h-full"
@@ -648,9 +648,9 @@ export default function Home() {
             <a
               className="h-[105px] px-16 py-8 flex items-center"
               href={company.link}
+              key={i}
             >
               <img
-                key={i}
                 alt={company.title}
                 src={`/logos/${company.logo}`}
                 className="object-fit w-full h-full"
@@ -663,9 +663,9 @@ export default function Home() {
             <a
               className="h-[105px] px-16 py-8 flex items-center"
               href={company.link}
+              key={i}
             >
               <img
-                key={i}
                 alt={company.title}
                 src={`/logos/${company.logo}`}
                 className="object-fit w-full h-full"
