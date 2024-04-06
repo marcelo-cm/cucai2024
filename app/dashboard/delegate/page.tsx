@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import DashboardTemplate, { useUser } from "../template";
+import { useUser } from "./template";
 import TicketInfo from "./(components)/TicketInfo";
 import ProfileInfo from "./(components)/ProfileInfo";
 import ProjectInfo from "./(components)/ProjectInfo";
 import ImportantResources from "./(components)/ImportantResources";
-import { createClient } from "@/lib/supabase/client";
 
 const DelegateDashboard = () => {
   const { user, supabase } = useUser();

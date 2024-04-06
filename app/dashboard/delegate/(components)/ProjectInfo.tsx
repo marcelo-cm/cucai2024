@@ -28,7 +28,7 @@ const ProjectInfo = ({ project }: { project: Project }) => {
         <div className="flex flex-col lg:w-1/2">
           <InfoComponent label="Members">
             {members.map((member, index) => (
-              <div key={index} className="flex flex-ol gap-1 items-center">
+              <div key={index} className="flex flex-col gap-1 items-center">
                 <div>{member.name}</div>
                 <div className="w-0 md:w-fit hidden md:flex text-blumine-700 text-xs">
                   — ({member.email})

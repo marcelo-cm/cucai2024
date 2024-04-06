@@ -17,6 +17,7 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -196,87 +197,145 @@ const ApplicationRow = ({
           </div>
         </SheetTrigger>
         <SheetContent
-          className={`${NunitoSans.className} text-blumine-50 text-base`}
+          className={`${NunitoSans.className} text-blumine-50 text-base flex flex-col h-full`}
         >
           <SheetHeader>
             <SheetTitle>
               Application Details — {application.first_name}{" "}
               {application.last_name}
             </SheetTitle>
-            <SheetDescription>
-              <InfoComponent label="Name">
-                {application?.first_name} {application?.last_name}{" "}
-              </InfoComponent>
-              <InfoComponent label="Email">{application?.email}</InfoComponent>
-              <InfoComponent label="LinkedIn">
-                <ExternalLink href={application?.linkedin || ""}>
-                  {application?.linkedin
-                    .replace("https://", "")
-                    .replace("www.", "")
-                    .replace("linkedin.com", "")}
-                </ExternalLink>
-              </InfoComponent>
-              <InfoComponent label="Gender">
-                {application?.gender}
-              </InfoComponent>
-              <InfoComponent label="Ethnicity">
-                {application?.ethnicity}
-              </InfoComponent>
-              <InfoComponent label="School">
-                {application?.school}, {application?.grad_year}
-              </InfoComponent>
-              <InfoComponent label="Faculty">
-                {application?.degree_type}, {application?.faculty},{" "}
-                {application?.discipline}
-              </InfoComponent>
-              <InfoComponent label="Student Partner">
-                {application?.student_partner}
-              </InfoComponent>
-            </SheetDescription>
-            <SheetDescription className="flex flex-col gap-4">
-              <div className="border border-blumine-700 text-blumine-50 w-full  bg-blumine-950">
-                <div className="bg-blumine-700 py-4 px-6 flex flex-row gap-6 font-semibold">
-                  <div>Why CUCAI?</div>
-                </div>
-                <div className="px-6 py-4">{application.why_cucai}</div>
-              </div>
-              <div className="border border-blumine-700 text-blumine-50 w-full max-w-[1080px] bg-blumine-950">
-                <div className="bg-blumine-700 py-4 px-6 flex flex-row gap-6 font-semibold">
-                  <div>Project</div>
-                  <div className="text-blumine-200">
-                    ID — {project?.project_id}
-                  </div>
-                </div>
-                {project ? (
-                  <div className="py-4 px-6 flex flex-col">
-                    <InfoComponent label="Name">{project?.name}</InfoComponent>
-                    <InfoComponent label="Description">
-                      {project?.description}
-                    </InfoComponent>
-                    {project.special_req ? (
-                      <InfoComponent label="Special Requests">
-                        {project.special_req}
-                      </InfoComponent>
-                    ) : null}
-                    <InfoComponent label="Members">
-                      {members &&
-                        members.map((member, index) => (
-                          <div
-                            key={index}
-                            className="flex flex-ol gap-1 items-center"
-                          >
-                            <div>{member.name}</div>
-                            <div className="w-0 md:w-fit hidden md:flex text-blumine-700 text-xs">
-                              — ({member.email})
-                            </div>
-                          </div>
-                        ))}
-                    </InfoComponent>
-                  </div>
-                ) : null}
-              </div>
-            </SheetDescription>
           </SheetHeader>
+          <SheetDescription>
+            <InfoComponent label="Name">
+              {application?.first_name} {application?.last_name}{" "}
+            </InfoComponent>
+            <InfoComponent label="Email">{application?.email}</InfoComponent>
+            <InfoComponent label="LinkedIn">
+              <ExternalLink href={application?.linkedin || ""}>
+                {application?.linkedin
+                  .replace("https://", "")
+                  .replace("www.", "")
+                  .replace("linkedin.com", "")}
+              </ExternalLink>
+            </InfoComponent>
+            <InfoComponent label="Gender">{application?.gender}</InfoComponent>
+            <InfoComponent label="Ethnicity">
+              {application?.ethnicity}
+            </InfoComponent>
+            <InfoComponent label="School">
+              {application?.school}, {application?.grad_year}
+            </InfoComponent>
+            <InfoComponent label="Faculty">
+              {application?.degree_type}, {application?.faculty},{" "}
+              {application?.discipline}
+            </InfoComponent>
+            <InfoComponent label="Student Partner">
+              {application?.student_partner}
+            </InfoComponent>
+          </SheetDescription>
+          <SheetDescription className="flex flex-col gap-4">
+            <div className="border border-blumine-700 text-blumine-50 w-full  bg-blumine-950">
+              <div className="bg-blumine-700 py-4 px-6 flex flex-row gap-6 font-semibold">
+                <div>Why CUCAI?</div>
+              </div>
+              <div className="px-6 py-4">{application.why_cucai}</div>
+            </div>
+            <div className="border border-blumine-700 text-blumine-50 w-full max-w-[1080px] bg-blumine-950">
+              <div className="bg-blumine-700 py-4 px-6 flex flex-row gap-6 font-semibold">
+                <div>Project</div>
+                <div className="text-blumine-200">
+                  ID — {project?.project_id}
+                </div>
+              </div>
+              {project ? (
+                <div className="py-4 px-6 flex flex-col">
+                  <InfoComponent label="Name">{project?.name}</InfoComponent>
+                  <InfoComponent label="Description">
+                    {project?.description}
+                  </InfoComponent>
+                  {project.special_req ? (
+                    <InfoComponent label="Special Requests">
+                      {project.special_req}
+                    </InfoComponent>
+                  ) : null}
+                  <InfoComponent label="Members">
+                    {members &&
+                      members.map((member, index) => (
+                        <div
+                          key={index}
+                          className="flex flex-ol gap-1 items-center"
+                        >
+                          <div>{member.name}</div>
+                          <div className="w-0 md:w-fit hidden md:flex text-blumine-700 text-xs">
+                            — ({member.email})
+                          </div>
+                        </div>
+                      ))}
+                  </InfoComponent>
+                </div>
+              ) : null}
+            </div>
+          </SheetDescription>
+          <SheetFooter className="absolute bottom-4">
+            <div className="flex flex-row gap-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="secondary" className="w-[120px]">
+                    {ticketDetails.ticket_assigned || "Assign Ticket"}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuRadioGroup
+                    onValueChange={(value) =>
+                      setTicketDetails((prev) => ({
+                        ...prev,
+                        ["ticket_assigned"]: value,
+                      }))
+                    }
+                    value={ticketDetails.ticket_assigned}
+                  >
+                    <DropdownMenuRadioItem value="Hotel">
+                      Hotel
+                    </DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="Conference">
+                      Conference
+                    </DropdownMenuRadioItem>
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="secondary" className="w-[120px]">
+                    {ticketDetails.batch || "Assign Batch"}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuRadioGroup
+                    onValueChange={(value) =>
+                      setTicketDetails((prev) => ({
+                        ...prev,
+                        ["batch"]: value,
+                      }))
+                    }
+                    value={ticketDetails.batch}
+                  >
+                    <DropdownMenuRadioItem value="Batch 1">
+                      Batch 1
+                    </DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="Batch 2">
+                      Batch 2
+                    </DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="Batch 3">
+                      Batch 3
+                    </DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="Reject">
+                      Reject
+                    </DropdownMenuRadioItem>
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </SheetFooter>
         </SheetContent>
       </Sheet>
     </div>
