@@ -8,7 +8,52 @@ import { TabsContent } from "@radix-ui/react-tabs";
 import Batch from "./(components)/Batch";
 
 const AdminDashboard = () => {
-  const { user, supabase, applications } = useUser();
+  const { user, supabase, applications, masterSettings } = useUser();
+
+  if (!user || !supabase || !applications || !masterSettings) {
+    return null;
+  }
+
+  const updateBatchStatus = async (
+    batch: string,
+    batchApplicants: Application[]
+  ) => {
+    const { data: updateBatchStatusRes, error: updateBatchStatusError } =
+      await supabase
+        .from("master_settings")
+        .update({ [batch]: "Sent" })
+        .eq("id", 1)
+        .single();
+
+    if (updateBatchStatusError) {
+      console.error("Error updating batch status", updateBatchStatusError);
+      return;
+    }
+
+    console.log("Batch status updated", updateBatchStatusRes);
+
+    const allAcceptedApplicants: string[] = batchApplicants.map(
+      (app) => app.user_id
+    );
+
+    const {
+      data: updateBatchApplicantsRes,
+      error: updateBatchApplicantsError,
+    } = await supabase
+      .from("tickets")
+      .update({ status: "Accepted" })
+      .in("owner", allAcceptedApplicants);
+
+    if (updateBatchApplicantsError) {
+      console.error(
+        "Error updating batch applicants",
+        updateBatchApplicantsError
+      );
+      return;
+    }
+
+    window.location.reload();
+  };
 
   return (
     <div className="w-full">
@@ -22,6 +67,7 @@ const AdminDashboard = () => {
               key={index}
               application={application}
               supabase={supabase}
+              masterSettings={masterSettings}
             />
           ))}
         </div>
@@ -112,10 +158,30 @@ const AdminDashboard = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full">
-          <Batch applications={applications} label="Batch 1" />
-          <Batch applications={applications} label="Batch 2" />
-          <Batch applications={applications} label="Batch 3" />
-          <Batch applications={applications} label="Reject" />
+          <Batch
+            applications={applications}
+            label="Batch 1"
+            status={masterSettings.batch_1}
+            updateStatus={updateBatchStatus}
+          />
+          <Batch
+            applications={applications}
+            label="Batch 2"
+            status={masterSettings.batch_2}
+            updateStatus={updateBatchStatus}
+          />
+          <Batch
+            applications={applications}
+            label="Batch 3"
+            status={masterSettings.batch_3}
+            updateStatus={updateBatchStatus}
+          />
+          <Batch
+            applications={applications}
+            label="Reject"
+            status={masterSettings.reject}
+            updateStatus={updateBatchStatus}
+          />
         </div>
       </TabsContent>
     </div>

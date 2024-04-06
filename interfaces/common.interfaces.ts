@@ -39,3 +39,13 @@ interface Ticket {
 }
 
 interface Application extends DelegateProfile, Omit<Ticket, "owner"> {}
+
+interface MasterSettings {
+  id: number;
+  created_at: string;
+  hotel_rooms: number;
+  batch_1: string;
+  batch_2: string;
+  batch_3: string;
+  reject: string;
+}

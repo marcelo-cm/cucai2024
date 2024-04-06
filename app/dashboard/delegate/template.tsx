@@ -24,11 +24,13 @@ const NunitoSans = Nunito_Sans({
 interface UserContextType {
   user: User | null;
   supabase: any;
+  masterSettings: MasterSettings | null;
 }
 
 const UserContext = createContext<UserContextType>({
   user: null,
   supabase: null,
+  masterSettings: null,
 });
 
 export const useUser = () => useContext(UserContext);
@@ -36,6 +38,9 @@ export const useUser = () => useContext(UserContext);
 const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
   const supabase = createClient();
   const [user, setUser] = useState<User | null>(null);
+  const [masterSettings, setMasterSettings] = useState<MasterSettings | null>(
+    null
+  );
 
   const checkUser = async () => {
     const {
@@ -48,7 +53,20 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
     } else {
       console.log("User found");
       setUser(user);
+      fetchMasterSettings();
     }
+  };
+
+  const fetchMasterSettings = async () => {
+    const { data: masterSettingsRes, error: masterSettingsError } =
+      await supabase.from("master_settings").select("*").single();
+
+    if (masterSettingsError) {
+      console.error(masterSettingsError);
+      return;
+    }
+    setMasterSettings(masterSettingsRes);
+    console.log("Master Settings:", masterSettingsRes);
   };
 
   useEffect(() => {
@@ -56,7 +74,7 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, supabase }}>
+    <UserContext.Provider value={{ user, supabase, masterSettings }}>
       <div
         className={`${NunitoSans.className} h-full p-4 text-blumine-50 flex flex-col items-center gap-4 overflow-auto`}
       >
