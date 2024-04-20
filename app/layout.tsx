@@ -4,14 +4,6 @@ import { IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 
-const inter = Inter({ subsets: ["latin"] });
-
-const IBMPlexSans = IBM_Plex_Sans({
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
-});
-
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.cucai.ca"),
   title: "Canadian Undergraduate Conference on AI 2024",

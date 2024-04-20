@@ -36,6 +36,7 @@ interface Ticket {
   ticket_assigned: string;
   status: string;
   batch: string;
+  hotel_claimed: boolean;
 }
 
 interface Application extends DelegateProfile, Omit<Ticket, "owner"> {}
@@ -51,4 +52,23 @@ interface MasterSettings {
   batch_3: string;
   batch_3_active: boolean;
   reject: string;
+}
+
+interface HotelRoom {
+  id: number;
+
+  occupant_1: {
+    status: "Available" | "Unavailable" | "Occupied";
+    name?: string;
+    school?: string;
+    year?: string;
+    gender?: string;
+  };
+  occupant_2: {
+    status: "Available" | "Unavailable" | "Occupied";
+    name?: string;
+    school?: string;
+    year?: string;
+    gender?: string;
+  };
 }

@@ -13,12 +13,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { LogOut } from "lucide-react";
-
-import { Nunito_Sans } from "next/font/google";
 import { Tabs, TabsTrigger } from "@/components/ui/tabs";
 import { TabsList } from "@radix-ui/react-tabs";
 import { Button } from "@/components/ui/button";
 import { parseDate } from "@/lib/utils";
+
+import { Nunito_Sans } from "next/font/google";
+
 const NunitoSans = Nunito_Sans({
   subsets: ["latin"],
   weight: ["200", "300", "400", "600", "700", "800", "900"],

@@ -6,7 +6,6 @@ import { SupabaseClient } from "@supabase/supabase-js";
 import { getTicketDescription } from "@/lib/utils";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,

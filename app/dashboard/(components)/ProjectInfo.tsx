@@ -1,4 +1,3 @@
-import { SupabaseClient, User } from "@supabase/supabase-js";
 import React from "react";
 import InfoComponent from "./InfoComponent";
 

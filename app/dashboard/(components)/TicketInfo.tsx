@@ -1,9 +1,7 @@
-import { SupabaseClient, User } from "@supabase/supabase-js";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import InfoComponent from "./InfoComponent";
 import { getTicketDescription } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Info } from "lucide-react";
 
 const TicketInfo = ({ ticket }: { ticket: Ticket | null }) => {
   return (

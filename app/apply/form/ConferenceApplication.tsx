@@ -1,22 +1,7 @@
 "use client";
 
 import useFormContext from "@/app/apply/hooks/useFormContext";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import React from "react";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Textarea } from "@/components/ui/textarea";
 import FormGenerator from "../../../components/generators/FormGeneratorContext";
 
 const ConferenceApplication = () => {

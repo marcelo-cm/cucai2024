@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { IBM_Plex_Sans } from "next/font/google";
 import { ReactNode, useEffect, useState } from "react";
 

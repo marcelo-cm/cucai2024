@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useUser } from "./template";
 import ApplicationRow from "./(components)/ApplicationRow";
-import { parseDate } from "@/lib/utils";
 import { TabsContent } from "@radix-ui/react-tabs";
 import Batch from "./(components)/Batch";
 import ApplicationStatistics from "./(components)/ApplicationStatistics";
+import { Button } from "@/components/ui/button";
 
 const AdminDashboard = () => {
   const { user, supabase, applications, masterSettings } = useUser();
@@ -56,9 +56,37 @@ const AdminDashboard = () => {
     window.location.reload();
   };
 
+  // const uploadHotelData = async () => {
+  //   for (let i = 1; i < 66; i++) {
+  //     const dataToUpload: {
+  //       id: number;
+  //       occupant_1: { status: string };
+  //       occupant_2: { status: string };
+  //     } = {
+  //       id: i,
+  //       occupant_1: {
+  //         status: "Available",
+  //       },
+  //       occupant_2: {
+  //         status: "Available",
+  //       },
+  //     };
+
+  //     const { data: updateHotelDataRes, error: updateHotelDataError } =
+  //       await supabase.from("hotel").upsert(dataToUpload);
+
+  //     if (updateHotelDataError) {
+  //       console.error("Error updating hotel data", updateHotelDataError);
+  //     } else {
+  //       console.log("Hotel data updated", i);
+  //     }
+  //   }
+  // };
+
   return (
     <div className="w-full">
       <TabsContent value="applications">
+        {/* <Button onClick={uploadHotelData}>Upload Hotel Data</Button> */}
         <div className="border border-blumine-700 text-blumine-50 w-full bg-blumine-950">
           <div className="bg-blumine-700 py-4 px-6 flex flex-row gap-6 font-semibold">
             <div>Delegate Applications</div>

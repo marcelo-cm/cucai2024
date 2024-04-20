@@ -4,9 +4,7 @@ import {
   DialogClose,
   DialogContent,
   DialogDescription,
-  DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Nunito_Sans } from "next/font/google";
