@@ -78,10 +78,6 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
     console.log("Master Settings:", masterSettingsRes);
   };
 
-  useEffect(() => {
-    checkUser();
-  }, []);
-
   const fetchDelegates = async () => {
     const { data: applicationsRes, error: applicationsError } = await supabase
       .from("delegates")
@@ -93,10 +89,6 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
     }
     setDelegates(applicationsRes);
   };
-
-  useEffect(() => {
-    handleTabChange();
-  }, []);
 
   const fetchTickets = async () => {
     const { data: ticketsRes, error: ticketsError } = await supabase
@@ -132,14 +124,19 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
     setApplications(combined);
   };
 
-  useEffect(() => {
-    combineDelegatesAndTickets();
-  }, [delegates, tickets]);
-
   const handleTabChange = async () => {
     await fetchDelegates();
     await fetchTickets();
   };
+
+  useEffect(() => {
+    combineDelegatesAndTickets();
+  }, [delegates, tickets]);
+
+  useEffect(() => {
+    checkUser();
+    handleTabChange();
+  }, []);
 
   return (
     <UserContext.Provider
@@ -154,6 +151,9 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
               <TabsList>
                 <TabsTrigger value="applications" className="!py-6" asChild>
                   <Button variant={"secondary"}>Applications</Button>
+                </TabsTrigger>
+                <TabsTrigger value="projects" className="!py-6" asChild>
+                  <Button variant={"secondary"}>Projects</Button>
                 </TabsTrigger>
                 <TabsTrigger value="acceptances" className="!py-6" asChild>
                   <Button variant={"secondary"}>Acceptances</Button>

@@ -528,7 +528,7 @@ export default function Home() {
 
   return (
     <main
-      className={`${IBMPlexSans.className} h-full w-[100dvw] overflow-x-hidden overflow-y-scroll flex flex-col items-center z-10 no-scrollbar font-light text-white pb-32`}
+      className={`${IBMPlexSans.className} h-full w-[100dvw] overflow-x-hidden overflow-y-scroll flex flex-col items-center z-10 no-scrollbar font-light text-white pb-32 bg-gradient-to-b from-cyan-950 to-cyan-800`}
     >
       <div className="absolute left-[7.5dvw] h-full w-[1px] bg-[#55E0FF]/50" />
       <div className="absolute left-[7.5dvw] h-full w-[1px] bg-[#55E0FF]/50 blur-sm" />

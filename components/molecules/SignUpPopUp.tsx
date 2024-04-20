@@ -67,12 +67,16 @@ const SignUpPopUp = ({
   return (
     <Dialog open={open}>
       <DialogContent
-        className={`${NunitoSans.className} text-blumine-50 flex flex-col gap-4 h-fit bg-blumine-800 p-8 text-blumine-50 border-0 !rounded-none`}
+        className={`${NunitoSans.className} text-blumine-50 flex flex-col gap-4 h-fit bg-blumine-800 p-8 border-0 !rounded-none`}
       >
         <DialogTitle className="text-blumine-50 text-2xl">Sign Up</DialogTitle>
         <DialogDescription className="text-blumine-50">
           You should really make an account before you apply. It makes your
-          application tracking & updates THAT much easier.
+          application tracking & updates THAT much easier. If you already have
+          an account, then just{" "}
+          <a href="/login" className="text-blumine-200 underline">
+            log in.
+          </a>
         </DialogDescription>
         <Form {...form}>
           <form

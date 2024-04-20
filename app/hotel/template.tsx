@@ -23,12 +23,14 @@ const NunitoSans = Nunito_Sans({
 
 interface UserContextType {
   user: User | null;
+  ticket: Ticket | null;
   supabase: any;
   masterSettings: MasterSettings | null;
 }
 
 const UserContext = createContext<UserContextType>({
   user: null,
+  ticket: null,
   supabase: null,
   masterSettings: null,
 });
@@ -38,6 +40,7 @@ export const useUser = () => useContext(UserContext);
 const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
   const supabase = createClient();
   const [user, setUser] = useState<User | null>(null);
+  const [ticket, setTicket] = useState<Ticket | null>(null);
   const [masterSettings, setMasterSettings] = useState<MasterSettings | null>(
     null
   );
@@ -48,12 +51,26 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
     } = await supabase.auth.getUser();
 
     if (!user) {
-      console.log("No user found");
+      console.error("No user found");
       window.location.href = "/login";
     } else {
       console.log("User found");
       setUser(user);
-      fetchMasterSettings();
+
+      const { data: ticketRes, error: ticketError } = await supabase
+        .from("tickets")
+        .select("*")
+        .eq("owner", user.id)
+        .single();
+
+      if (ticketError) {
+        console.error(ticketError);
+        window.location.href = "/login";
+      } else {
+        console.log("Ticket found", ticketRes);
+        setTicket(ticketRes);
+        fetchMasterSettings();
+      }
     }
   };
 
@@ -74,7 +91,7 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, supabase, masterSettings }}>
+    <UserContext.Provider value={{ user, ticket, supabase, masterSettings }}>
       <div
         className={`${NunitoSans.className} h-full p-4 text-blumine-50 flex flex-col items-center gap-4 overflow-auto`}
       >

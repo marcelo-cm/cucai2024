@@ -45,7 +45,10 @@ interface MasterSettings {
   created_at: string;
   hotel_rooms: number;
   batch_1: string;
+  batch_1_active: boolean;
   batch_2: string;
+  batch_2_active: boolean;
   batch_3: string;
+  batch_3_active: boolean;
   reject: string;
 }

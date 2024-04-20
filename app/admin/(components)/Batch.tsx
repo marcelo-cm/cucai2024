@@ -1,19 +1,7 @@
 "use client";
 
 import React from "react";
-import ApplicationRow from "./ApplicationRow";
-import { SupabaseClient } from "@supabase/supabase-js";
 import BatchTableRow from "./BatchTableRow";
-import {
-  Dialog,
-  DialogClose,
-  DialogDescription,
-  DialogOverlay,
-  DialogPortal,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { DialogContent } from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog,

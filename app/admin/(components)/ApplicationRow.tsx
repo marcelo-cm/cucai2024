@@ -23,7 +23,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-import InfoComponent from "../../delegate/(components)/InfoComponent";
+import InfoComponent from "../../dashboard/(components)/InfoComponent";
 
 import { Nunito_Sans } from "next/font/google";
 const NunitoSans = Nunito_Sans({
@@ -322,7 +322,17 @@ const ApplicationRow = ({
             <div className="flex flex-row gap-2">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="secondary" className="w-[120px]">
+                  <Button
+                    variant="secondary"
+                    className="w-[120px]"
+                    disabled={
+                      masterSettings[
+                        `${ticketDetails.batch
+                          ?.replace(" ", "_")
+                          ?.toLowerCase()}` as keyof MasterSettings
+                      ] === "Sent"
+                    }
+                  >
                     {ticketDetails.ticket_assigned || "Assign Ticket"}
                   </Button>
                 </DropdownMenuTrigger>
@@ -347,7 +357,17 @@ const ApplicationRow = ({
               </DropdownMenu>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="secondary" className="w-[120px]">
+                  <Button
+                    variant="secondary"
+                    className="w-[120px]"
+                    disabled={
+                      masterSettings[
+                        `${ticketDetails.batch
+                          ?.replace(" ", "_")
+                          ?.toLowerCase()}` as keyof MasterSettings
+                      ] === "Sent"
+                    }
+                  >
                     {ticketDetails.batch || "Assign Batch"}
                   </Button>
                 </DropdownMenuTrigger>
@@ -361,16 +381,40 @@ const ApplicationRow = ({
                     }
                     value={ticketDetails.batch}
                   >
-                    <DropdownMenuRadioItem value="Batch 1">
+                    <DropdownMenuRadioItem
+                      value="Batch 1"
+                      disabled={
+                        masterSettings[`batch_1` as keyof MasterSettings] ===
+                        "Sent"
+                      }
+                    >
                       Batch 1
                     </DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="Batch 2">
+                    <DropdownMenuRadioItem
+                      value="Batch 2"
+                      disabled={
+                        masterSettings[`batch_2` as keyof MasterSettings] ===
+                        "Sent"
+                      }
+                    >
                       Batch 2
                     </DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="Batch 3">
+                    <DropdownMenuRadioItem
+                      value="Batch 3"
+                      disabled={
+                        masterSettings[`batch_3` as keyof MasterSettings] ===
+                        "Sent"
+                      }
+                    >
                       Batch 3
                     </DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="Reject">
+                    <DropdownMenuRadioItem
+                      value="Reject"
+                      disabled={
+                        masterSettings[`reject` as keyof MasterSettings] ===
+                        "Sent"
+                      }
+                    >
                       Reject
                     </DropdownMenuRadioItem>
                   </DropdownMenuRadioGroup>

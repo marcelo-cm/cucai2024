@@ -15,8 +15,10 @@ const ImportantResources = () => {
         Important Resources
       </div>
       <div className="py-4 px-6 text-blumine-600">
-        {hotLinks.map((item) => (
-          <ExternalLink href={item.url}>{item.name}</ExternalLink>
+        {hotLinks.map((item, index) => (
+          <ExternalLink href={item.url} key={index}>
+            {item.name}
+          </ExternalLink>
         ))}
       </div>
     </div>

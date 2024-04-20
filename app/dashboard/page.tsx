@@ -6,9 +6,10 @@ import TicketInfo from "./(components)/TicketInfo";
 import ProfileInfo from "./(components)/ProfileInfo";
 import ProjectInfo from "./(components)/ProjectInfo";
 import ImportantResources from "./(components)/ImportantResources";
+import { Button } from "@/components/ui/button";
 
 const DelegateDashboard = () => {
-  const { user, supabase } = useUser();
+  const { user, ticket, supabase } = useUser();
   const [project, setProject] = useState<any>(null);
 
   useEffect(() => {
@@ -41,9 +42,6 @@ const DelegateDashboard = () => {
       console.error(projectError);
       return;
     }
-
-    console.log(projectRes);
-
     setProject(projectRes);
   };
 
@@ -57,7 +55,7 @@ const DelegateDashboard = () => {
         Graphic Here
       </div>
       <ProfileInfo user={user} supabase={supabase} />
-      <TicketInfo user={user} supabase={supabase} />
+      <TicketInfo ticket={ticket} />
       {project ? <ProjectInfo project={project} /> : null}
       <ImportantResources />
     </div>

@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect, use } from "react";
 import { ReactNode } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { getTicketType } from "@/lib/utils";
 
 interface ApplyFormContextType {
   title: { [key: number]: string };

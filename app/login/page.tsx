@@ -14,6 +14,8 @@ const NunitoSans = Nunito_Sans({
 });
 
 const LogIn = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const supabase = createClient();
   const [logInInfo, setLogInInfo] = useState({
     email: "",
@@ -21,11 +23,15 @@ const LogIn = () => {
   });
 
   const handleSubmit = async (e: any) => {
+    setLoading(true);
     e.preventDefault();
+
     const { data: logInRes, error: logInError } =
       await supabase.auth.signInWithPassword(logInInfo);
 
     if (logInError) {
+      setLoading(false);
+      setError(true);
       console.error(logInError);
     } else {
       window.location.href = "/dashboard/delegate";
@@ -70,7 +76,12 @@ const LogIn = () => {
           data={logInInfo}
           handleChange={handleChange}
         />
-        <Button onClick={(e) => handleSubmit(e)}>Log In</Button>
+        {error && (
+          <div className="text-red-500">There was an error logging in...</div>
+        )}
+        <Button onClick={(e) => handleSubmit(e)} disabled={loading}>
+          Log In
+        </Button>
       </div>
     </div>
   );
