@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { createClient } from "@/lib/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -115,6 +121,7 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
       return;
     }
 
+    console.log("Projects fetched", projectsRes);
     setProjects(projectsRes);
   };
 
@@ -146,8 +153,7 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    if (delegates.length && tickets.length && projects?.length)
-      combineDelegatesAndTickets();
+    if (delegates.length && tickets.length) combineDelegatesAndTickets();
   }, [delegates, tickets]);
 
   useEffect(() => {

@@ -12,11 +12,6 @@ import { Input } from "@/components/ui/input";
 
 const AdminDashboard = () => {
   const { user, supabase, applications, projects, masterSettings } = useUser();
-
-  if (!user || !supabase || !applications || !masterSettings) {
-    return null;
-  }
-
   const [detailedProjects, setDetailedProjects] = useState<any[]>([]);
   const [searchFilter, setSearchFilter] = useState<string>("");
   const delayedSearchFilter = useDeferredValue<string>(searchFilter);
@@ -27,6 +22,10 @@ const AdminDashboard = () => {
       transformAllProjects(projects, applications);
     }
   }, [projects, applications]);
+
+  if (!user || !supabase || !applications || !masterSettings) {
+    return null;
+  }
 
   const updateBatchStatus = async (
     batch: string,
@@ -119,11 +118,7 @@ const AdminDashboard = () => {
                 <ApplicationRow
                   key={index}
                   application={application}
-                  project={
-                    projects.find(
-                      (p) => p.project_id === application.project_id
-                    ) || null
-                  }
+                  projects={projects}
                   supabase={supabase}
                   masterSettings={masterSettings}
                 />

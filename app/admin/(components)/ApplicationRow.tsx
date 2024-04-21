@@ -33,12 +33,12 @@ const NunitoSans = Nunito_Sans({
 
 const ApplicationRow = ({
   application,
-  project,
+  projects,
   supabase,
   masterSettings,
 }: {
   application: Application;
-  project: Project | null;
+  projects: Project[];
   supabase: SupabaseClient;
   masterSettings: MasterSettings;
 }) => {
@@ -48,6 +48,9 @@ const ApplicationRow = ({
     ticket_assigned: application.ticket_assigned,
     batch: application.batch,
   });
+  const project = projects.find(
+    (project) => project.project_id === application.project_id
+  );
 
   useEffect(
     () =>
@@ -71,21 +74,6 @@ const ApplicationRow = ({
     )
       handleApplicationDecision();
   }, [ticketDetails]);
-
-  // const fetchProject = async () => {
-  //   const { data: projectRes, error: projectError } = await supabase
-  //     .from("projects")
-  //     .select("*")
-  //     .eq("project_id", application.project_id)
-  //     .single();
-
-  //   if (projectError) {
-  //     console.error(projectError);
-  //     return;
-  //   }
-
-  //   setProject(projectRes);
-  // };
 
   const handleApplicationDecision = async () => {
     console.log("Updating Application");
