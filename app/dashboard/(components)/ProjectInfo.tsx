@@ -30,7 +30,7 @@ const ProjectInfo = ({ project }: { project: Project }) => {
               <div key={index} className="flex flex-row gap-1 items-center">
                 <div>{member.name}</div>
                 <div className="w-0 md:w-fit hidden md:flex text-blumine-700 text-xs">
-                  — ({member.email})
+                  — ({member.email as string})
                 </div>
               </div>
             ))}

@@ -5,7 +5,7 @@ interface Project {
   description: string;
   approved: boolean;
   member_names: string[];
-  member_emails: string[];
+  member_emails: (string | Application)[];
   special_req: string;
 }
 

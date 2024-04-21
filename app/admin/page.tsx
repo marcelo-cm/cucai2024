@@ -1,12 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useUser } from "./template";
 import ApplicationRow from "./(components)/ApplicationRow";
 import { TabsContent } from "@radix-ui/react-tabs";
 import Batch from "./(components)/Batch";
 import ApplicationStatistics from "./(components)/ApplicationStatistics";
 import { Button } from "@/components/ui/button";
+import ProjectContainer from "./(components)/ProjectContainer";
 
 const AdminDashboard = () => {
   const { user, supabase, applications, masterSettings } = useUser();
@@ -14,6 +15,9 @@ const AdminDashboard = () => {
   if (!user || !supabase || !applications || !masterSettings) {
     return null;
   }
+
+  const [projects, setProjects] = useState<Project[] | null>(null);
+  const [detailedProjects, setDetailedProjects] = useState<any[]>([]);
 
   const updateBatchStatus = async (
     batch: string,
@@ -56,32 +60,58 @@ const AdminDashboard = () => {
     window.location.reload();
   };
 
-  // const uploadHotelData = async () => {
-  //   for (let i = 1; i < 66; i++) {
-  //     const dataToUpload: {
-  //       id: number;
-  //       occupant_1: { status: string };
-  //       occupant_2: { status: string };
-  //     } = {
-  //       id: i,
-  //       occupant_1: {
-  //         status: "Available",
-  //       },
-  //       occupant_2: {
-  //         status: "Available",
-  //       },
-  //     };
+  const fetchProjects = async () => {
+    const { data: projectsRes, error: projectsError } = await supabase
+      .from("projects")
+      .select("*");
 
-  //     const { data: updateHotelDataRes, error: updateHotelDataError } =
-  //       await supabase.from("hotel").upsert(dataToUpload);
+    if (projectsError) {
+      console.error("Error fetching projects", projectsError);
+      return;
+    }
 
-  //     if (updateHotelDataError) {
-  //       console.error("Error updating hotel data", updateHotelDataError);
-  //     } else {
-  //       console.log("Hotel data updated", i);
-  //     }
-  //   }
-  // };
+    console.log("Projects fetched");
+    setProjects(projectsRes);
+  };
+
+  function transformProject(
+    project: Project,
+    applications: Application[]
+  ): Project {
+    return {
+      ...project,
+      member_emails: project.member_emails.map((email) => {
+        const application = applications.find((app) => app.email === email);
+        return application || email; // Returns the Application object if found, otherwise the original email string
+      }),
+    };
+  }
+
+  function transformAllProjects(
+    projects: Project[] | null,
+    applications: Application[]
+  ) {
+    if (!projects) return;
+
+    const transformed = projects.map((project) =>
+      transformProject(project, applications)
+    );
+    setDetailedProjects(transformed); // Update state
+  }
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  useEffect(() => {
+    if (projects && applications) {
+      transformAllProjects(projects, applications);
+    }
+  }, [projects, applications]);
+
+  useEffect(() => {
+    console.log("Detailed projects", detailedProjects);
+  }, [detailedProjects]);
 
   return (
     <div className="w-full">
@@ -130,7 +160,11 @@ const AdminDashboard = () => {
           />
         </div>
       </TabsContent>
-      <TabsContent value="projects"></TabsContent>
+      <TabsContent value="projects" className="grid lg:grid-cols-2 gap-4">
+        {detailedProjects?.map((project, index) => (
+          <ProjectContainer key={index} project={project} />
+        ))}
+      </TabsContent>
     </div>
   );
 };

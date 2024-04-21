@@ -111,12 +111,12 @@ export async function POST(req: Request) {
       const project_data = {
         name: data.project_name,
         description: data.project_description,
-        member_names: Object.values(data.project_members).map(
-          (member) => member.name
-        ),
-        member_emails: Object.values(data.project_members).map(
-          (member) => member.email
-        ),
+        member_names: Object.values(data.project_members)
+          .map((member) => member.name)
+          .concat([user_data.first_name + " " + user_data.last_name]),
+        member_emails: Object.values(data.project_members)
+          .map((member) => member.email)
+          .concat([user.email]),
         approved: false,
         special_req: data.project_needs,
       };
