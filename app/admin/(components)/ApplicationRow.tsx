@@ -33,18 +33,15 @@ const NunitoSans = Nunito_Sans({
 
 const ApplicationRow = ({
   application,
+  project,
   supabase,
   masterSettings,
 }: {
   application: Application;
+  project: Project | null;
   supabase: SupabaseClient;
   masterSettings: MasterSettings;
 }) => {
-  if (!application) {
-    return null;
-  }
-
-  const [project, setProject] = useState<Project | null>(null);
   const [ticketDetails, setTicketDetails] = useState<{
     [key: string]: string;
   }>({
@@ -68,12 +65,6 @@ const ApplicationRow = ({
     });
 
   useEffect(() => {
-    if (application.project_id) {
-      fetchProject();
-    }
-  }, []);
-
-  useEffect(() => {
     if (
       ticketDetails.ticket_assigned != application.ticket_assigned ||
       ticketDetails.batch != application.batch
@@ -81,20 +72,20 @@ const ApplicationRow = ({
       handleApplicationDecision();
   }, [ticketDetails]);
 
-  const fetchProject = async () => {
-    const { data: projectRes, error: projectError } = await supabase
-      .from("projects")
-      .select("*")
-      .eq("project_id", application.project_id)
-      .single();
+  // const fetchProject = async () => {
+  //   const { data: projectRes, error: projectError } = await supabase
+  //     .from("projects")
+  //     .select("*")
+  //     .eq("project_id", application.project_id)
+  //     .single();
 
-    if (projectError) {
-      console.error(projectError);
-      return;
-    }
+  //   if (projectError) {
+  //     console.error(projectError);
+  //     return;
+  //   }
 
-    setProject(projectRes);
-  };
+  //   setProject(projectRes);
+  // };
 
   const handleApplicationDecision = async () => {
     console.log("Updating Application");
@@ -299,16 +290,16 @@ const ApplicationRow = ({
                       {project.special_req}
                     </InfoComponent>
                   ) : null}
-                  <InfoComponent label="Members">
+                  <InfoComponent label="Members" className="!flex-col">
                     {members &&
                       members.map((member, index) => (
                         <div
                           key={index}
-                          className="flex flex-ol gap-1 items-center"
+                          className="flex flex-row gap-1 items-center"
                         >
                           <div>{member.name}</div>
                           <div className="w-0 md:w-fit hidden md:flex text-blumine-700 text-xs">
-                            — ({member.email})
+                            — ({member.email as string})
                           </div>
                         </div>
                       ))}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useDeferredValue, useEffect, useState } from "react";
 import { useUser } from "./template";
 import ApplicationRow from "./(components)/ApplicationRow";
 import { TabsContent } from "@radix-ui/react-tabs";
@@ -8,16 +8,25 @@ import Batch from "./(components)/Batch";
 import ApplicationStatistics from "./(components)/ApplicationStatistics";
 import { Button } from "@/components/ui/button";
 import ProjectContainer from "./(components)/ProjectContainer";
+import { Input } from "@/components/ui/input";
 
 const AdminDashboard = () => {
-  const { user, supabase, applications, masterSettings } = useUser();
+  const { user, supabase, applications, projects, masterSettings } = useUser();
 
   if (!user || !supabase || !applications || !masterSettings) {
     return null;
   }
 
-  const [projects, setProjects] = useState<Project[] | null>(null);
   const [detailedProjects, setDetailedProjects] = useState<any[]>([]);
+  const [searchFilter, setSearchFilter] = useState<string>("");
+  const delayedSearchFilter = useDeferredValue<string>(searchFilter);
+  const loading = delayedSearchFilter !== searchFilter;
+
+  useEffect(() => {
+    if (projects && applications) {
+      transformAllProjects(projects, applications);
+    }
+  }, [projects, applications]);
 
   const updateBatchStatus = async (
     batch: string,
@@ -60,20 +69,6 @@ const AdminDashboard = () => {
     window.location.reload();
   };
 
-  const fetchProjects = async () => {
-    const { data: projectsRes, error: projectsError } = await supabase
-      .from("projects")
-      .select("*");
-
-    if (projectsError) {
-      console.error("Error fetching projects", projectsError);
-      return;
-    }
-
-    console.log("Projects fetched");
-    setProjects(projectsRes);
-  };
-
   function transformProject(
     project: Project,
     applications: Application[]
@@ -99,36 +94,41 @@ const AdminDashboard = () => {
     setDetailedProjects(transformed); // Update state
   }
 
-  useEffect(() => {
-    fetchProjects();
-  }, []);
-
-  useEffect(() => {
-    if (projects && applications) {
-      transformAllProjects(projects, applications);
-    }
-  }, [projects, applications]);
-
-  useEffect(() => {
-    console.log("Detailed projects", detailedProjects);
-  }, [detailedProjects]);
-
   return (
     <div className="w-full">
       <TabsContent value="applications">
         {/* <Button onClick={uploadHotelData}>Upload Hotel Data</Button> */}
         <div className="border border-blumine-700 text-blumine-50 w-full bg-blumine-950">
-          <div className="bg-blumine-700 py-4 px-6 flex flex-row gap-6 font-semibold">
+          <div className="bg-blumine-700 py-2 px-6 flex flex-row gap-6 justify-between font-semibold items-center">
             <div>Delegate Applications</div>
-          </div>
-          {applications.map((application, index) => (
-            <ApplicationRow
-              key={index}
-              application={application}
-              supabase={supabase}
-              masterSettings={masterSettings}
+            <Input
+              className=" max-w-[500px] !py-1"
+              placeholder="Search"
+              value={searchFilter}
+              onChange={(e) => setSearchFilter(e.target.value)}
             />
-          ))}
+          </div>
+          <div className={`${loading ? "opacity-75" : null}`}>
+            {applications
+              .filter((application) =>
+                String(application.first_name + " " + application.last_name)
+                  .toLowerCase()
+                  .includes(delayedSearchFilter.toLowerCase())
+              )
+              .map((application, index) => (
+                <ApplicationRow
+                  key={index}
+                  application={application}
+                  project={
+                    projects.find(
+                      (p) => p.project_id === application.project_id
+                    ) || null
+                  }
+                  supabase={supabase}
+                  masterSettings={masterSettings}
+                />
+              ))}
+          </div>
         </div>
       </TabsContent>
       <TabsContent value="acceptances" className="flex flex-col gap-4">

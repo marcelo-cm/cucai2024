@@ -30,6 +30,7 @@ interface UserContextType {
   user: User | null;
   supabase: any;
   applications: Application[];
+  projects: Project[];
   masterSettings: MasterSettings | null;
 }
 
@@ -37,6 +38,7 @@ const UserContext = createContext<UserContextType>({
   user: null,
   supabase: null,
   applications: [],
+  projects: [],
   masterSettings: null,
 });
 
@@ -51,6 +53,7 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
   const [masterSettings, setMasterSettings] = useState<MasterSettings | null>(
     null
   );
+  const [projects, setProjects] = useState<Project[]>([]);
 
   const checkUser = async () => {
     const {
@@ -76,7 +79,6 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
       return;
     }
     setMasterSettings(masterSettingsRes);
-    console.log("Master Settings:", masterSettingsRes);
   };
 
   const fetchDelegates = async () => {
@@ -103,6 +105,19 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
     setTickets(ticketsRes);
   };
 
+  const fetchProjects = async () => {
+    const { data: projectsRes, error: projectsError } = await supabase
+      .from("projects")
+      .select("*");
+
+    if (projectsError) {
+      console.error("Error fetching projects", projectsError);
+      return;
+    }
+
+    setProjects(projectsRes);
+  };
+
   const combineDelegatesAndTickets = () => {
     const combined: Application[] = delegates
       .map((delegate) => {
@@ -121,17 +136,18 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
       })
       .sort((a, b) => +parseDate(a.created_at) - +parseDate(b.created_at));
 
-    console.log("Combined Dels & Tickets:", combined);
     setApplications(combined);
   };
 
   const handleTabChange = async () => {
     await fetchDelegates();
     await fetchTickets();
+    await fetchProjects();
   };
 
   useEffect(() => {
-    combineDelegatesAndTickets();
+    if (delegates.length && tickets.length && projects?.length)
+      combineDelegatesAndTickets();
   }, [delegates, tickets]);
 
   useEffect(() => {
@@ -141,7 +157,7 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <UserContext.Provider
-      value={{ user, supabase, applications, masterSettings }}
+      value={{ user, supabase, applications, projects, masterSettings }}
     >
       <Tabs defaultValue="applications" onValueChange={handleTabChange}>
         <div
