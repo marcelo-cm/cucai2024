@@ -46,6 +46,14 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
     null
   );
 
+  useEffect(() => {
+    fetchTicket();
+  }, [user]);
+
+  useEffect(() => {
+    checkUser();
+  }, []);
+
   const checkUser = async () => {
     const {
       data: { user },
@@ -60,10 +68,6 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
       fetchMasterSettings();
     }
   };
-
-  useEffect(() => {
-    fetchTicket();
-  }, [user]);
 
   const fetchTicket = async () => {
     if (!user) {
@@ -95,10 +99,6 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
     setMasterSettings(masterSettingsRes);
     console.log("Master Settings:", masterSettingsRes);
   };
-
-  useEffect(() => {
-    checkUser();
-  }, []);
 
   return (
     <UserContext.Provider value={{ user, ticket, supabase, masterSettings }}>

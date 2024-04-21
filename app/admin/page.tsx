@@ -9,6 +9,8 @@ import ApplicationStatistics from "./(components)/ApplicationStatistics";
 import { Button } from "@/components/ui/button";
 import ProjectContainer from "./(components)/ProjectContainer";
 import { Input } from "@/components/ui/input";
+import FinalDelegateDetails from "./(components)/FinalDelegateList";
+import HotelList from "./(components)/HotelList";
 
 const AdminDashboard = () => {
   const { user, supabase, applications, projects, masterSettings } = useUser();
@@ -94,9 +96,8 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full overflow-scroll">
       <TabsContent value="applications">
-        {/* <Button onClick={uploadHotelData}>Upload Hotel Data</Button> */}
         <div className="border border-blumine-700 text-blumine-50 w-full bg-blumine-950">
           <div className="bg-blumine-700 py-2 px-6 flex flex-row gap-6 justify-between font-semibold items-center">
             <div>Delegate Applications</div>
@@ -159,6 +160,22 @@ const AdminDashboard = () => {
         {detailedProjects?.map((project, index) => (
           <ProjectContainer key={index} project={project} />
         ))}
+      </TabsContent>
+      <TabsContent value="final">
+        <FinalDelegateDetails
+          applications={applications.filter(
+            (a) => a.status === "Paid" || "Checked In"
+          )}
+          projects={projects}
+          supabase={supabase}
+        />
+      </TabsContent>
+      <TabsContent value="hotel">
+        <HotelList
+          applications={applications}
+          projects={projects}
+          supabase={supabase}
+        />
       </TabsContent>
     </div>
   );

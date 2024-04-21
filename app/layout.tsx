@@ -7,8 +7,7 @@ import { Analytics } from "@vercel/analytics/react";
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.cucai.ca"),
   title: "Canadian Undergraduate Conference on AI 2024",
-  description:
-    "March 2-3, 2024 in Kingston, ON | Bringing together the brightest minds in AI",
+  description: "Bringing together the brightest minds in AI",
   openGraph: {
     images: "/opengraph-image.png",
   },

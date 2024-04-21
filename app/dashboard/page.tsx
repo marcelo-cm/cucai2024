@@ -17,6 +17,10 @@ const DelegateDashboard = () => {
     }
   }, [user]);
 
+  if (user === null) {
+    return null;
+  }
+
   const fetchProject = async () => {
     const { data: projectIDRes, error: projectIDError } = await supabase
       .from("delegates")
@@ -43,10 +47,6 @@ const DelegateDashboard = () => {
     }
     setProject(projectRes);
   };
-
-  if (user === null) {
-    return null;
-  }
 
   return (
     <div className="flex flex-col gap-4 w-full items-center h-full">

@@ -165,25 +165,32 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
     <UserContext.Provider
       value={{ user, supabase, applications, projects, masterSettings }}
     >
-      <Tabs defaultValue="applications" onValueChange={handleTabChange}>
+      <Tabs
+        defaultValue="applications"
+        onValueChange={handleTabChange}
+        className="overflow-scroll"
+      >
         <div
-          className={`${NunitoSans.className} h-full p-4 text-blumine-50 flex flex-col items-center gap-4 overflow-auto`}
+          className={`${NunitoSans.className} h-full p-4 pb-0 text-blumine-50 flex flex-col items-center gap-4 overflow-auto`}
         >
           <div className="bg-blumine-700 pr-4 font-semibold leading-none flex justify-between items-center w-full">
-            <div className="flex gap-4 items-center">
-              <TabsList>
-                <TabsTrigger value="applications" className="!py-6" asChild>
-                  <Button variant={"secondary"}>Applications</Button>
-                </TabsTrigger>
-                <TabsTrigger value="projects" className="!py-6" asChild>
-                  <Button variant={"secondary"}>Projects</Button>
-                </TabsTrigger>
-                <TabsTrigger value="acceptances" className="!py-6" asChild>
-                  <Button variant={"secondary"}>Acceptances</Button>
-                </TabsTrigger>
-              </TabsList>
-              Canadian Undergraduate Conference on AI
-            </div>
+            <TabsList>
+              <TabsTrigger value="applications" className="!py-6" asChild>
+                <Button variant={"secondary"}>Applications</Button>
+              </TabsTrigger>
+              <TabsTrigger value="projects" className="!py-6" asChild>
+                <Button variant={"secondary"}>Projects</Button>
+              </TabsTrigger>
+              <TabsTrigger value="acceptances" className="!py-6" asChild>
+                <Button variant={"secondary"}>Acceptances</Button>
+              </TabsTrigger>
+              <TabsTrigger value="final" className="!py-6" asChild>
+                <Button variant={"secondary"}>Paid Delegates</Button>
+              </TabsTrigger>
+              <TabsTrigger value="hotel" className="!py-6" asChild>
+                <Button variant={"secondary"}>Hotel List</Button>
+              </TabsTrigger>
+            </TabsList>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Avatar className="h-8 w-8">
