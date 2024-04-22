@@ -61,6 +61,18 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
   );
   const [projects, setProjects] = useState<Project[]>([]);
 
+  useEffect(() => {
+    if (delegates.length && tickets.length) combineDelegatesAndTickets();
+  }, [delegates, tickets]);
+
+  useEffect(() => {
+    checkUser();
+    handleTabChange();
+  }, []);
+
+  /**
+   * Checks if a user is logged in and redirects to login page if not
+   */
   const checkUser = async () => {
     const {
       data: { user },
@@ -125,6 +137,11 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
     setProjects(projectsRes);
   };
 
+  /**
+   * Combines the delegate and ticket data into a single array of applications joining them
+   * by the user_id and owner key (dropping the owner key to avoid duplicate entry),
+   * sorted by created_at date
+   */
   const combineDelegatesAndTickets = () => {
     const combined: Application[] = delegates
       .map((delegate) => {
@@ -146,20 +163,14 @@ const DashboardTemplate = ({ children }: { children: React.ReactNode }) => {
     setApplications(combined);
   };
 
+  /**
+   * Fetches the delegates, tickets, and projects data when the tab is changed
+   */
   const handleTabChange = async () => {
     await fetchDelegates();
     await fetchTickets();
     await fetchProjects();
   };
-
-  useEffect(() => {
-    if (delegates.length && tickets.length) combineDelegatesAndTickets();
-  }, [delegates, tickets]);
-
-  useEffect(() => {
-    checkUser();
-    handleTabChange();
-  }, []);
 
   return (
     <UserContext.Provider

@@ -1,5 +1,9 @@
 import React from "react";
 
+/**
+ * @param applications All applications in the database
+ * @returns A component that displays the total number of applications sent and pending for both hotel and conference tickets
+ */
 const ApplicationStatistics = ({
   applications,
 }: {

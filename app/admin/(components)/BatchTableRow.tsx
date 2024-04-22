@@ -1,5 +1,10 @@
 import React from "react";
 
+/**
+ * A row in the Batch table that displays the name & email of the applicant and the ticket they were assigned
+ * @param application The application to display
+ * @returns A row in the Batch table
+ */
 const BatchTableRow = ({ application }: { application: Application }) => {
   return (
     <div className="flex flex-row gap-1 items-center py-4 px-6 justify-between">

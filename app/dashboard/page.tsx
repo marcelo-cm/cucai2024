@@ -7,6 +7,10 @@ import ProfileInfo from "./(components)/ProfileInfo";
 import ProjectInfo from "./(components)/ProjectInfo";
 import ImportantResources from "./(components)/ImportantResources";
 
+/**
+ * The delegate dashboard that renders the profile, ticket, project and important resources information
+ * @returns The delegate dashboard
+ */
 const DelegateDashboard = () => {
   const { user, ticket, supabase } = useUser();
   const [project, setProject] = useState<any>(null);

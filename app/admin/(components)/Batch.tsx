@@ -20,6 +20,14 @@ const NunitoSans = Nunito_Sans({
   style: ["normal", "italic"],
 });
 
+/**
+ * Container for all applications in a given batch, with the ability to send the batch and copy all emails to the clipboard
+ * @param label The name of the batch
+ * @param applications All applications in the database
+ * @param status The status of the batch
+ * @param updateStatus A function to update the status of the batch
+ * @returns A component that displays the applications in a batch
+ */
 const Batch = ({
   label,
   applications,
@@ -33,6 +41,9 @@ const Batch = ({
 }) => {
   const batchApplications = applications.filter((app) => app.batch === label);
 
+  /**
+   * Copies all emails in the batch to the clipboard in a comma-separated string
+   */
   const copyEmailsToClipboard = async () => {
     const emailsString = batchApplications.map((app) => app.email).join(", ");
     try {

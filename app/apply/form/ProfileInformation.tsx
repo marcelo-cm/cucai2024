@@ -20,6 +20,10 @@ import { Textarea } from "@/components/ui/textarea";
 import FormGenerator from "../../../components/generators/FormGeneratorContext";
 import Image from "next/image";
 
+/**
+ * The profile information portion of the form, detailing the applicant's personal information
+ * @returns Profile Information form
+ */
 const ProfileInformation = () => {
   const context = useFormContext();
 

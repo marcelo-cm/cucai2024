@@ -31,6 +31,14 @@ const NunitoSans = Nunito_Sans({
   style: ["normal", "italic"],
 });
 
+/**
+ * Contains the details of an application, and allows for the assignment of tickets and batches, as well as viewing the application details in a sheet
+ * @param application application pertaining to this row
+ * @param projects list of all projects in the database
+ * @param supabase supabase client
+ * @param masterSettings master settings as set in the database
+ * @returns A row in the applications table
+ */
 const ApplicationRow = ({
   application,
   projects,
@@ -75,6 +83,10 @@ const ApplicationRow = ({
       handleApplicationDecision();
   }, [ticketDetails]);
 
+  /**
+   * Updates the ticket details in the database
+   * @returns void
+   */
   const handleApplicationDecision = async () => {
     console.log("Updating Application");
 

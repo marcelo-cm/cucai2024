@@ -12,6 +12,10 @@ import { Input } from "@/components/ui/input";
 import FinalDelegateDetails from "./(components)/FinalDelegateList";
 import HotelList from "./(components)/HotelList";
 
+/**
+ * The admin dashboard that renders the applications, projects, batches of applicants, hotel list and paid delegate list
+ * @returns The admin dashboard
+ */
 const AdminDashboard = () => {
   const { user, supabase, applications, projects, masterSettings } = useUser();
   const [detailedProjects, setDetailedProjects] = useState<any[]>([]);
@@ -29,6 +33,12 @@ const AdminDashboard = () => {
     return null;
   }
 
+  /**
+   * Updates the batch status in the master settings to "Sent" and updates the ticket status of all applicants in the batch to "Accepted"
+   * @param batch batch to be updated in the master settings
+   * @param batchApplicants all applicants in the batch to have their ticket status updated
+   * @returns
+   */
   const updateBatchStatus = async (
     batch: string,
     batchApplicants: Application[]
@@ -70,6 +80,12 @@ const AdminDashboard = () => {
     window.location.reload();
   };
 
+  /**
+   * Helper function to transformAllProjects, Transforms a project object by replacing member_emails with the application object if it's found within the list of applicants
+   * @param project the project to transform
+   * @param applications all applications in the database
+   * @returns the transformed project with member_emails replaced with the application object, or the original email string if not found
+   */
   function transformProject(
     project: Project,
     applications: Application[]
@@ -83,6 +99,13 @@ const AdminDashboard = () => {
     };
   }
 
+  /**
+   * Transforms all projects in the database by replacing member_emails with the application object if it's found within the list of applicants
+   * @param projects  All projects in the database
+   * @param applications All applications in the database
+   * @requires transformProject, which transforms a single project
+   * @returns void
+   */
   function transformAllProjects(
     projects: Project[] | null,
     applications: Application[]
@@ -171,11 +194,7 @@ const AdminDashboard = () => {
         />
       </TabsContent>
       <TabsContent value="hotel">
-        <HotelList
-          applications={applications}
-          projects={projects}
-          supabase={supabase}
-        />
+        <HotelList supabase={supabase} />
       </TabsContent>
     </div>
   );

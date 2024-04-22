@@ -15,6 +15,11 @@ const NunitoSans = Nunito_Sans({
   style: ["normal", "italic"],
 });
 
+/**
+ * The main application form that handles the application process,
+ * including the different pages and the ability to move between them
+ * @returns The application form
+ */
 const ApplicationForm = () => {
   const context = useFormContext();
 

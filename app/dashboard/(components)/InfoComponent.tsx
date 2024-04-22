@@ -1,3 +1,6 @@
+/**
+ * InfoComponent is a component that displays information in a label-value format.
+ */
 const InfoComponent = ({
   label,
   className,

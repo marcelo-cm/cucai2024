@@ -100,33 +100,7 @@ export const ApplyFormProvider = ({
   const title: { [key: number]: string } = defaultContextValue.title;
   const [page, setPage] = useState(defaultContextValue.states.page);
   const [data, setData] = useState(defaultContextValue.data);
-
-  const handleChange = (e: any) => {
-    const type = e.target.type;
-    const name = e.target.name;
-    const value = e.target.value;
-
-    if (type === "file") {
-      const file = e.target.files[0];
-      setData((prev) => ({ ...prev, [name]: file }));
-      return;
-    }
-
-    setData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  // useEffect(() => {
-  //   console.log(data.project_members);
-  // }, [data]);
-
-  const nextPage = () => {
-    setPage((prev) => prev + 1);
-  };
-
-  const prevPage = () => {
-    setPage((prev) => prev - 1);
-  };
-
+  // Destructure the project-related data from the rest of the form data
   const {
     project,
     project_id,
@@ -137,15 +111,15 @@ export const ApplyFormProvider = ({
     project_members,
     ...alwaysRequiredInputs
   } = data;
-
+  const [areProjectInputsValid, setAreProjectInputsValid] = useState(true);
+  // Check if all inputs that are always required are valid
   const areAlwaysRequiredInputsValid = Object.values(
     alwaysRequiredInputs
   ).every((input) => {
     if (input !== "" && input !== null) return true;
     return false;
   });
-
-  const [areProjectInputsValid, setAreProjectInputsValid] = useState(true);
+  const canSubmit = areAlwaysRequiredInputsValid && areProjectInputsValid;
 
   useEffect(() => {
     setAreProjectInputsValid(
@@ -183,8 +157,29 @@ export const ApplyFormProvider = ({
     }));
   }, [project_id]);
 
-  const canSubmit = areAlwaysRequiredInputsValid && areProjectInputsValid;
+  const handleChange = (e: any) => {
+    const type = e.target.type;
+    const name = e.target.name;
+    const value = e.target.value;
 
+    if (type === "file") {
+      const file = e.target.files[0];
+      setData((prev) => ({ ...prev, [name]: file }));
+      return;
+    }
+
+    setData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const nextPage = () => {
+    setPage((prev) => prev + 1);
+  };
+
+  const prevPage = () => {
+    setPage((prev) => prev - 1);
+  };
+
+  // Submit the form data to the backend API
   const handleSubmit = async () => {
     try {
       const supabase = createClient();

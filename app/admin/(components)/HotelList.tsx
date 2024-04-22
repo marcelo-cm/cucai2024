@@ -10,15 +10,13 @@ import {
 } from "@/components/ui/table";
 import { SupabaseClient } from "@supabase/supabase-js";
 
-const HotelList = ({
-  applications,
-  projects,
-  supabase,
-}: {
-  applications: Application[];
-  projects: Project[];
-  supabase: SupabaseClient;
-}) => {
+/**
+ * The list of hotel rooms and their occupants. Similar to HotelDashboard, but only displays status of rooms
+ * and cannot edit them
+ * @param supabase The Supabase client
+ * @returns A component that displays the hotel room list
+ */
+const HotelList = ({ supabase }: { supabase: SupabaseClient }) => {
   const [hotelData, setHotelData] = useState<HotelRoom[]>([]);
 
   const fetchHotelData = async () => {
@@ -41,6 +39,7 @@ const HotelList = ({
   useEffect(() => {
     fetchHotelData();
   }, []);
+
   return (
     <div className="w-full flex justify-center pb-4">
       <div className="w-fit">
