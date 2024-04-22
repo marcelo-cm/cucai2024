@@ -5,6 +5,10 @@ import ApplicationForm from "./form/ApplicationForm";
 import { createClient } from "@/lib/supabase/client";
 import SignUpPopUp from "@/components/molecules/SignUpPopUp";
 
+/**
+ * The page for the application form
+ * @returns The application form page
+ */
 const ApplyPage = () => {
   const [loggedIn, setLoggedIn] = useState(true);
   const supabase = createClient();

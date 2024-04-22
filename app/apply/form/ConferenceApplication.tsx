@@ -4,6 +4,10 @@ import useFormContext from "@/app/apply/hooks/useFormContext";
 import React from "react";
 import FormGenerator from "../../../components/generators/FormGeneratorContext";
 
+/**
+ * The conference application portion of the form, detailing conference ticket information, LinkedIn profile, and more
+ * @returns The conference application form
+ */
 const ConferenceApplication = () => {
   const context = useFormContext();
 

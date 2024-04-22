@@ -3,6 +3,11 @@ import React, { useEffect, useState } from "react";
 import InfoComponent from "./InfoComponent";
 import ExternalLink from "@/components/ui/external-link";
 
+/**
+ * A component that displays the user's profile information based on the user's delegate profile
+ * @param user User that is currently logged in
+ * @returns a component that displays the user's profile information
+ */
 const ProfileInfo = ({
   user,
   supabase,

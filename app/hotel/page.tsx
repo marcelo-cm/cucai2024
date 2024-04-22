@@ -22,8 +22,14 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import HotelRoomStatus from "./(components)/HotelRoomStatus";
 
-const AcceptTicket = () => {
+/**
+ * The hotel dashboard that shows all hotel rooms and their occupancy status,
+ * allowing the user to select a hotel room and claim it if is available
+ * @returns The hotel dashboard
+ */
+const HotelDashboard = () => {
   const { user, ticket, supabase, masterSettings } = useUser();
 
   if (!user || !supabase || !ticket || !masterSettings) {
@@ -76,6 +82,12 @@ const AcceptTicket = () => {
     fetchHotelData();
   }
 
+  /**
+   * Updates the hotel room to be occupied by the user
+   * @param roomID the ID of the room to update
+   * @param currentRoom the current room to update to be occupied by the user
+   * @returns void
+   */
   const updateHotel = async (roomID: number | undefined) => {
     if (typeof roomID == "undefined") {
       console.error("Room ID is undefined");
@@ -170,34 +182,11 @@ const AcceptTicket = () => {
                     : null
                 } min-w-[200px]`}
               >
-                {room.occupant_1.status === "Available" ? (
-                  <AlertDialogTrigger asChild>
-                    <Button
-                      variant={"ghost"}
-                      className="hover:bg-jewel-500 hover:text-white w-full h-full"
-                      onClick={() => {
-                        setCurrentRoom([room, 1]);
-                      }}
-                    >
-                      Claim Room
-                    </Button>
-                  </AlertDialogTrigger>
-                ) : room.occupant_1.status === "Occupied" ? (
-                  <div className="p-1">
-                    <div>{room.occupant_1.name}</div>
-                    <div>{room.occupant_1.school}</div>
-                    <div className="flex flex-row gap-2 mt-2">
-                      <div className="rounded-full text-xs bg-blumine-700 w-fit h-fit px-3 py-1">
-                        {room.occupant_1.gender}
-                      </div>
-                      <div className="rounded-full text-xs bg-blumine-700 w-fit h-fit px-3 py-1">
-                        {room.occupant_1.year}
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  "Unavailable"
-                )}
+                <HotelRoomStatus
+                  room={room}
+                  occupant={room.occupant_1}
+                  setCurrentRoom={setCurrentRoom}
+                />
               </TableCell>
               <TableCell
                 className={`${
@@ -206,34 +195,11 @@ const AcceptTicket = () => {
                     : null
                 } min-w-[200px]`}
               >
-                {room.occupant_2.status === "Available" ? (
-                  <AlertDialogTrigger asChild>
-                    <Button
-                      variant={"ghost"}
-                      className="hover:bg-jewel-500 hover:text-white w-full"
-                      onClick={() => {
-                        setCurrentRoom([room, 2]);
-                      }}
-                    >
-                      Claim Room
-                    </Button>
-                  </AlertDialogTrigger>
-                ) : room.occupant_2.status === "Occupied" ? (
-                  <div className="p-1">
-                    <div>{room.occupant_2.name}</div>
-                    <div>{room.occupant_2.school}</div>
-                    <div className="flex flex-row gap-2 mt-2">
-                      <div className="rounded-full text-xs bg-blumine-700 w-fit h-fit px-3 py-1">
-                        {room.occupant_2.gender}
-                      </div>
-                      <div className="rounded-full text-xs bg-blumine-700 w-fit h-fit px-3 py-1">
-                        {room.occupant_2.year}
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  "Unavailable"
-                )}
+                <HotelRoomStatus
+                  room={room}
+                  occupant={room.occupant_2}
+                  setCurrentRoom={setCurrentRoom}
+                />
               </TableCell>
             </TableRow>
           ))}
@@ -243,4 +209,4 @@ const AcceptTicket = () => {
   );
 };
 
-export default AcceptTicket;
+export default HotelDashboard;

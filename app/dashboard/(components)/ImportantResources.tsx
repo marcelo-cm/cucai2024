@@ -1,6 +1,10 @@
 import ExternalLink from "@/components/ui/external-link";
 import React from "react";
 
+/**
+ * A component that displays important resources for the user
+ * @returns A component that displays important resources for the user
+ */
 const ImportantResources = () => {
   const hotLinks = [
     {

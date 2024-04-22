@@ -1,5 +1,9 @@
 import React from "react";
 
+/**
+ * @param member Member of the project to display
+ * @returns A component that displays a row for a member of a project
+ */
 const ProjectMemberRow = ({ member }: { member: Application }) => {
   return (
     <div className="flex flex-row gap-1 items-center">

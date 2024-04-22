@@ -1,6 +1,11 @@
 import React from "react";
 import ProjectMemberRow from "./ProjectMemberRow";
 
+/**
+ * Container for a project, displaying the name, description, special requests, and members
+ * @param project The project to display
+ * @returns A component that displays the project
+ */
 const ProjectContainer = ({ project }: { project: Project }) => {
   return (
     <div className="border border-2 border-blumine-700">

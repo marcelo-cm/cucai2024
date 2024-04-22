@@ -20,6 +20,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { PlusIcon } from "lucide-react";
 import FormGenerator from "../../../components/generators/FormGeneratorContext";
 
+/**
+ * The project application portion of the form, detailing project information and team members, if applicable
+ * @returns The project application form
+ */
 const ProjectApplication = () => {
   const context = useFormContext();
 
