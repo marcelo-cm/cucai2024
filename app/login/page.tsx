@@ -34,7 +34,7 @@ const LogIn = () => {
       setError(true);
       console.error(logInError);
     } else {
-      window.location.href = "/dashboard/delegate";
+      window.location.href = "/dashboard";
     }
   };
 
