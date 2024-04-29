@@ -31,9 +31,18 @@ export async function POST(req: NextRequest) {
       if (response instanceof Error) {
         throw new Error("Error registering ticket purchase");
       }
-    }
 
-    return NextResponse.json({ status: "success", event: event.type });
+      return NextResponse.json({
+        status: "success",
+        event: event.type,
+        body: {
+          email: res?.data.object.receipt_email,
+          dateTime,
+          timeString,
+          response,
+        },
+      });
+    }
   } catch (err: any) {
     return NextResponse.json({ status: "error", message: err.message });
   }
