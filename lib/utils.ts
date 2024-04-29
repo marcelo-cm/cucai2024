@@ -55,8 +55,8 @@ export const registerTicketPurchase = async (email: string) => {
 
   const { data: ticketDataRes, error: ticketDataError } = await supabase
     .from("tickets")
-    .update({ status: "paid" })
-    .eq("owner", userDataRes?.id)
+    .update({ status: "Paid" })
+    .eq("owner", userDataRes.user_id)
     .single();
 
   if (ticketDataError) {
