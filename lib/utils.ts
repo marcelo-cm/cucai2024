@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { createClient } from "./supabase/client";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -38,12 +39,30 @@ export function getTicketDescription(category: string): string {
 export const parseDate = (dateString: string): Date => new Date(dateString);
 export const formatDate = (date: Date): string => date.toLocaleDateString();
 
-export const registerTicketPurchase = async (
-  amount: number,
-  receipt_email: string
-) => {
-  console.log(`Registering ticket purchase for ${receipt_email}...`);
-  console.log(`Amount: ${amount}`);
-  // Logic to register ticket purchase
-  return;
+export const registerTicketPurchase = async (email: string) => {
+  console.log(`📧  Registering ticket purchase for ${email}`);
+  const supabase = createClient();
+  const { data: userDataRes, error: userDataError } = await supabase
+    .from("delegates")
+    .select("*")
+    .eq("email", email)
+    .single();
+
+  if (userDataError) {
+    console.error(userDataError);
+    return new Error("Error fetching user data");
+  }
+
+  const { data: ticketDataRes, error: ticketDataError } = await supabase
+    .from("tickets")
+    .update({ status: "paid" })
+    .eq("owner", userDataRes?.id)
+    .single();
+
+  if (ticketDataError) {
+    console.error(ticketDataError);
+    return new Error("Error updating ticket data");
+  }
+
+  return ticketDataRes;
 };

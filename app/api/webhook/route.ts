@@ -25,9 +25,12 @@ export async function POST(req: NextRequest) {
     if (event.type === "checkout.session.completed") {
       console.log(`🔔  Payment received on ${dateTime} at ${timeString}!`);
       const response = await registerTicketPurchase(
-        res?.data.object.amount_captured,
         res?.data.object.receipt_email
       );
+
+      if (response instanceof Error) {
+        throw new Error("Error registering ticket purchase");
+      }
     }
 
     return NextResponse.json({ status: "success", event: event.type });
