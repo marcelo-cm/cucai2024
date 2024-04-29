@@ -37,3 +37,13 @@ export function getTicketDescription(category: string): string {
 
 export const parseDate = (dateString: string): Date => new Date(dateString);
 export const formatDate = (date: Date): string => date.toLocaleDateString();
+
+export const registerTicketPurchase = async (
+  amount: number,
+  receipt_email: string
+) => {
+  console.log(`Registering ticket purchase for ${receipt_email}...`);
+  console.log(`Amount: ${amount}`);
+  // Logic to register ticket purchase
+  return;
+};

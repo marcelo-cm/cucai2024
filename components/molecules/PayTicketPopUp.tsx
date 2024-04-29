@@ -9,12 +9,17 @@ import {
 import { Button } from "../ui/button";
 import { Nunito_Sans } from "next/font/google";
 import { useUser } from "@/app/dashboard/template";
+import { loadStripe } from "@stripe/stripe-js";
 
 const NunitoSans = Nunito_Sans({
   subsets: ["latin"],
   weight: ["200", "300", "400", "600", "700", "800", "900"],
   style: ["normal", "italic"],
 });
+
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+);
 
 const PayTicketPopUp = () => {
   const { ticket } = useUser();
@@ -41,7 +46,13 @@ const PayTicketPopUp = () => {
           see you. All that's left is to pay for your ticket, and you're all
           set.
         </DialogDescription>
-        <Button>Purchase now!</Button>
+        <form action="/api/checkout-sessions" method={"POST"}>
+          <section>
+            <Button className="w-full" type="submit" role="link">
+              Purchase now!
+            </Button>
+          </section>
+        </form>
         <DialogClose asChild>
           <Button onClick={() => setIsOpen(false)} variant={"secondary"}>
             I will purchase it before my expiration date!
