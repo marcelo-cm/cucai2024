@@ -2,27 +2,23 @@
 
 import React, { useState } from "react";
 import { useUser } from "./template";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { DialogContent } from "@radix-ui/react-dialog";
 import {
   AlertDialog,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import HotelRoomStatus from "./(components)/HotelRoomStatus";
+import { Nunito_Sans } from "next/font/google";
+
+const NunitoSans = Nunito_Sans({
+  subsets: ["latin"],
+  weight: ["200", "300", "400", "600", "700", "800", "900"],
+  style: ["normal", "italic"],
+});
 
 /**
  * The hotel dashboard that shows all hotel rooms and their occupancy status,
@@ -136,7 +132,7 @@ const HotelDashboard = () => {
   return (
     <AlertDialog>
       <AlertDialogContent
-        className={`text-blumine-50 flex flex-col gap-4 h-fit bg-blumine-800 p-8 border-0 !rounded-none absolute`}
+        className={`${NunitoSans.className} text-blumine-50 flex flex-col gap-4 h-fit bg-blumine-800 p-8 border-0 !rounded-none absolute`}
       >
         <AlertDialogTitle className="text-blumine-50 text-2xl">
           Confirm Hotel Room Selection
@@ -144,9 +140,9 @@ const HotelDashboard = () => {
         <AlertDialogDescription className="text-blumine-50">
           Are you sure you want to claim Room {currentRoom[0]?.id}
           {currentRoom[0]?.occupant_1.status == "Occupied"
-            ? ", with " + currentRoom[0].occupant_1.name + "as your roommate"
+            ? ", with " + currentRoom[0].occupant_1.name + " as your roommate"
             : currentRoom[0]?.occupant_2.status == "Occupied"
-            ? ", with " + currentRoom[0]?.occupant_1.name + "as your roommate"
+            ? ", with " + currentRoom[0]?.occupant_1.name + " as your roommate"
             : null}
           ?
         </AlertDialogDescription>

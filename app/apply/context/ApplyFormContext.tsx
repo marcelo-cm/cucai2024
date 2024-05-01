@@ -155,7 +155,7 @@ export const ApplyFormProvider = ({
       project_team: false,
       project_members: { member_1: { name: "", email: "" } },
     }));
-  }, [project_id]);
+  }, [project_id, project]);
 
   const handleChange = (e: any) => {
     const type = e.target.type;

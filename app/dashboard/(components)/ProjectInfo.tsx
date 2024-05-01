@@ -12,7 +12,7 @@ const ProjectInfo = ({ project }: { project: Project }) => {
         <div>Project</div>
         <div className="text-blumine-200">ID — {project?.project_id}</div>
       </div>
-      <div className="py-4 px-6 flex flex-col lg:flex-row lg:gap-8">
+      <div className="py-4 px-6 flex flex-col lg:gap-8">
         <div className="flex flex-col w-1/2">
           <InfoComponent label="Name">{project?.name}</InfoComponent>
           <InfoComponent label="Description">

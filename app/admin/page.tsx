@@ -66,7 +66,7 @@ const AdminDashboard = () => {
       error: updateBatchApplicantsError,
     } = await supabase
       .from("tickets")
-      .update({ status: "Accepted" })
+      .update({ status: batch === "Reject" ? "Rejected" : "Accepted" })
       .in("owner", allAcceptedApplicants);
 
     if (updateBatchApplicantsError) {
